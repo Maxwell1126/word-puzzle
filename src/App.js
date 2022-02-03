@@ -1,6 +1,6 @@
 import logo from './logo.svg';
 import './App.css';
-require('dotenv').config();
+//require('dotenv').config();
 
 function App() {
   return (
