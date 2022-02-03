@@ -1,20 +1,17 @@
+require('dotenv').config();
 const express = require('express');
-const router = express.Router();
-const axios = require('axios');
-const API_KEY = process.env.API_KEY;
-const BASE_URL = `https://www.dictionaryapi.com/api/v3/references/collegiate/json/?key=${API_KEY}`;
+const app = express();
+const bodyParser = require('body-parser');
+const PORT = process.env.PORT || 5000;
 
-router.get('/', (req, res) => {
-    axios({
-        method: 'GET',
-        url: `${BASE_URL}`
-    }).then((response) => {
-        console.log(response.data);
-        res.send(response.data);
-    }).catch((error) => {
-        console.log('Error in GET', error);
-        res.sendStatus(500);
-    });
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
+app.use(express.static('build'));
+
+const wordsRouter = require('./Routes/words.router');
+
+app.use('/words', wordsRouter);
+
+app.listen(PORT, () => {
+    console.log(`Listening on port: ${PORT}`);
 });
-
-module.exports = router;
