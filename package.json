@@ -12,6 +12,7 @@
     "express": "^4.17.2",
     "nodemon": "^2.0.15",
     "prop-types": "^15.8.1",
+    "random-word": "^2.0.0",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-scripts": "5.0.0",
