@@ -1,10 +1,16 @@
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import logo from './logo.svg';
 import './App.css';
-//require('dotenv').config();
+import { HashRouter as Router, Route, Redirect, Switch, } from 'react-router-dom';
 
-function App() {
+class App extends Component {
+  constructor() {
+    super()
+  }
+  render() {
   return (
-    <div className="App">
+    <div>
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
         <p>
@@ -18,9 +24,14 @@ function App() {
         >
           Learn React
         </a>
+        <a href="https://www.merriam-webster.com/dictionary/">Click</a>
       </header>
     </div>
   );
+  }
 }
 
-export default App;
+const mapStateToProps = reduxStore => ({
+  reduxStore
+});
+export default connect(mapStateToProps)(App);

@@ -5,7 +5,8 @@ import { Provider } from 'react-redux';
 import createSagaMiddleware from 'redux-saga';
 import logger from 'redux-logger';
 import App from './App';
-
+// import rootReducer from './Redux/Reducers'; // imports ./redux/reducers/index.js
+// import rootSaga from './Redux/Sagas'; // imports ./redux/sagas/index.js
 const sagaMiddleware = createSagaMiddleware();
 
 // this line creates an array of all of redux middleware you want to use
@@ -18,14 +19,14 @@ const middlewareList = process.env.NODE_ENV === 'development' ?
 const store = createStore(
   // tells the saga middleware to use the rootReducer
   // rootSaga contains all of our other reducers
-  rootReducer,
+  //rootReducer,
   // adds all middleware to our project including saga and logger
   applyMiddleware(...middlewareList),
 );
 
 // tells the saga middleware to use the rootSaga
 // rootSaga contains all of our other sagas
-sagaMiddleware.run(rootSaga);
+//sagaMiddleware.run(rootSaga);
 
 ReactDOM.render(
   <Provider store={store}>
