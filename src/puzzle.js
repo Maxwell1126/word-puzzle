@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-class Home extends Component {
+class Puzzle extends Component {
     constructor(props) {
         super(props)
     }
@@ -10,7 +10,7 @@ class Home extends Component {
 
         return (
             <div>
-                <button>Play</button>
+                <h1>Word Puzzle</h1>
             </div>
         );
 
@@ -22,4 +22,4 @@ class Home extends Component {
 const mapStateToProps = reduxStore => ({
     reduxStore
 });
-export default connect(mapStateToProps)(Home);
+export default connect(mapStateToProps)(Puzzle);
