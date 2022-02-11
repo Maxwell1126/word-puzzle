@@ -1,25 +1,32 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { useNavigate} from 'react-router-dom';
 
-class Home extends Component {
-    constructor(props) {
-        super(props)
-    }
 
-    render() {
+
+
+function Home(){
+let navigate = useNavigate();
+const playButton = (event) => {
+    navigate('/puzzle');
+    console.log('hello')
+}
+   
+
+    
+
+        
 
         return (
             <div>
-                <button>Play</button>
+                <button onClick={playButton}>Play</button>
             </div>
         );
-
     }
 
 
-}
-
 const mapStateToProps = reduxStore => ({
-    reduxStore
+    reduxStore: reduxStore
 });
+
 export default connect(mapStateToProps)(Home);
