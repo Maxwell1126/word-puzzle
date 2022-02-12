@@ -9,13 +9,7 @@ function Home(){
 let navigate = useNavigate();
 const playButton = (event) => {
     navigate('/puzzle');
-    console.log('hello')
-}
-   
-
-    
-
-        
+}        
 
         return (
             <div>
