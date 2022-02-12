@@ -18,14 +18,14 @@ class Puzzle extends Component {
                     colDiv.push(<textarea id={i + `,` + n} className={"textarea"} maxLength={1} rows={1} cols={1}></textarea>);
                     console.log(colDiv);
                     if(n == 5){
-                       rowDiv.push(<div id={i}>{colDiv}</div>);
+                       rowDiv.push(<div className={"rowContainer"} id={i}>{colDiv}</div>);
                        console.log(rowDiv);
                     }
                 }
-            puzzleDiv = <div>{rowDiv}</div>;
+            puzzleDiv = <div className={"puzzleContainer"}>{rowDiv}</div>;
             }
         return (
-            <div>
+            <div className='container'>
                 <h1>Word Puzzle</h1>
                 {puzzleDiv}
             </div>

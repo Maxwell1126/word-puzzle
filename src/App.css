@@ -38,5 +38,40 @@
 }
 .textarea {
   resize: none;
+  margin:4px;
+  padding: 20px;
+  font-size: 28px;
+  text-transform: uppercase;
+  caret-color: transparent;
+  border: 2px solid rgb(99, 97, 97);
+  border-radius: 12px;
+  background-color: #282c34;
+  color:white;
 }
 
+.puzzleContainer {
+ flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  vertical-align: middle;
+  text-align: center;
+  padding: 5px;
+}
+
+.rowContainer {
+  margin-bottom: 10px;
+}
+
+.container {
+  background-color: black;
+}
+
+h1 {
+  color: white;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  vertical-align: middle;
+  text-align: center;
+  padding: 5px;
+}
