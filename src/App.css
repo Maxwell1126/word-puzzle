@@ -38,15 +38,34 @@
 }
 .textarea {
   resize: none;
-  margin:4px;
-  padding: 20px;
+  margin-right:15px;
+  padding: 6px;
   font-size: 28px;
+  font-family: Arial, Helvetica, sans-serif;
   text-transform: uppercase;
   caret-color: transparent;
   border: 2px solid rgb(99, 97, 97);
-  border-radius: 12px;
+  border-radius: 10px;
   background-color: #282c34;
   color:white;
+  text-align: center;
+  outline: none;
+}
+
+.textareaLast{
+  resize: none;
+  
+  padding: 6px;
+  font-size: 28px;
+  font-family: Arial, Helvetica, sans-serif;
+  text-transform: uppercase;
+  caret-color: transparent;
+  border: 2px solid rgb(99, 97, 97);
+  border-radius: 10px;
+  background-color: #282c34;
+  color:white;
+  text-align: center;
+  outline: none;
 }
 
 .puzzleContainer {
@@ -56,22 +75,35 @@
   vertical-align: middle;
   text-align: center;
   padding: 5px;
+  display: inline-block;
 }
 
 .rowContainer {
   margin-bottom: 10px;
-}
-
-.container {
-  background-color: black;
-}
-
-h1 {
-  color: white;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   vertical-align: middle;
   text-align: center;
-  padding: 5px;
+  
+}
+
+.container{
+  text-align: center;
+}
+
+h1 {
+  color: rgb(181, 178, 178);
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 46px;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  vertical-align: middle;
+  text-align: center;
+  
+}
+
+body {
+  background-color: rgb(19, 19, 19);
 }
