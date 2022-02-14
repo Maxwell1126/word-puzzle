@@ -16,21 +16,22 @@ class Keyboard extends Component {
 
         function createRow(firstRowArray, secondRowArray, thirdRowArray) {
             for(let i =0; i < firstRowArray.length; i++){   
-                topRow.push(<button id={firstRowArray[i]}>{firstRowArray[i]}</button>);
+                topRow.push(<button id={firstRowArray[i]} className="keyboardButton">{firstRowArray[i]}</button>);
             }
             for (let i = 0; i < secondRowArray.length; i++) {
-                middleRow.push(<button id={secondRowArray[i]}>{secondRowArray[i]}</button>);
+                middleRow.push(<button id={secondRowArray[i]} className="keyboardButton">{secondRowArray[i]}</button>);
             }
             for (let i = 0; i < thirdRowArray.length; i++) {
-                bottomRow.push(<button id={thirdRowArray[i]}>{thirdRowArray[i]}</button>);
+                bottomRow.push(<button id={thirdRowArray[i]} className="keyboardButton">{thirdRowArray[i]}</button>);
             }
         }
         createRow(topRowArray, middleRowArray, bottomRowArray);
         return(
-            <div id="keyboard">
-                <div>{topRow}</div>
-                <div>{middleRow}</div>
-                <div><button>Delete</button>{bottomRow}<button>Enter</button></div>
+            <div className="keyboard">
+                <div className="topRow">{topRow}</div>
+                <div className="middleRow">{middleRow}</div>
+                <div className="bottomRow"><button className="delEnterButton">DEL</button>{bottomRow}
+                <button className="delEnterButton">ENT</button></div>
             </div>
         );
 

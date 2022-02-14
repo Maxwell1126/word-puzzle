@@ -103,6 +103,55 @@ h1 {
   
 }
 
+.keyboardButton {
+  background-color: #282c34;
+  color:white;
+  border-right: 2px solid rgb(99, 97, 97);
+  border-left: 2px solid rgb(99, 97, 97);
+  border-top: none;
+  border-bottom: none;
+  font-size: 24px;
+  width: 50px;
+  padding: 5px;
+}
+
+.delEnterButton {
+  background-color: #282c34;
+  color:white;
+  border-right: 2px solid rgb(99, 97, 97);
+  border-left: 2px solid rgb(99, 97, 97);
+  border-top: none;
+  border-bottom: none;
+  font-size: 24px;
+  width: 70px;
+  padding: 5px;
+}
+
+.topRow{
+  display: inline-block;
+  border: 2px solid rgb(99, 97, 97);
+  border-bottom: 4px solid rgb(99, 97, 97);
+  border-top: 4px solid rgb(99, 97, 97);
+}
+
+.middleRow{
+  display: inline-block;
+  border-right: 2px solid rgb(99, 97, 97);
+  border-left: 2px solid rgb(99, 97, 97);
+
+}
+
+.bottomRow{
+  display: inline-block;
+  border: 2px solid rgb(99, 97, 97);
+  border-top: 4px solid rgb(99, 97, 97);
+  border-bottom: 4px solid rgb(99, 97, 97);
+}
+
+.keyboard{
+  display: inline-block;
+}
+
 body {
   background-color: rgb(19, 19, 19);
 }
