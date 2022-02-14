@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import './App.css'
+import Keyboard from './keyboard' ;
 class Puzzle extends Component {
     constructor(props) {
         super(props)
@@ -31,6 +32,7 @@ class Puzzle extends Component {
             <div className="container">
                 <h1>Word Puzzle</h1>
                 {puzzleDiv}
+                <Keyboard />
             </div>
         );
 
