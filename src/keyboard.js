@@ -28,8 +28,8 @@ class Keyboard extends Component {
         createRow(topRowArray, middleRowArray, bottomRowArray);
         return(
             <div className="keyboard">
-                <div className="topRow">{topRow}</div>
-                <div className="middleRow">{middleRow}</div>
+                <div className="topRow">{topRow}</div><br></br>
+                <div className="middleRow">{middleRow}</div><br></br>
                 <div className="bottomRow"><button className="delEnterButton">DEL</button>{bottomRow}
                 <button className="delEnterButton">ENT</button></div>
             </div>
