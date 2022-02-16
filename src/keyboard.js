@@ -7,16 +7,20 @@ class Keyboard extends Component {
     }
 
     render() {
+          
+       let letterButton = (event) => {
+            console.log("hello");
+        } 
         let topRowArray = ['Q','W','E','R','T','Y','U','I','O','P'];
         let middleRowArray = ['A','S','D','F','G','H','J','K','L'];
         let bottomRowArray = ['Z','X','C','V','B','N','M'];
         let topRow =[];
         let middleRow =[];
         let bottomRow = [];
-
+      
         function createRow(firstRowArray, secondRowArray, thirdRowArray) {
             for(let i =0; i < firstRowArray.length; i++){   
-                topRow.push(<button id={firstRowArray[i]} className="keyboardButton">{firstRowArray[i]}</button>);
+                topRow.push(<button onClick={letterButton} id={firstRowArray[i]} className="keyboardButton">{firstRowArray[i]}</button>);
             }
             for (let i = 0; i < secondRowArray.length; i++) {
                 middleRow.push(<button id={secondRowArray[i]} className="keyboardButton">{secondRowArray[i]}</button>);

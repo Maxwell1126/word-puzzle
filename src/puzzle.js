@@ -9,15 +9,13 @@ function Puzzle(){
                     event.preventDefault();
                 }
     });
-}, []);
-
-        // function isCharacterKeyPress(evt) {
-        //     document.addEventListener('keydown', function (event) {
-        //         if (event.code.charAt(0) != 'K') {
-        //             e.preventDefault();
-        //         }
-        //     });
-        // }
+    }, []);
+    window.onmousedown = (event) => {
+        if (event.target.className != "keyboardButton" || "delEnterButton"){
+            event.preventDefault();
+        }
+        console.log(event.target.className);
+    }
         let rowDiv=[];
         let puzzleDiv="";
         for(let i=1; i<7; i++){
