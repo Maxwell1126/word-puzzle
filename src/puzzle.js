@@ -21,26 +21,26 @@ function Puzzle(){
                     event.preventDefault();
                 }
         else if (event.code.charAt(0) == 'K'){
-            console.log(document.getElementById(document.activeElement.id).id.charAt(2) , " char")
             if (document.getElementById(document.activeElement.id).id.charAt(2) == 4 &&
-                document.getElementById(document.activeElement.id).value != ""){
+                    document.getElementById(document.activeElement.id).value != ""){
                 event.preventDefault();
             }else{
-            document.getElementById(document.activeElement.id).value = event.key;
-            assignFocus(event.code.charAt(0));   
+                document.getElementById(document.activeElement.id).value = event.key;
+                assignFocus(event.code.charAt(0));   
             }
         }
         else if (event.code == "Backspace"){
             if (document.getElementById(document.activeElement.id).id.charAt(2) == 0 && 
-                document.getElementById(document.activeElement.id).value == ""){
+                    document.getElementById(document.activeElement.id).value == ""){
                 event.preventDefault();
             }
             else{
-            assignFocus(event.code);
+                assignFocus(event.code);
             }
         }
     });
     }, []);
+
     window.onmousedown = (event) => {
         if (event.target.className != "keyboardButton" || "delEnterButton"){
             event.preventDefault();
@@ -56,25 +56,38 @@ function Puzzle(){
         let rowDiv=[];
 
     function assignFocus(code){
-        
-        console.log('in assignFocus');
-        if(rowDiv.length >0){
-            // if(code == "K"){
-        for (let i = 0; i < 6; i++) {
-            for (let n = 0; n < 5; n++) {
-                console.log(document.getElementById(i + ',' + n).value)
-                if (document.getElementById(i + ',' + n).value == "") {
-                    console.log(document.getElementById(i + ',' + n).id.charAt(0), " hello")
-                    document.getElementById(i + ',' + n).focus();
-                    return;
-                } else if (document.getElementById(i + ',' + n).value && n != 4){
-                    console.log(document.getElementById(i + ',' + (n + 1)), " hey")
-                    document.getElementById(i + ',' + n).blur();
-                    document.getElementById(i + ',' + (n+1)).focus();
+
+        let currentRow = parseInt(document.getElementById(document.activeElement.id).id.charAt(0));
+        let currentColumn = parseInt(document.getElementById(document.activeElement.id).id.charAt(2));   
+            
+                if (code == "K") {
+                console.log("code is K")
+                if (document.getElementById(currentRow + ',' + currentColumn).value == "") {
+                    console.log("value is blank")
+                    document.getElementById(currentRow + ',' + currentColumn).focus();
+
+                } else if (document.getElementById(currentRow + ',' + currentColumn).value && currentColumn != 4){
+                    console.log(document.getElementById(currentRow + ',' + currentColumn))
+                    document.getElementById(currentRow + ',' + currentColumn).blur();
+                    document.getElementById(currentRow + ',' + (currentColumn+1)).focus();
+
                 }
+                
             }
-        }
-        }
+        
+            else if (code == "Backspace"){
+                    if (document.getElementById(currentRow + ',' + currentColumn).value == "") {
+                        document.getElementById(currentRow + ',' + (currentColumn-1)).value = "";
+                        document.getElementById(currentRow + ',' + currentColumn).blur();
+                        document.getElementById(currentRow + ',' + (currentColumn - 1)).focus();
+
+                    }
+                    else if (document.getElementById(currentRow + ',' + currentColumn).value != ""){
+                        document.getElementById(currentRow + ',' + currentColumn).value = "";
+                        document.getElementById(currentRow + ',' + currentColumn).focus();
+
+                    }
+                }
         } 
     
         let puzzleDiv="";
