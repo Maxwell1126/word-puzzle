@@ -8,7 +8,7 @@ function Puzzle(){
     useEffect(() => {
         firstInput.current.focus();
     }, []);
-
+    
     useEffect(() => {
         window.addEventListener('keyup', (event) => {
             event.preventDefault();
@@ -16,7 +16,9 @@ function Puzzle(){
         }, []);
 
     useEffect(() => {
-    window.addEventListener('keydown', (event) => {
+
+        
+            function userKeyDown(event){
         if (event.code.charAt(0) != 'K' && event.code != "Backspace") {
                     event.preventDefault();
                 }
@@ -38,8 +40,16 @@ function Puzzle(){
                 assignFocus(event.code);
             }
         }
-    });
+        
+    }
+        document.addEventListener('keydown', userKeyDown)
+        return function cleanupListener() {
+           document.removeEventListener('keydown', userKeyDown)
+        }
+       
     }, []);
+        
+    
 
     window.onmousedown = (event) => {
         if (event.target.className != "keyboardButton" || "delEnterButton"){
@@ -56,36 +66,27 @@ function Puzzle(){
         let rowDiv=[];
 
     function assignFocus(code){
-
         let currentRow = parseInt(document.getElementById(document.activeElement.id).id.charAt(0));
         let currentColumn = parseInt(document.getElementById(document.activeElement.id).id.charAt(2));   
             
                 if (code == "K") {
-                console.log("code is K")
+                    console.log();
                 if (document.getElementById(currentRow + ',' + currentColumn).value == "") {
-                    console.log("value is blank")
                     document.getElementById(currentRow + ',' + currentColumn).focus();
-
                 } else if (document.getElementById(currentRow + ',' + currentColumn).value && currentColumn != 4){
-                    console.log(document.getElementById(currentRow + ',' + currentColumn))
                     document.getElementById(currentRow + ',' + currentColumn).blur();
                     document.getElementById(currentRow + ',' + (currentColumn+1)).focus();
-
                 }
-                
-            }
-        
+            } 
             else if (code == "Backspace"){
                     if (document.getElementById(currentRow + ',' + currentColumn).value == "") {
                         document.getElementById(currentRow + ',' + (currentColumn-1)).value = "";
                         document.getElementById(currentRow + ',' + currentColumn).blur();
                         document.getElementById(currentRow + ',' + (currentColumn - 1)).focus();
-
                     }
                     else if (document.getElementById(currentRow + ',' + currentColumn).value != ""){
                         document.getElementById(currentRow + ',' + currentColumn).value = "";
                         document.getElementById(currentRow + ',' + currentColumn).focus();
-
                     }
                 }
         } 
@@ -108,8 +109,6 @@ function Puzzle(){
                 }
             puzzleDiv = <div className={"puzzleContainer"}><h1>Word Puzzle</h1>{rowDiv}</div>;
             }
-
-console.log(rowDiv[0].props.children[0].props.value)
             
         return (
             <div className="container">
@@ -119,8 +118,6 @@ console.log(rowDiv[0].props.children[0].props.value)
         );
 
     }
-
-
 
 
 const mapStateToProps = reduxStore => ({

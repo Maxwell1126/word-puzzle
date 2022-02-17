@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import './App.css'
+
 class Keyboard extends Component {
     constructor(props) {
         super(props)
@@ -9,7 +10,7 @@ class Keyboard extends Component {
     render() {
           
        let letterButton = (event) => {
-            console.log("hello");
+           console.log(event.target.id);
         } 
         let topRowArray = ['Q','W','E','R','T','Y','U','I','O','P'];
         let middleRowArray = ['A','S','D','F','G','H','J','K','L'];
