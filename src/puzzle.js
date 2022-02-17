@@ -21,15 +21,23 @@ function Puzzle(){
                     event.preventDefault();
                 }
         else if (event.code.charAt(0) == 'K'){
-            console.log(document.getElementById(document.activeElement.id));
-            console.log(event.key);
+            console.log(document.getElementById(document.activeElement.id).id.charAt(2) , " char")
+            if (document.getElementById(document.activeElement.id).id.charAt(2) == 4 &&
+                document.getElementById(document.activeElement.id).value != ""){
+                event.preventDefault();
+            }else{
             document.getElementById(document.activeElement.id).value = event.key;
-            console.log(document.getElementById(document.activeElement.id).value);
             assignFocus(event.code.charAt(0));   
+            }
         }
         else if (event.code == "Backspace"){
-            document.getElementById(document.activeElement.id).value = "";
-            assignFocus(event.code); 
+            if (document.getElementById(document.activeElement.id).id.charAt(2) == 0 && 
+                document.getElementById(document.activeElement.id).value == ""){
+                event.preventDefault();
+            }
+            else{
+            assignFocus(event.code);
+            }
         }
     });
     }, []);
@@ -66,7 +74,6 @@ function Puzzle(){
                 }
             }
         }
-            console.log(rowDiv[0].props.children[0].props.value);
         }
         } 
     
