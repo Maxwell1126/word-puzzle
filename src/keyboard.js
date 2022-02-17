@@ -35,7 +35,7 @@ class Keyboard extends Component {
                 <div className="topRow">{topRow}</div><br></br>
                 <div className="middleRow">{middleRow}</div><br></br>
                 <div className="bottomRow"><button className="delEnterButton">DEL</button>{bottomRow}
-                <button className="delEnterButton">ENT</button></div>
+                    <button className="delEnterButton">ENT</button></div>
             </div>
         );
 
