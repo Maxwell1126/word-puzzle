@@ -76,14 +76,14 @@ function Puzzle(){
                 for(let n=0; n<5; n++){
                     if(i==0 && n == 0){
                         colDiv.push(<input ref={firstInput} type="text" value="" autoFocus="" readOnly="" id={i + `,` + n} 
-                            className={"textarea"} maxLength={1} rows={1} cols={1}/>);
+                            className={"input"} maxLength={1} rows={1} cols={1}/>);
                     }else if(n == 4){
                         colDiv.push(<input type="text" value="" readOnly="" id={i + `,` + n} 
-                            className={"textareaLast"} maxLength={1} rows={1} cols={1}/>);
+                            className={"inputLast"} maxLength={1} rows={1} cols={1}/>);
                         rowDiv.push(<div className={"rowContainer"} id={i}>{colDiv}</div>);
                     }else{
                         colDiv.push(<input type="text" value="" readOnly="" id={i + `,` + n} 
-                            className={"textarea"} maxLength={1} rows={1} cols={1}/>);
+                            className={"input"} maxLength={1} rows={1} cols={1}/>);
                     }
                 }
             puzzleDiv = <div className={"puzzleContainer"}>{rowDiv}</div>;

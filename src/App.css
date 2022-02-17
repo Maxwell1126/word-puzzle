@@ -37,24 +37,7 @@
   }
 }
 
-input{
-   resize: none;
-  margin-right:15px;
-  width: 30px;
-  padding: 6px;
-  font-size: 28px;
-  font-family: Arial, Helvetica, sans-serif;
-  text-transform: uppercase;
-  caret-color: transparent;
-  border: 2px solid rgb(99, 97, 97);
-  border-radius: 10px;
-  background-color: #282c34;
-  color:white;
-  text-align: center;
-  outline: none;
-}
-
-.textarea {
+.input {
   resize: none;
   margin-right:15px;
   width: 30px;
@@ -71,7 +54,7 @@ input{
   outline: none;
 }
 
-.textareaLast{
+.inputLast{
   resize: none;
   padding: 6px;
   width: 30px;
@@ -85,6 +68,7 @@ input{
   color:white;
   text-align: center;
   outline: none;
+  margin-right:0px;
 }
 
 .puzzleContainer {
