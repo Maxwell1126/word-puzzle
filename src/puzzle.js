@@ -75,25 +75,24 @@ function Puzzle(){
             let colDiv=[];
                 for(let n=0; n<5; n++){
                     if(i==0 && n == 0){
-                        colDiv.push(<input ref={firstInput} type="text" value="" autoFocus="" readOnly="" id={i + `,` + n} 
+                        colDiv.push(<input ref={firstInput} type="text" value="" autoFocus="" readOnly="readonly" id={i + `,` + n} 
                             className={"input"} maxLength={1} rows={1} cols={1}/>);
                     }else if(n == 4){
-                        colDiv.push(<input type="text" value="" readOnly="" id={i + `,` + n} 
+                        colDiv.push(<input type="text" value="" readOnly="readonly" id={i + `,` + n} 
                             className={"inputLast"} maxLength={1} rows={1} cols={1}/>);
                         rowDiv.push(<div className={"rowContainer"} id={i}>{colDiv}</div>);
                     }else{
-                        colDiv.push(<input type="text" value="" readOnly="" id={i + `,` + n} 
+                        colDiv.push(<input type="text" value="" readOnly="readonly" id={i + `,` + n} 
                             className={"input"} maxLength={1} rows={1} cols={1}/>);
                     }
                 }
-            puzzleDiv = <div className={"puzzleContainer"}>{rowDiv}</div>;
+            puzzleDiv = <div className={"puzzleContainer"}><h1>Word Puzzle</h1>{rowDiv}</div>;
             }
 
 console.log(rowDiv[0].props.children[0].props.value)
             
         return (
             <div className="container">
-                <h1>Word Puzzle</h1>
                 {puzzleDiv}
                 <Keyboard />
             </div>
