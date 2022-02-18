@@ -4,5 +4,6 @@ import getGuess from './currentGuess';
 export default function* rootSaga() {
     yield all([
         getWord(),
+        getGuess,
     ]);
 }       
