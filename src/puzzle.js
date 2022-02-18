@@ -1,9 +1,13 @@
-import React, { Component, useEffect, useRef } from 'react';
-import { connect } from 'react-redux';
+import React, { useEffect, useRef, useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import './App.css'
 import Keyboard from './keyboard' ;
 function Puzzle(){
 
+    // const [currentGuess, setWordToGuess] = useState("");
+    const dispatch = useDispatch();
+    const theCurrentGuess = useSelector(state => state.setWordToGuess)
+    console.log(theCurrentGuess)
     const firstInput = useRef(null);
     useEffect(() => {
         firstInput.current.focus();
@@ -119,8 +123,4 @@ function Puzzle(){
 
     }
 
-
-const mapStateToProps = reduxStore => ({
-    reduxStore
-});
-export default connect(mapStateToProps)(Puzzle);
+export default (Puzzle);
