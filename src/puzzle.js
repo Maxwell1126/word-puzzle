@@ -47,7 +47,7 @@ function Puzzle(){
         else if (event.code == "Enter"){
             if (document.getElementById(document.activeElement.id).id.charAt(2) == 4 &&
                 document.getElementById(document.activeElement.id).value != "") {
-                
+                assignClassName();
             } else {
                 event.preventDefault();
             }
@@ -74,7 +74,9 @@ function Puzzle(){
         }
     }
 
-    
+    function assignClassName(){
+        console.log("hello")
+    }    
         let rowDiv=[];
 
     function assignFocus(code){
