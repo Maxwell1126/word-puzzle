@@ -22,8 +22,8 @@ function Puzzle(){
     useEffect(() => {
 
         
-            function userKeyDown(event){
-        if (event.code.charAt(0) != 'K' && event.code != "Backspace") {
+    function userKeyDown(event){
+        if (event.code.charAt(0) != 'K' && event.code != "Backspace" && event.code != "Enter") {
                     event.preventDefault();
                 }
         else if (event.code.charAt(0) == 'K'){
@@ -42,6 +42,14 @@ function Puzzle(){
             }
             else{
                 assignFocus(event.code);
+            }
+        }
+        else if (event.code == "Enter"){
+            if (document.getElementById(document.activeElement.id).id.charAt(2) == 4 &&
+                document.getElementById(document.activeElement.id).value != "") {
+                
+            } else {
+                event.preventDefault();
             }
         }
         
