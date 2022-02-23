@@ -1,4 +1,4 @@
-const setGuess = (state = "tests", action) => {
+const setGuess = (state = "", action) => {
     switch (action.type) {
         case 'SET_GUESS':
             let currentGuess = action.payload;

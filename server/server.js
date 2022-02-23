@@ -8,9 +8,9 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(express.static('build'));
 
-const wordsRouter = require('./Routes/words.router');
+const guessRouter = require('./Routes/guess.router');
 
-app.use('/words', wordsRouter);
+app.use('/guess', guessRouter);
 
 app.listen(PORT, () => {
     console.log(`Listening on port: ${PORT}`);
