@@ -1,12 +1,12 @@
-const setGuess = (state = "", action) => {
+const setGuesses = (state = [], action) => {
     switch (action.type) {
-        case 'SET_GUESS':
-            let currentGuess = action.payload;
-            state = currentGuess
+        case 'SET_GUESSES':
+            let guessList = action.payload;
+            state = guessList
             return state;
         default:
             return state;
     }
 };
 
-export default setGuess;
+export default setGuesses;

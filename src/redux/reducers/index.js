@@ -1,10 +1,10 @@
 import { combineReducers } from 'redux';
 import setWordToGuess from './setWordReducer';
-import setGuess from './setGuessReducer';
+import setGuesses from './setGuessReducer';
 
 const rootReducer = combineReducers({
     setWordToGuess,
-    setGuess,
+    setGuesses,
 });
 
 export default rootReducer;
