@@ -42,7 +42,19 @@ router.post('/', (req, res) => {
     })
 });
 
-
+router.get('/', (req, res) => {
+    let guessList = `SELECT COUNT(*) FROM "guess_list";`;
+    pool.query(allStatsNames).then((response) => {
+        if (response.rows.length) {
+            res.send(response.rows[0])
+        } else {
+            let gooseEgg = 0;
+            res.send(gooseEgg);
+        }
+    }).catch((error) => {
+        console.log('error in server getting from database.', error);
+    })
+})
 // router.post('/', (req, res) => {
 //     axios({
 //         method: 'GET',
