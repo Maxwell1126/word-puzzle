@@ -7,28 +7,38 @@ const API_KEY = process.env.API_KEY;
 
 
 router.post('/', (req, res) => {
+    
     console.log("TTHE REQQY ", req.body.payload);
     (async () => {
+        let isValid = true;
         const client = await pool.connect();
         try {
             await client.query('BEGIN');
-            function isValid() {
-                let insertGuessQuery = `INSERT INTO "guess_list" ("guess") VALUES ($1);`;
-                let insertGuessQueryValue = [req.body.payload];
-                client.query(insertGuessQuery, insertGuessQueryValue);
-            }
             await  axios({
                     method: 'GET',
                     url: `https://www.dictionaryapi.com/api/v3/references/collegiate/json/${req.body.payload}?key=${API_KEY}`
                 }).then((response) => {
-                     isValid();
+                    if (response.data[0].meta != undefined){
+                        isValid = true;
+                        let insertGuessQuery = `INSERT INTO "guess_list" ("guess") VALUES ($1);`;
+                        let insertGuessQueryValue = [req.body.payload];
+                        client.query(insertGuessQuery, insertGuessQueryValue);
+                    }else{
+                        isValid = false;
+                    }
+                    
                 }).catch((error) => {
                     console.log('Error in GET', error);
                     res.sendStatus(500);
                 });
             
             await client.query('COMMIT');
-            res.sendStatus(201);
+            if(isValid == true){
+               return res.sendStatus(200);
+            }else{
+               return res.sendStatus(204);
+            }
+            
         } catch (e) {
             console.log('ROLLBACK', e);
             await client.query('ROLLBACK');

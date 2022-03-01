@@ -7,8 +7,8 @@ function Puzzle(){
 
     
     const dispatch = useDispatch();
-    let guess = "tests";
-    const callGuess =  useCallback(() => {
+    let guess = "bbtty";
+  const callGuess =  useCallback(() => {
         console.log("dispatching post guess")
         dispatch({
             type: 'POST_GUESS',
@@ -19,12 +19,6 @@ function Puzzle(){
     useEffect(() => {
         firstInput.current.focus();
     }, []);
-
-    useEffect(() => {
-        const getGuessList = () => callGuess();
-
-        getGuessList();
-    })
     
     useEffect(() => {
         window.addEventListener('keyup', (event) => {
@@ -61,6 +55,7 @@ function Puzzle(){
             if (document.getElementById(document.activeElement.id).id.charAt(2) == 4 &&
                 document.getElementById(document.activeElement.id).value != "") {
                 assignClassName();
+                callGuess();
             } else {
                 event.preventDefault();
             }
