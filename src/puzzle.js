@@ -7,14 +7,14 @@ function Puzzle(){
 
     
     const dispatch = useDispatch();
-    let guess = "bbtty";
-  const callGuess =  useCallback(() => {
+    let guess = "tests";
+  function callGuess(){
         console.log("dispatching post guess")
         dispatch({
             type: 'POST_GUESS',
             payload: guess,
         })
-    }, []);
+    }
     const firstInput = useRef(null);
     useEffect(() => {
         firstInput.current.focus();

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
+
 import { useNavigate} from 'react-router-dom';
 
 
@@ -50,9 +50,4 @@ const playButton = (event) => {
         );
     }
 
-
-const mapStateToProps = reduxStore => ({
-    reduxStore: reduxStore
-});
-
-export default connect(mapStateToProps)(Home);
+export default Home;

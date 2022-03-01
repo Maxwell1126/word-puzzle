@@ -29,7 +29,7 @@ router.post('/', (req, res) => {
                     
                 }).catch((error) => {
                     console.log('Error in GET', error);
-                    res.sendStatus(500);
+                    
                 });
             
             await client.query('COMMIT');
@@ -54,10 +54,15 @@ router.post('/', (req, res) => {
 
 router.get('/', (req, res) => {
     console.log('in get')
-    let guessList = `SELECT COUNT(*) FROM "guess_list";`;
+    let guessList = `SELECT * FROM "guess_list";`;
     pool.query(guessList).then((response) => {
+        console.log(response.rows)
         if (response.rows.length) {
-            res.send(response.rows)
+            let guesses = [];
+            for (let i = 0; i < response.rows.length; i++){
+                guesses.push(response.rows[i].guess);
+            }
+            res.send(guesses)
         } else {
             console.log('in goose egg')
             let gooseEgg = 0;
