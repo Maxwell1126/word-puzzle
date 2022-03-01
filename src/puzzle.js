@@ -1,17 +1,30 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState, useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import './App.css'
 import Keyboard from './keyboard' ;
+
 function Puzzle(){
 
-    // const [currentGuess, setWordToGuess] = useState("");
+    
     const dispatch = useDispatch();
-    const theCurrentGuess = useSelector(state => state.setWordToGuess)
-    console.log(theCurrentGuess)
+    let guess = "tests";
+    const callGuess =  useCallback(() => {
+        console.log("dispatching post guess")
+        dispatch({
+            type: 'POST_GUESS',
+            payload: guess,
+        })
+    }, []);
     const firstInput = useRef(null);
     useEffect(() => {
         firstInput.current.focus();
     }, []);
+
+    useEffect(() => {
+        const getGuessList = () => callGuess();
+
+        getGuessList();
+    })
     
     useEffect(() => {
         window.addEventListener('keyup', (event) => {

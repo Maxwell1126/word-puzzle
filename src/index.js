@@ -4,9 +4,13 @@ import { createStore, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
 import createSagaMiddleware from 'redux-saga';
 import logger from 'redux-logger';
+
+import rootReducer from './redux/reducers'; // imports ./redux/reducers/index.js
+import rootSaga from './redux/sagas'; // imports ./redux/sagas/index.js
+
 import App from './App';
-import rootReducer from './redux/reducers/index.js'; // imports ./redux/reducers/index.js
-import rootSaga from './redux/sagas/index.js'; // imports ./redux/sagas/index.js
+import { BrowserRouter } from 'react-router-dom';
+
 const sagaMiddleware = createSagaMiddleware();
 
 // this line creates an array of all of redux middleware you want to use
@@ -18,11 +22,10 @@ const middlewareList = process.env.NODE_ENV === 'development' ?
 
 const store = createStore(
   // tells the saga middleware to use the rootReducer
-  // rootReducer contains all of our other reducers
+  // rootSaga contains all of our other reducers
   rootReducer,
   // adds all middleware to our project including saga and logger
   applyMiddleware(...middlewareList),
-  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
 );
 
 // tells the saga middleware to use the rootSaga
@@ -30,8 +33,10 @@ const store = createStore(
 sagaMiddleware.run(rootSaga);
 
 ReactDOM.render(
+ <BrowserRouter>
   <Provider store={store}>
     <App />
-  </Provider>,
+  </Provider>
+  </BrowserRouter>,
   document.getElementById('react-root'),
 );

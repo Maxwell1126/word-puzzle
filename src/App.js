@@ -15,14 +15,13 @@ class App extends Component {
     return (
       
 
-        <BrowserRouter>
+       
           <Routes>
             <Route exact path='/' element={<Home />} />
             <Route path='/puzzle' element={<Puzzle />} />
             <Route render={() => <h1>404</h1>} />
           </Routes>
-        </BrowserRouter>
-    
+        
      
     );
   }
