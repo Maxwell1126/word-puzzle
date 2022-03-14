@@ -2,13 +2,15 @@ import { put, take, takeLatest } from 'redux-saga/effects';
 import axios from 'axios';
 axios.defaults.baseURL = 'http://localhost:8000';
 
+
 function* postGuess(guess) {
     try {
         console.log("in post: ", guess)
        const response =  yield axios.put('/guess', guess);
-        
-        if(response.data == 204){
-            alert('word not in dictionary')
+        console.log(response)
+        if(response.status == 204){
+            alert('Word not in the dicionary')
+
         }
         const getGuesses = { type: 'GET_GUESSES'}
         yield put(getGuesses);

@@ -40,7 +40,6 @@ function Puzzle(){
     let guessesList = useRef([]);
     let [guesses, setGuesses] = useState([]);
     let currentGuesses = useSelector((state => state.setGuesses));
-    console.log(setGuesses.state)
     guessesList.current = [currentGuesses.a, currentGuesses.b, currentGuesses.c, currentGuesses.d, currentGuesses.e, currentGuesses.f]
     useEffect(() => { setGuesses(guesses = guessesList.current) }, [currentGuesses]);
 
