@@ -1,12 +1,16 @@
-import { put, takeLatest } from 'redux-saga/effects';
+import { put, take, takeLatest } from 'redux-saga/effects';
 import axios from 'axios';
 axios.defaults.baseURL = 'http://localhost:8000';
 
 function* postGuess(guess) {
     try {
-        console.log("in post: ", guess.payload)
-        yield axios.post('/guess', guess);
-        const getGuesses = { type: 'GET_GUESSES' }
+        console.log("in post: ", guess)
+       const response =  yield axios.put('/guess', guess);
+        
+        if(response.data == 204){
+            alert('word not in dictionary')
+        }
+        const getGuesses = { type: 'GET_GUESSES'}
         yield put(getGuesses);
     } catch (error) {
         console.log('Error in axios POST (postGuess): ', error);
@@ -27,7 +31,7 @@ function* getGuesses(action) {
 
 function* getGuessSaga() {
     yield takeLatest('POST_GUESS', postGuess);
-    yield getGuesses('GET_GUESSES', getGuesses);
+    yield takeLatest('GET_GUESSES', getGuesses);
 }
 
 export default getGuessSaga;

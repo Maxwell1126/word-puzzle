@@ -1,7 +1,6 @@
 const buildGuess = (state = "", action) => {
     switch (action.type) {
         case 'BUILD_GUESS':
-            console.log("reducer payload", action.payload)
             let guess = action.payload;
             state = state + guess
             return state;
