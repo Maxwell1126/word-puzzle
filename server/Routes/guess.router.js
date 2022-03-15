@@ -8,7 +8,7 @@ router.put('/', (req, res) => {
 
     console.log("TTHE REQQY ", req.body.payload);
     (async () => {
-        let isValid = true;
+        let isValid = false;
         const client = await pool.connect();
         try {
             await client.query('BEGIN');
@@ -16,13 +16,18 @@ router.put('/', (req, res) => {
                 method: 'GET',
                 url: `https://www.dictionaryapi.com/api/v3/references/collegiate/json/${req.body.payload.guess}?key=${API_KEY}`
             }).then((response) => {
+                console.log(response.data[0].fl, " ",response.data[0].meta.offensive == false);
+  
                 if (response.data[0].meta != undefined) {
-                    isValid = true;
-                    let insertGuessQuery = `UPDATE "guess_list" SET "guess"=$1 WHERE "id" = $2;`;
-                    let insertGuessQueryValue = [req.body.payload.guess, req.body.payload.id];
-                    client.query(insertGuessQuery, insertGuessQueryValue);
-                } else {
-                    isValid = false;
+                    if (response.data[0].meta.offensive == false && response.data[0].fl != "trademark" 
+                        && response.data[0].fl != "certification mark" && response.data[0].fl !="service mark" 
+                        && response.data[0].fl != "geographical name" && response.data[0].fl != "biographical name" 
+                        && response.data[0].fl != "abbreviation" && response.data[0].fl != "contraction"){
+                        isValid = true;
+                        let insertGuessQuery = `UPDATE "guess_list" SET "guess"=$1 WHERE "id" = $2;`;
+                        let insertGuessQueryValue = [req.body.payload.guess, req.body.payload.id];
+                        client.query(insertGuessQuery, insertGuessQueryValue);
+                     }
                 }
 
             }).catch((error) => {
