@@ -12,29 +12,30 @@ router.put('/', (req, res) => {
         const client = await pool.connect();
         try {
             await client.query('BEGIN');
-            await axios({
-                method: 'GET',
-                url: `https://www.dictionaryapi.com/api/v3/references/collegiate/json/${req.body.payload.guess}?key=${API_KEY}`
-            }).then((response) => {
-                console.log(response.data[0].fl, " ",response.data[0].meta.offensive == false);
-  
+                await axios({
+                    method: 'GET',
+                    url: `https://www.dictionaryapi.com/api/v3/references/collegiate/json/${req.body.payload.guess}?key=${API_KEY}`
+                }).then((response) => {
+                    console.log(response.data[0].fl, " ",response.data[0].meta.offensive);
+    
                 if (response.data[0].meta != undefined) {
                     if (response.data[0].meta.offensive == false && response.data[0].fl != "trademark" 
                         && response.data[0].fl != "certification mark" && response.data[0].fl !="service mark" 
                         && response.data[0].fl != "geographical name" && response.data[0].fl != "biographical name" 
-                        && response.data[0].fl != "abbreviation" && response.data[0].fl != "contraction"){
-                        isValid = true;
-                        let insertGuessQuery = `UPDATE "guess_list" SET "guess"=$1 WHERE "id" = $2;`;
-                        let insertGuessQueryValue = [req.body.payload.guess, req.body.payload.id];
-                        client.query(insertGuessQuery, insertGuessQueryValue);
-                     }
+                        && response.data[0].fl != "abbreviation" && response.data[0].fl != "contraction"
+                        && response.data[0].fl != "slang"){
+                            isValid = true;
+                            let insertGuessQuery = `UPDATE "guess_list" SET "guess"=$1 WHERE "id" = $2;`;
+                            let insertGuessQueryValue = [req.body.payload.guess, req.body.payload.id];
+                            client.query(insertGuessQuery, insertGuessQueryValue);
+                    }
                 }
-
+            
             }).catch((error) => {
                 console.log('Error in GET', error);
 
             });
-
+        
             await client.query('COMMIT');
             console.log("isValid ", isValid)
             if (isValid == true) {
