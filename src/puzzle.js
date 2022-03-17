@@ -13,6 +13,11 @@ function Puzzle(){
             type: 'GET_GUESSES',
         })
     }, [])
+    useEffect(() => {
+        dispatchAction({
+            type: 'GET_WORD',
+        })
+    }, [])
     // let [firstGuess, setFirstGuess] = useState("");
     // let getFirstGuess = useSelector((state => state.setFirstGuess.guess));
     //     console.log('first guess', getFirstGuess)
@@ -50,7 +55,12 @@ function Puzzle(){
         setGuess(guess = guessToSend)
     })
     
- 
+    let [word, setWord] = useState("");
+    let wordToGuess = useSelector((state => state.setWordToGuess));
+    useEffect(() => {
+        setWord(word= wordToGuess)
+    })
+ console.log("wordToGuess ",word)
     // let guessesList = useRef([]);
     // let getGuessesList = async () => {
     //     axios({

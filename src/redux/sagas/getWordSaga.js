@@ -3,8 +3,8 @@ import axios from 'axios';
 
 function* getWord(word) {
     try {
-        //const response = yield axios.get('/');
-        const getLatest = { type: 'SET_WORD', payload: 'words' }
+        const response = yield axios.post('/word', null);
+        const getLatest = { type: 'SET_WORD', payload: response.data }
         yield put(getLatest);
     } catch (error) {
         console.log('Error in axios GET:', error);

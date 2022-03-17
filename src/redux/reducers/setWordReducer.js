@@ -1,4 +1,4 @@
-const setWordToGuess = (state = "tests", action) => {
+const setWordToGuess = (state = "", action) => {
     switch (action.type) {
         case 'SET_WORD':
             let wordToGuess = action.payload;
