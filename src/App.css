@@ -54,6 +54,109 @@
   outline: none;
 }
 
+.correct {
+  resize: none;
+  margin-right:15px;
+  width: 30px;
+  padding: 6px;
+  font-size: 28px;
+  font-family: Arial, Helvetica, sans-serif;
+  text-transform: uppercase;
+  caret-color: transparent;
+  border: 2px solid rgb(92, 255, 144);
+  border-radius: 10px;
+  background-color: #309638;
+  color:rgb(177, 177, 177);
+  text-align: center;
+  outline: none;
+}
+
+.misplaced{
+  resize: none;
+  margin-right:15px;
+  width: 30px;
+  padding: 6px;
+  font-size: 28px;
+  font-family: Arial, Helvetica, sans-serif;
+  text-transform: uppercase;
+  caret-color: transparent;
+  border: 2px solid rgb(255, 255, 122);
+  border-radius: 10px;
+  background-color: #919848;
+  color:rgb(177, 177, 177);
+  text-align: center;
+  outline: none;
+}
+
+.wrong {
+  resize: none;
+  margin-right:15px;
+  width: 30px;
+  padding: 6px;
+  font-size: 28px;
+  font-family: Arial, Helvetica, sans-serif;
+  text-transform: uppercase;
+  caret-color: transparent;
+  border: 2px solid rgb(0, 0, 0);
+  border-radius: 10px;
+  background-color: #303030;
+  color:rgb(177, 177, 177);
+  text-align: center;
+  outline: none;
+}
+
+.correctLast {
+  resize: none;
+  margin-right:15px;
+  width: 30px;
+  padding: 6px;
+  font-size: 28px;
+  font-family: Arial, Helvetica, sans-serif;
+  text-transform: uppercase;
+  caret-color: transparent;
+  border: 2px solid rgb(92, 255, 144);
+  border-radius: 10px;
+  background-color: #309638;
+  color:rgb(177, 177, 177);
+  text-align: center;
+  outline: none;
+}
+
+.misplacedLast{
+  resize: none;
+  margin-right:15px;
+  width: 30px;
+  padding: 6px;
+  font-size: 28px;
+  font-family: Arial, Helvetica, sans-serif;
+  text-transform: uppercase;
+  caret-color: transparent;
+  border: 2px solid rgb(255, 255, 122);
+  border-radius: 10px;
+  background-color: #919848;
+  color:rgb(177, 177, 177);
+  text-align: center;
+  outline: none;
+}
+
+.wrongLast {
+  resize: none;
+  margin-right:15px;
+  width: 30px;
+  padding: 6px;
+  font-size: 28px;
+  font-family: Arial, Helvetica, sans-serif;
+  text-transform: uppercase;
+  caret-color: transparent;
+  border: 2px solid rgb(0, 0, 0);
+  border-radius: 10px;
+  background-color: #303030;
+  color:rgb(177, 177, 177);
+  text-align: center;
+  outline: none;
+}
+
+
 .inputLast{
   resize: none;
   padding: 6px;
