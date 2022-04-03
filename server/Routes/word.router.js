@@ -22,7 +22,7 @@ router.post('/', (req, res) => {
             }else{
                 while(isValid == false){
                     console.log("isValid ", isValid)
-                    
+                  
                     await axios({
                         method: 'GET',
                         url: `https://api.wordnik.com/v4/words.json/randomWord?hasDictionaryDef=true&excludePartOfSpeech=abbreviation%2C%20family-name%2C%20given-name%2C%20idiom%2C%20noun-possessive%2C%20proper-noun%2C%20proper-noun-plural%2C%20contraction&minCorpusCount=500&maxCorpusCount=-1&minDictionaryCount=2&maxDictionaryCount=-1&minLength=5&maxLength=5&api_key=${WORDNIK_KEY}`
@@ -71,6 +71,7 @@ router.post('/', (req, res) => {
                         });
                         
                     }
+                    
                 }
                 if (isValid == true) {
                     console.log("The random word ",randomWord);
