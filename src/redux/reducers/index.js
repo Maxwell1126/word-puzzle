@@ -7,7 +7,6 @@ const rootReducer = combineReducers({
     setWordToGuess,
     setGuesses,
     buildGuess,
-    
 
 });
 

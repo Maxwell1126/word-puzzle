@@ -3,8 +3,26 @@ import { useSelector, useDispatch } from 'react-redux';
 import './App.css'
 
 function Keyboard() {
- const dispatchAction = useDispatch();
-          
+    const dispatchAction = useDispatch();
+
+    useEffect(() => {
+        dispatchAction({
+            type: 'GET_GUESSES',
+        })
+    }, [])
+    useEffect(() => {
+        dispatchAction({
+            type: 'GET_WORD',
+        })
+    }, [])
+
+    let guessesList = useRef([]);
+    let [guesses, setGuesses] = useState([]);
+    let currentGuesses = useSelector((state => state.setGuesses));
+    guessesList.current = [currentGuesses.a, currentGuesses.b, currentGuesses.c, currentGuesses.d, currentGuesses.e, currentGuesses.f]
+    useEffect(() => { setGuesses(guesses = guessesList.current) }, [currentGuesses]);
+
+        
        let letterButton = (event) => {
            if (document.getElementById(document.activeElement.id).value == "") {
                dispatchAction({
@@ -39,9 +57,9 @@ function Keyboard() {
                     payload: { guess: finalGuess, id: (currentRow + 1) }
                 })
                 sendGuess()
-                dispatchAction({
-                    type: 'CLEAR_GUESS',
-                })
+                // dispatchAction({
+                //     type: 'CLEAR_GUESS',
+                // })
 
             }
         }
@@ -66,6 +84,7 @@ function Keyboard() {
         createRow(topRowArray, middleRowArray, bottomRowArray);
         return(
             <div className="keyboard">
+      
                 <div className="topRow">{topRow}</div><br></br>
                 <div className="middleRow">{middleRow}</div><br></br>
                 <div className="bottomRow"><button onClick={deleteButton} className="delEnterButton">DEL</button>{bottomRow}

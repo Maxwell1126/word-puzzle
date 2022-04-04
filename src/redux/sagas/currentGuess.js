@@ -7,13 +7,28 @@ function* postGuess(guess) {
     try {
         console.log("in post: ", guess)
        const response =  yield axios.put('/guess', guess);
-        console.log(response)
+        console.log(response.status)
         if(response.status == 204){
-            alert('Word not in the dicionary')
+            // alert('Word not in the dicionary')
+            let currentRow = parseInt(document.getElementById(document.activeElement.id).id.charAt(0));
+            for (let i = 0; i < 5; i++) {
+                if (i != 4) {
+                    document.getElementById(currentRow + ',' + i).className = "notWord";
+                } else {
+                    document.getElementById(currentRow + ',' + i).className = "notWordLast";
 
+                }
+
+            }
+            document.getElementById("p").className="pNotInDictioinary"
         }
-        const getGuesses = { type: 'GET_GUESSES'}
+        if(response.status ==200){
+        const clearGuess = {type: 'CLEAR_GUESS'};
+        yield put (clearGuess);
+        const getGuesses = { type: 'GET_GUESSES'};
         yield put(getGuesses);
+        }
+        
     } catch (error) {
         console.log('Error in axios POST (postGuess): ', error);
     }
