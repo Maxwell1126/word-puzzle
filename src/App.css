@@ -451,7 +451,7 @@ h1 {
  animation-duration: 3s;
 }
 
-.keyboardButton {
+/* .keyboardButton {
   background-color: #282c34;
   color:white;
   border-right: 2px solid rgb(99, 97, 97);
@@ -498,7 +498,7 @@ h1 {
 
 .keyboard{
   flex-direction: column;
-}
+} */
 
 body {
   background-color: rgb(19, 19, 19);

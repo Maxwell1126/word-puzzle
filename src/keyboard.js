@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState, useCallback, useReducer } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import './App.css'
+import './keyboard.css';
 
 function Keyboard() {
     const dispatchAction = useDispatch();
@@ -85,9 +85,9 @@ function Keyboard() {
         return(
             <div className="keyboard">
       
-                <div className="topRow">{topRow}</div><br></br>
-                <div className="middleRow">{middleRow}</div><br></br>
-                <div className="bottomRow"><button onClick={deleteButton} className="delEnterButton">DEL</button>{bottomRow}
+                <div className="row">{topRow}</div><br></br>
+                <div className="row">{middleRow}</div><br></br>
+                <div className="row"><button onClick={deleteButton} className="delEnterButton">DEL</button>{bottomRow}
                     <button onClick={enterButton} className="delEnterButton">ENT</button></div>
             </div>
         );

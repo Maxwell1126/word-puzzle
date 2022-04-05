@@ -1,0 +1,152 @@
+@media screen and (max-width: 800px) {
+    .keyboardButton {
+        background-color: #282c34;
+        color:white;
+        border:  solid rgb(99, 97, 97);
+        border-radius: 5px;
+        font-size: 16px;
+        width: 30px;
+        height:40px;
+        padding: 5px;
+        margin:2px;
+    }
+
+    .keyboardWrong{
+        border: 2px solid rgb(138, 138, 138);
+        background-color: #303030;
+        color:white;
+        border-radius: 5px;
+        font-size: 16px;
+        width: 30px;
+        height:40px;
+        padding: 5px;
+        margin:2px;
+    }
+
+    .keyboardMisplaced{
+        border: 2px solid rgb(255, 255, 122);
+        background-color: #919848;
+        color:white;
+        border-radius: 5px;
+        font-size: 16px;
+        width: 30px;
+        height:40px;
+        padding: 5px;
+        margin:2px;
+    }
+
+    .keyboardCorrect{
+        border: 2px solid rgb(92, 255, 144);
+        background-color: #309638;
+        color:white;
+        border-radius: 5px;
+        font-size: 16px;
+        width: 30px;
+        height:40px;
+        padding: 5px;
+        margin:2px;
+    }
+
+    .delEnterButton {
+        background-color: #282c34;
+        color:white;
+        border: 2px solid rgb(99, 97, 97);
+        border-radius: 5px;
+        font-size: 16px;
+        width: 45px;
+        height:40px;
+        padding: 5px;
+        margin:2px;
+    }
+}
+
+@media screen and (min-width: 801px) {
+.keyboardButton {
+        background-color: #282c34;
+        color:white;
+        border:  solid rgb(99, 97, 97);
+        border-radius: 5px;
+        font-size: 20px;
+        width: 45px;
+        height:50px;
+        padding: 5px;
+        margin:5px;
+    }
+
+    .keyboardWrong{
+        border: 2px solid rgb(138, 138, 138);
+        background-color: #303030;
+        color:white;
+        border-radius: 5px;
+        font-size: 16px;
+        width: 30px;
+        height:40px;
+        padding: 5px;
+        margin:2px;
+    }
+
+    .keyboardMisplaced{
+        border: 2px solid rgb(255, 255, 122);
+        background-color: #919848;
+        color:white;
+        border-radius: 5px;
+        font-size: 16px;
+        width: 30px;
+        height:40px;
+        padding: 5px;
+        margin:2px;
+    }
+
+    .keyboardCorrect{
+        border: 2px solid rgb(92, 255, 144);
+        background-color: #309638;
+        color:white;
+        border-radius: 5px;
+        font-size: 16px;
+        width: 30px;
+        height:40px;
+        padding: 5px;
+        margin:2px;
+    }
+
+    .delEnterButton {
+        background-color: #282c34;
+        color:white;
+        border: 2px solid rgb(99, 97, 97);
+        border-radius: 5px;
+        font-size: 16px;
+        width: 60px;
+        height:50px;
+        padding: 5px;
+        margin:5px;
+    }
+}
+.row{
+    display: inline-block;  
+    /* margin-bottom: 2px; */
+}
+
+/* .topRow{
+    display: inline-block;
+    border: 2px solid rgb(99, 97, 97);
+    border-bottom: 4px solid rgb(99, 97, 97);
+    border-top: 4px solid rgb(99, 97, 97);
+}
+
+.middleRow{
+    display: inline-block;
+    border-right: 2px solid rgb(99, 97, 97);
+    border-left: 2px solid rgb(99, 97, 97);
+
+}
+
+.bottomRow{
+    display: inline-block;
+    border: 2px solid rgb(99, 97, 97);
+    border-top: 4px solid rgb(99, 97, 97);
+    border-bottom: 4px solid rgb(99, 97, 97);
+} */
+
+.keyboard{
+    flex-direction: column;
+    }
