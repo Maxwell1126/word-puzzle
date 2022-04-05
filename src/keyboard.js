@@ -22,7 +22,12 @@ function Keyboard() {
     guessesList.current = [currentGuesses.a, currentGuesses.b, currentGuesses.c, currentGuesses.d, currentGuesses.e, currentGuesses.f]
     useEffect(() => { setGuesses(guesses = guessesList.current) }, [currentGuesses]);
 
-        
+    let [word, setWord] = useState("");
+    let wordToGuess = useSelector((state => state.setWordToGuess));
+    useEffect(() => {
+        setWord(word = wordToGuess)
+    })
+
        let letterButton = (event) => {
            if (document.getElementById(document.activeElement.id).value == "") {
                dispatchAction({
@@ -57,9 +62,6 @@ function Keyboard() {
                     payload: { guess: finalGuess, id: (currentRow + 1) }
                 })
                 sendGuess()
-                // dispatchAction({
-                //     type: 'CLEAR_GUESS',
-                // })
 
             }
         }
@@ -82,6 +84,39 @@ function Keyboard() {
             }
         }
         createRow(topRowArray, middleRowArray, bottomRowArray);
+
+        // function changeColor(){
+        //     let guessesArray = [];
+        //     for (let i = 0; i < guesses.length; i++) {
+
+        //         if (guesses[i].length > 0) {
+        //             guessesArray.push(guesses[i]);
+        //         }
+        //     }
+        //    console.log(guessesArray);
+        //     for(let i =0; i < 3; i ++){
+        //         for (let n=0; n < guessesArray.length; n++) {
+        //             for(let z=0; z<6; z++){
+        //                 if (i == 0) {
+        //                     if (document.getElementById(n + ',' + z).className== "wrong" || 
+        //                         document.getElementById(n + ',' + z).className == "wrongLast") {
+        //                         document.getElementById(`${document.getElementById(n + ',' + z).value}`).className = "keyboardWrong";
+        //                         console.log(document.getElementById(`${document.getElementById(n + ',' + z).value}`))
+        //                     }
+        //                 } else if (i == 1) {
+
+        //                 } else if (i == 2) {
+
+        //                 }
+        //             } 
+        //         }
+        //     }
+        // }
+
+    // useEffect(() => {
+    //     changeColor();
+    // })
+
         return(
             <div className="keyboard">
       

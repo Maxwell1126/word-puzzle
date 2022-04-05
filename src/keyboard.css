@@ -12,9 +12,9 @@
     }
 
     .keyboardWrong{
-        border: 2px solid rgb(138, 138, 138);
-        background-color: #303030;
-        color:white;
+        border: 2px solid rgb(41, 41, 41);
+        background-color: #151515;
+        color:rgb(255, 255, 255);
         border-radius: 5px;
         font-size: 16px;
         width: 30px;
@@ -74,15 +74,15 @@
     }
 
     .keyboardWrong{
-        border: 2px solid rgb(138, 138, 138);
-        background-color: #303030;
+        border: 2px solid rgb(41, 41, 41);
+        background-color: #151515;
         color:white;
         border-radius: 5px;
-        font-size: 16px;
-        width: 30px;
-        height:40px;
+        font-size: 20px;
+        width: 45px;
+        height:50px;
         padding: 5px;
-        margin:2px;
+        margin:5px;
     }
 
     .keyboardMisplaced{
@@ -90,11 +90,11 @@
         background-color: #919848;
         color:white;
         border-radius: 5px;
-        font-size: 16px;
-        width: 30px;
-        height:40px;
+        font-size: 20px;
+        width: 45px;
+        height:50px;
         padding: 5px;
-        margin:2px;
+        margin:5px;
     }
 
     .keyboardCorrect{
@@ -102,11 +102,11 @@
         background-color: #309638;
         color:white;
         border-radius: 5px;
-        font-size: 16px;
-        width: 30px;
-        height:40px;
+       font-size: 20px;
+        width: 45px;
+        height:50px;
         padding: 5px;
-        margin:2px;
+        margin:5px;
     }
 
     .delEnterButton {

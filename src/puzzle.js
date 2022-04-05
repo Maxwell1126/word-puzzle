@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState, useCallback, useReducer } from 'rea
 import { useSelector, useDispatch } from 'react-redux';
 import './App.css'
 import Keyboard from './keyboard' ;
-// import axios from 'axios';
+import './keyboard.css'
 
 
 function Puzzle(){
@@ -239,6 +239,8 @@ function Puzzle(){
                 }
                 counter++;
             }else{
+                
+                
                 counter = 0;
             }  
             if (document.getElementById(currentRow + ',' + '4').className == "correctLast" ||
@@ -246,10 +248,11 @@ function Puzzle(){
                 document.getElementById(currentRow + ',' + '4').className == "wrongLast" ||
                 document.getElementById(currentRow + ',' + '4').className == "inputLast"){
                     isAnimated = false;
+                
                 }
            console.log(isAnimated, " boolean")
                 
-                
+         
             
 
                 
@@ -263,8 +266,7 @@ function Puzzle(){
     }, []);
        
     function renderGuess () {
-        console.log(document.getElementById(document.activeElement.id));
-       console.log(lastKey);
+
         let guessesArray = [];
         for (let i = 0; i < guesses.length; i++){
 
@@ -392,7 +394,7 @@ function Puzzle(){
                 wordCharCounter = 0;
                 guessCharCounter = 0;
             }
-
+            
             // for (let x = 0; x < wordArray.length; x++) {
             //     for (let n = 0; n < guessArray.length; n++) {
             //         console.log(wordArray);
@@ -562,7 +564,35 @@ function Puzzle(){
             }
         
         }
-       
+        for (let i = 0; i < 3; i++) {
+            for (let n = 0; n < guessesArray.length; n++) {
+                for (let z = 0; z < 5; z++) {
+                    let letter = guessesArray[n].charAt(z).toUpperCase();
+                    if (i == 0) {
+                        if (document.getElementById(n + ',' + z).className == "wrong" ||
+                            document.getElementById(n + ',' + z).className == "wrongLast" ||
+                            document.getElementById(n + ',' + z).className == "wrongLastRecent" ||
+                            document.getElementById(n + ',' + z).className == "wrongRecent") {
+                            document.getElementById(letter).className = "keyboardWrong";
+                        }
+                    } else if (i == 1) {
+                        if (document.getElementById(n + ',' + z).className == "misplaced" ||
+                            document.getElementById(n + ',' + z).className == "misplacedLast" ||
+                            document.getElementById(n + ',' + z).className == "misplacedLastRecent" ||
+                            document.getElementById(n + ',' + z).className == "misplacedRecent") {
+                            document.getElementById(letter).className = "keyboardMisplaced";
+                        }
+                    } else if (i == 2) {
+                        if (document.getElementById(n + ',' + z).className == "correct" ||
+                            document.getElementById(n + ',' + z).className == "correctLast" ||
+                            document.getElementById(n + ',' + z).className == "correctLastRecent" ||
+                            document.getElementById(n + ',' + z).className == "correctRecent") {
+                            document.getElementById(letter).className = "keyboardCorrect";
+                        }
+                    }
+                }
+            }
+        }
     }  
 
 
