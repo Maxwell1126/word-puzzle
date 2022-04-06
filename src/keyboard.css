@@ -1,3 +1,31 @@
+@keyframes correctKeyboardAni{
+from {  border:  solid rgb(99, 97, 97);
+  background-color: #282c34;}
+  to {border: 2px solid rgb(92, 255, 144);
+   background-color: #309638;}
+}
+
+@keyframes misplacedKeyboardAni{
+from { border: 2px solid rgb(99, 97, 97);
+  background-color: #282c34;}
+  to {border: 2px solid rgb(255, 255, 122);
+  background-color: #919848;}
+}
+
+@keyframes wrongKeyboardAni{
+from {  border: 2px solid rgb(99, 97, 97);
+  background-color: #282c34;}
+  to {border: 2px solid rgb(41, 41, 41);
+        background-color: #151515;}
+}
+
+@keyframes misToCorKeyboardAni{
+from {  border: 2px solid rgb(255, 255, 122);
+        background-color: #919848;}
+  to {border: 2px solid rgb(92, 255, 144);
+   background-color: #309638;}
+}
+
 @media screen and (max-width: 800px) {
     .keyboardButton {
         background-color: #282c34;
@@ -46,7 +74,65 @@
         padding: 5px;
         margin:2px;
     }
+.keyboardWrongRecent{
+        background-color: #282c34;
+        color:white;
+        border:  solid rgb(99, 97, 97);
+        border-radius: 5px;
+        font-size: 16px;
+        width: 30px;
+        height:40px;
+        padding: 5px;
+        margin:2px;
+        animation-name: wrongKeyboardAni;
+        animation-duration: 2s;
+        animation-iteration-count: 1;
+    }
 
+    .keyboardMisplacedRecent{
+       background-color: #282c34;
+        color:white;
+        border:  solid rgb(99, 97, 97);
+        border-radius: 5px;
+        font-size: 16px;
+        width: 30px;
+        height:40px;
+        padding: 5px;
+        margin:2px;
+        animation-name: misplacedKeyboardAni;
+        animation-duration: 2s;
+        animation-iteration-count: 1;
+    }
+
+    .keyboardCorrectRecent{
+        background-color: #282c34;
+        color:white;
+        border:  solid rgb(99, 97, 97);
+        border-radius: 5px;
+        font-size: 16px;
+        width: 30px;
+        height:40px;
+        padding: 5px;
+        margin:2px;
+        animation-name: correctKeyboardAni;
+        animation-duration: 2s;
+        animation-iteration-count: 1;
+    }
+
+    .keyboardMisToCorRecent{
+        border: 2px solid rgb(255, 255, 122);
+        background-color: #919848;
+        color:white;
+        border-radius: 5px;
+        font-size: 16px;
+        width: 30px;
+        height:40px;
+        padding: 5px;
+        margin:2px;
+        animation-name: misToCorKeyboardAni;
+        animation-duration:2s;
+        animation-iteration-count: 1;
+    }
     .delEnterButton {
         background-color: #282c34;
         color:white;
@@ -102,13 +188,70 @@
         background-color: #309638;
         color:white;
         border-radius: 5px;
-       font-size: 20px;
+        font-size: 20px;
         width: 45px;
         height:50px;
         padding: 5px;
         margin:5px;
     }
+    .keyboardWrongRecent{
+        background-color: #282c34;
+        color:white;
+        border:  solid rgb(99, 97, 97);
+        border-radius: 5px;
+        font-size: 20px;
+        width: 45px;
+        height:50px;
+        padding: 5px;
+        margin:5px;
+        animation-name: wrongKeyboardAni;
+        animation-duration: 2s;
+        animation-iteration-count: 1;
+    }
 
+    .keyboardMisplacedRecent{
+       background-color: #282c34;
+        color:white;
+        border:  solid rgb(99, 97, 97);
+        border-radius: 5px;
+        font-size: 20px;
+        width: 45px;
+        height:50px;
+        padding: 5px;
+        margin:5px;
+        animation-name: misplacedKeyboardAni;
+        animation-duration: 2s;
+        animation-iteration-count: 1;
+    }
+
+    .keyboardCorrectRecent{
+        background-color: #282c34;
+        color:white;
+        border:  solid rgb(99, 97, 97);
+        border-radius: 5px;
+        font-size: 20px;
+        width: 45px;
+        height:50px;
+        padding: 5px;
+        margin:5px;
+        animation-name: correctKeyboardAni;
+        animation-duration: 2s;
+        animation-iteration-count: 1;
+    }
+    .keyboardMisToCorRecent{
+        border: 2px solid rgb(255, 255, 122);
+        background-color: #919848;
+        color:white;
+        border-radius: 5px;
+        font-size: 20px;
+        width: 45px;
+        height:50px;
+        padding: 5px;
+        margin:5px;
+        animation-name: misToCorKeyboardAni;
+        animation-duration: 2s;
+        animation-iteration-count: 1;
+    }
     .delEnterButton {
         background-color: #282c34;
         color:white;

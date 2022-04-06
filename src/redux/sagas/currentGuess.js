@@ -5,9 +5,9 @@ axios.defaults.baseURL = 'http://localhost:8000';
 
 function* postGuess(guess) {
     try {
-        console.log("in post: ", guess)
+
        const response =  yield axios.put('/guess', guess);
-        console.log(response.status)
+
         if(response.status == 204){
             // alert('Word not in the dicionary')
             let currentRow = parseInt(document.getElementById(document.activeElement.id).id.charAt(0));
@@ -20,7 +20,9 @@ function* postGuess(guess) {
                 }
 
             }
-            document.getElementById("p").className="pNotInDictioinary"
+            // document.getElementById("p").className="pNotInDictioinary"
+            document.getElementById("p").style.visibility="visible";
+            setTimeout(()=>{document.getElementById("p").style.visibility = "hidden";}, 1000);
         }
         if(response.status ==200){
         const clearGuess = {type: 'CLEAR_GUESS'};
@@ -36,9 +38,9 @@ function* postGuess(guess) {
 
 function* getGuesses(action) {
     try {
-        console.log('in get')
+
         const response = yield axios.get('/guess');
-        console.log("response ", response.data);
+
         const guesses = { type: 'SET_GUESSES', payload: response.data };
         yield put(guesses);
     } catch (error) {

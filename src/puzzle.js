@@ -7,7 +7,6 @@ import './keyboard.css'
 
 function Puzzle(){
     const dispatchAction = useDispatch();
-    let isAnimated = false;
     
     useEffect(() => {
         dispatchAction({
@@ -36,10 +35,10 @@ function Puzzle(){
     useEffect(() => {
         setLastKey(lastKey= lastKeyToSend)
     })
-   console.log( lastKey); 
+
    
     let [word, setWord] = useState("");
-    let wordToGuess = useSelector((state => state.setWordToGuess));
+    let wordToGuess = useSelector((state => state.setWordToGuess.toLowerCase()));
     useEffect(() => {
         setWord(word= wordToGuess)
     })
@@ -57,8 +56,8 @@ function Puzzle(){
  
     useEffect(() => {
     function userKeyDown(event){
-        console.log(guesses[5].length, isAnimated)
-        if (guesses[5].length > 0 || isAnimated == true){
+     
+        if (guesses[5].length > 0){
             event.preventDefault();
         }else{
         if (event.code.charAt(0) != 'K' && event.code != "Backspace" && event.code != "Enter") {
@@ -91,6 +90,7 @@ function Puzzle(){
         else if (event.code == "Enter"){
             if (document.getElementById(document.activeElement.id).id.charAt(2) == 4 &&
                 document.getElementById(document.activeElement.id).value != ""){
+                    
                 let currentRow = parseInt(document.getElementById(document.activeElement.id).id.charAt(0));
                 let finalGuess = "";
                 for (let i = 0; i < 5; i++) {
@@ -102,7 +102,7 @@ function Puzzle(){
                 })
                 
                 sendGuess()
-                
+
                     // dispatchAction({
                     //     type: 'CLEAR_GUESS',
                     // })
@@ -198,17 +198,17 @@ function Puzzle(){
     useEffect(() => {
         document.addEventListener('animationend', () => {
         // function aniEnd(event){
-            console.log(counter, " counter")
             document.getElementById("p").className = "pNormal";
             let currentRow = parseInt(document.getElementById(document.activeElement.id).id.charAt(0));
-            console.log(guessesList.current)
             for(let i =0; i < 5; i++){
                 if (document.getElementById((currentRow) + ',' + i).className == "notWord") {
                     document.getElementById((currentRow) + ',' + i).className = "input";
+                 
                 } else if (document.getElementById((currentRow) + ',' + i).className == "notWordLast") {
                     document.getElementById((currentRow) + ',' + i).className = "inputLast";
                     document.getElementById("p").className = "pNormal";
                     counter = 0;
+              
                 }
             }
             
@@ -216,7 +216,6 @@ function Puzzle(){
                 currentRow = parseInt(document.getElementById(document.activeElement.id).id.charAt(0));
                 
             }else{
-                console.log(currentRow, " ", counter);
                 
                 currentRow = parseInt(document.getElementById(document.activeElement.id).id.charAt(0) - 1);
             }
@@ -226,36 +225,85 @@ function Puzzle(){
             
                 if (document.getElementById(currentRow + ',' + counter).className == "correctRecent"){
                     document.getElementById(currentRow + ',' + counter).className = "correct";
+                    // if (document.getElementById(document.getElementById(currentRow + ',' + counter).value.toUpperCase()).className == "keyboardCorrectRecent" ||
+                    //     document.getElementById(document.getElementById(currentRow + ',' + counter).value.toUpperCase()).className == "keyboardMisToCorRecent"){
+                    //     document.getElementById(document.getElementById(currentRow + ',' + counter).value.toUpperCase()).className = "keyboardCorrect";
+                    // }
                 } else if (document.getElementById(currentRow + ',' + counter).className == "misplacedRecent"){
                     document.getElementById(currentRow + ',' + counter).className = "misplaced";
+                    // if (document.getElementById(document.getElementById(currentRow + ',' + counter).value.toUpperCase()).className == "keyboardMisplacedRecent") {
+                    //     document.getElementById(document.getElementById(currentRow + ',' + counter).value.toUpperCase()).className = "keyboardMisplaced";
+                    // }
                 } else if (document.getElementById(currentRow + ',' + counter).className == "wrongRecent"){
                     document.getElementById(currentRow + ',' + counter).className = "wrong";
+                    // if (document.getElementById(document.getElementById(currentRow + ',' + counter).value.toUpperCase()).className == "keyboardWrongRecent") {
+                    //     document.getElementById(document.getElementById(currentRow + ',' + counter).value.toUpperCase()).className = "keyboardWrong";
+                    // }
                 } else if (document.getElementById(currentRow + ',' + counter).className == "correctLastRecent") {
                     document.getElementById(currentRow + ',' + counter).className = "correctLast";
+                    // if (document.getElementById(document.getElementById(currentRow + ',' + counter).value.toUpperCase()).className == "keyboardCorrectRecent" ||
+                    //     document.getElementById(document.getElementById(currentRow + ',' + counter).value.toUpperCase()).className == "keyboardMisToCorRecent") {
+                    //     document.getElementById(document.getElementById(currentRow + ',' + counter).value.toUpperCase()).className = "keyboardCorrect";
+                    // }
                 } else if (document.getElementById(currentRow + ',' + counter).className == "misplacedLastRecent") {
                     document.getElementById(currentRow + ',' + counter).className = "misplacedLast";
+                    // if (document.getElementById(document.getElementById(currentRow + ',' + counter).value.toUpperCase()).className == "keyboardMisplacedRecent") {
+                    //     document.getElementById(document.getElementById(currentRow + ',' + counter).value.toUpperCase()).className = "keyboardMisplaced";
+                    // }
                 } else if (document.getElementById(currentRow + ',' + counter).className == "wrongLastRecent") {
                     document.getElementById(currentRow + ',' + counter).className = "wrongLast";
+                    // if (document.getElementById(document.getElementById(currentRow + ',' + counter).value.toUpperCase()).className == "keyboardWrongRecent") {
+                    //     document.getElementById(document.getElementById(currentRow + ',' + counter).value.toUpperCase()).className = "keyboardWrong";
+                    // }
                 }
                 counter++;
             }else{
-                
-                
+                // for (let i = 0; i < 5; i++) {
+                //     console.log(document.getElementById(currentRow + ',' + i).className)
+                //     console.log(currentRow, ' ', i)
+                //     console.log(document.getElementById(document.getElementById(currentRow + ',' + i).value.toUpperCase()).className)
+                //     if (document.getElementById(currentRow + ',' + i).className == "correct"
+                //         || document.getElementById(currentRow + ',' + i).className == "correctLast"
+                //         || document.getElementById(currentRow + ',' + i).className == "correctLastRecent"
+                //         || document.getElementById(currentRow + ',' + i).className == "correctRecent") {
+                //         if (document.getElementById(document.getElementById(currentRow + ',' + i).value.toUpperCase()).className == "keyboardCorrectRecent" ||
+                //             document.getElementById(document.getElementById(currentRow + ',' + i).value.toUpperCase()).className == "keyboardMisToCorRecent") {
+                //             setTimeout(()=>{document.getElementById(document.getElementById(currentRow + ',' + i).value.toUpperCase()).className = "keyboardCorrect";}, 1000)
+                //         }
+                //     } else if (document.getElementById(currentRow + ',' + i).className == "misplacedLast"
+                //         || document.getElementById(currentRow + ',' + i).className == "misplaced"
+                //         || document.getElementById(currentRow + ',' + i).className == "misplacedLastRecent"
+                //         || document.getElementById(currentRow + ',' + i).className == "misplacedRecent"
+                //     ) {
+                //         if (document.getElementById(document.getElementById(currentRow + ',' + i).value.toUpperCase()).className == "keyboardMisplacedRecent") {
+                //             setTimeout(() => { document.getElementById(document.getElementById(currentRow + ',' + i).value.toUpperCase()).className = "keyboardMisplaced"; }, 1000)
+                //         }
+                //     } else if (document.getElementById(currentRow + ',' + i).className == "wrongLast"
+                //         || document.getElementById(currentRow + ',' + i).className == "wrong"
+                //         || document.getElementById(currentRow + ',' + i).className == "wrongLastRecent"
+                //         || document.getElementById(currentRow + ',' + i).className == "wrongRecent") {
+                //         if (document.getElementById(document.getElementById(currentRow + ',' + i).value.toUpperCase()).className == "keyboardWrongRecent") {
+                //             setTimeout(() => {  document.getElementById(document.getElementById(currentRow + ',' + i).value.toUpperCase()).className = "keyboardWrong";}, 1000)
+                //         }
+                //     }
+                //     console.log(document.getElementById(document.getElementById(currentRow + ',' + i).value.toUpperCase()).className)
+                // }
+                // setTimeout(() => { document.onkeydown = () => true;}, 1000);
                 counter = 0;
             }  
             if (document.getElementById(currentRow + ',' + '4').className == "correctLast" ||
                 document.getElementById(currentRow + ',' + '4').className == "misplacedLast" ||
                 document.getElementById(currentRow + ',' + '4').className == "wrongLast" ||
                 document.getElementById(currentRow + ',' + '4').className == "inputLast"){
-                    isAnimated = false;
+                   
                 
                 }
-           console.log(isAnimated, " boolean")
+  
                 
          
             
 
-                
+           
             
             
         });
@@ -349,7 +397,7 @@ function Puzzle(){
                     
                 } else{
                     for (let y = 0; y < wordArray.length; y++) {
-                        
+                      
                         if (guessArray[z].char == guessArray[y].char) {
                             guessCharCounter++;
                             if (guessCharCounter <= wordCharCounter) {
@@ -570,25 +618,44 @@ function Puzzle(){
                     let letter = guessesArray[n].charAt(z).toUpperCase();
                     if (i == 0) {
                         if (document.getElementById(n + ',' + z).className == "wrong" ||
-                            document.getElementById(n + ',' + z).className == "wrongLast" ||
-                            document.getElementById(n + ',' + z).className == "wrongLastRecent" ||
-                            document.getElementById(n + ',' + z).className == "wrongRecent") {
+                            document.getElementById(n + ',' + z).className == "wrongLast"){
                             document.getElementById(letter).className = "keyboardWrong";
-                        }
+                        } else if((document.getElementById(n + ',' + z).className == "wrongLastRecent" ||
+                            document.getElementById(n + ',' + z).className == "wrongRecent") 
+                            && document.getElementById(letter).className != "keyboardWrong"){
+                            // document.getElementById(letter).className = "keyboardWrongRecent";
+                            // document.getElementById(letter).style.animationDelay = '7s'; 
+                            setTimeout(() => { document.getElementById(letter).className = "keyboardWrong" }, 6000);  
+                            }
                     } else if (i == 1) {
                         if (document.getElementById(n + ',' + z).className == "misplaced" ||
-                            document.getElementById(n + ',' + z).className == "misplacedLast" ||
-                            document.getElementById(n + ',' + z).className == "misplacedLastRecent" ||
-                            document.getElementById(n + ',' + z).className == "misplacedRecent") {
+                            document.getElementById(n + ',' + z).className == "misplacedLast"){
                             document.getElementById(letter).className = "keyboardMisplaced";
+                        } else if ((document.getElementById(n + ',' + z).className == "misplacedLastRecent" ||
+                            document.getElementById(n + ',' + z).className == "misplacedRecent") 
+                            && document.getElementById(letter).className != "keyboardMisplaced"){
+                            // document.getElementById(letter).className = "keyboardMisplacedRecent";
+                            // document.getElementById(letter).style.animationDelay = '7s'; 
+                            setTimeout(() => { document.getElementById(letter).className = "keyboardMisplaced" },6000); 
                         }
                     } else if (i == 2) {
                         if (document.getElementById(n + ',' + z).className == "correct" ||
-                            document.getElementById(n + ',' + z).className == "correctLast" ||
-                            document.getElementById(n + ',' + z).className == "correctLastRecent" ||
-                            document.getElementById(n + ',' + z).className == "correctRecent") {
+                            document.getElementById(n + ',' + z).className == "correctLast"){
                             document.getElementById(letter).className = "keyboardCorrect";
-                        }
+                        } else if ((document.getElementById(n + ',' + z).className == "correctLastRecent" ||
+                            document.getElementById(n + ',' + z).className == "correctRecent")
+                            && document.getElementById(letter).className != "keyboardCorrect"
+                            && document.getElementById(letter).className != "keyboardMisplaced") {
+                            // document.getElementById(letter).className = "keyboardCorrectRecent";
+                            // document.getElementById(letter).style.animationDelay = '7s'; 
+                            setTimeout(() => { document.getElementById(letter).className = "keyboardCorrect" }, 6000); 
+                        } else if ((document.getElementById(n + ',' + z).className == "correctLastRecent" ||
+                            document.getElementById(n + ',' + z).className == "correctRecent")
+                            && document.getElementById(letter).className == "keyboardMisplaced"){
+                            // document.getElementById(letter).className = "keyboardMisToCorRecent";
+                            // document.getElementById(letter).style.animationDelay = '7s';
+                            setTimeout(() => { document.getElementById(letter).className = "keyboardCorrect" }, 6000); 
+                            }
                     }
                 }
             }

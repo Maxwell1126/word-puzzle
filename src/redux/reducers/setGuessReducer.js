@@ -2,9 +2,9 @@ const defaultState = {a:'', b:'', c:'', d:'', e:'', f:''};
 const setGuesses = (state = defaultState, action) => {
     switch (action.type) {
         case 'SET_GUESSES':
-            console.log("in set")
+
             let newState= { a: '', b: '', c: '', d: '', e: '', f: '' };
-            console.log(action.payload)
+
            for(let i =0; i< action.payload.length; i++){
                if(i == 0 && action.payload.length){
                    newState.a = action.payload[i];
@@ -22,8 +22,7 @@ const setGuesses = (state = defaultState, action) => {
                
            }
            Object.assign(state, newState);
-           console.log(state)
-            console.log(Object.keys(newState).length)
+
             return {...state};
         case 'ADD_GUESS':
             console.log("in add")

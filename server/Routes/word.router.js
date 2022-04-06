@@ -28,7 +28,7 @@ router.post('/', (req, res) => {
                         url: `https://api.wordnik.com/v4/words.json/randomWord?hasDictionaryDef=true&excludePartOfSpeech=abbreviation%2C%20family-name%2C%20given-name%2C%20idiom%2C%20noun-possessive%2C%20proper-noun%2C%20proper-noun-plural%2C%20contraction&minCorpusCount=500&maxCorpusCount=-1&minDictionaryCount=2&maxDictionaryCount=-1&minLength=5&maxLength=5&api_key=${WORDNIK_KEY}`
                     }).then((response) => {
                         console.log("wordnik response ", response.data.word)
-                        for (let i = 0; i < response.data.word; i++){
+                        for (let i = 0; i < response.data.word.length; i++){
                             if (response.data.word.charAt(i) == "'" || response.data.word.charAt(i) == "-" ||
                                 response.data.word.charAt(i) == "." || response.data.word.charAt(i) == " "){
                                     justLetters = false;
@@ -51,9 +51,6 @@ router.post('/', (req, res) => {
                         }).then((response) => {
                             apiResponse = response;
                             console.log(response.data[0].fl, " ", response.data[0].meta.offensive);
-                            console.log(response.data[0].def[0].sseq[0][0][1].dt)
-                            console.log( "BREAK")
-                            console.log(response.data[0].def[0].sseq[0][0][1].dt[0])
                             if (response.data[0].meta != undefined) {
                                 console.log("word exists")
                                 if (response.data[0].meta.offensive == false && response.data[0].fl != "trademark"
