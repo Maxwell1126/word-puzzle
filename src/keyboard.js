@@ -29,7 +29,9 @@ function Keyboard() {
     })
 
        let letterButton = (event) => {
-           if (document.getElementById(document.activeElement.id).value == "") {
+           if (guesses[5].length > 0 || guesses[0] == word || guesses[1] == word || guesses[2] == word || guesses[3] == word || guesses[4] == word){
+           }
+          else if (document.getElementById(document.activeElement.id).value == "") {
                dispatchAction({
                    type: 'BUILD_GUESS',
                    payload: event.target.id,
@@ -38,9 +40,9 @@ function Keyboard() {
            console.log(event.target.id);
         } 
         let deleteButton = (event) => {
-            if (document.getElementById(document.activeElement.id).id.charAt(2) == 0 &&
-                document.getElementById(document.activeElement.id).value == "") {
-
+            if (guesses[5].length > 0 || guesses[0] == word || guesses[1] == word || guesses[2] == word || guesses[3] == word || guesses[4] == word
+            || (document.getElementById(document.activeElement.id).id.charAt(2) == 0 &&
+                document.getElementById(document.activeElement.id).value == "")){
             }
             else {
                 dispatchAction({
@@ -50,8 +52,9 @@ function Keyboard() {
             }
         }
         let enterButton = (event) => {
-            if (document.getElementById(document.activeElement.id).id.charAt(2) == 4 &&
-                document.getElementById(document.activeElement.id).value != "") {
+            if (guesses[5].length > 0 || guesses[0] == word || guesses[1] == word || guesses[2] == word || guesses[3] == word || guesses[4] == word
+                || (document.getElementById(document.activeElement.id).id.charAt(2) == 4 &&
+                document.getElementById(document.activeElement.id).value != "")) {
                 let currentRow = parseInt(document.getElementById(document.activeElement.id).id.charAt(0));
                 let finalGuess = "";
                 for (let i = 0; i < 5; i++) {

@@ -7,7 +7,7 @@ import './keyboard.css'
 
 function Puzzle(){
     const dispatchAction = useDispatch();
-    
+    let isAnimated = false;
     useEffect(() => {
         dispatchAction({
             type: 'GET_GUESSES',
@@ -57,7 +57,7 @@ function Puzzle(){
     useEffect(() => {
     function userKeyDown(event){
      
-        if (guesses[5].length > 0){
+        if (guesses[5].length > 0 || guesses[0] == word || guesses[1] == word || guesses[2] == word || guesses[3] == word || guesses[4] == word || isAnimated==true){
             event.preventDefault();
         }else{
         if (event.code.charAt(0) != 'K' && event.code != "Backspace" && event.code != "Enter") {
@@ -345,6 +345,10 @@ function Puzzle(){
                         && lastKey == "Enter") {
                         document.getElementById(i + ',' + guessArray[n].id).className = "correctRecent";
                         document.getElementById(i + ',' + guessArray[n].id).style.animationDelay = `${guessArray[n].id}s`;
+                        isAnimated=true;
+                        setTimeout(() => {
+                            isAnimated = false;
+                        }, 6000);
                     } else {
                         document.getElementById(i + ',' + guessArray[n].id).className = "correct";
                     }
@@ -354,6 +358,10 @@ function Puzzle(){
                         && lastKey == "Enter") {
                         document.getElementById(i + ',' + guessArray[n].id).className = "correctLastRecent";
                         document.getElementById(i + ',' + guessArray[n].id).style.animationDelay = `${n}s`;
+                        isAnimated = true;
+                        setTimeout(() => {
+                            isAnimated = false;
+                        }, 6000);
                     } else {
                         document.getElementById(i + ',' + guessArray[n].id).className = "correctLast";
                     }     
@@ -383,6 +391,10 @@ function Puzzle(){
                             && lastKey == "Enter") {
                             document.getElementById(i + ',' + guessArray[z].id).className = "wrongRecent";
                             document.getElementById(i + ',' + guessArray[z].id).style.animationDelay = `${guessArray[z].id}s`;
+                            isAnimated = true;
+                            setTimeout(() => {
+                                isAnimated = false;
+                            }, 6000);
                         } else {
                             document.getElementById(i + ',' + guessArray[z].id).className = "wrong";
                         }
@@ -390,6 +402,10 @@ function Puzzle(){
                         if (i == guessesArray.length - 1 && guess.length == 0 && lastKey != "Backspace" && lastKey == "Enter") {
                             document.getElementById(i + ',' + guessArray[z].id).className = "wrongLastRecent";
                             document.getElementById(i + ',' + guessArray[z].id).style.animationDelay = `${guessArray[z].id}s`;
+                            isAnimated = true;
+                            setTimeout(() => {
+                                isAnimated = false;
+                            }, 6000);
                         } else {
                             document.getElementById(i + ',' + guessArray[z].id).className = "wrongLast";
                         }
@@ -406,6 +422,10 @@ function Puzzle(){
                                         && lastKey == "Enter") {
                                         document.getElementById(i + ',' + guessArray[y].id).className = "misplacedRecent";
                                         document.getElementById(i + ',' + guessArray[y].id).style.animationDelay = `${guessArray[y].id}s`;
+                                        isAnimated = true;
+                                        setTimeout(() => {
+                                            isAnimated = false;
+                                        }, 6000);
                                     } else {
                                         document.getElementById(i + ',' + guessArray[y].id).className = "misplaced";
                                     } 
@@ -414,6 +434,10 @@ function Puzzle(){
                                         && lastKey == "Enter") {
                                         document.getElementById(i + ',' + guessArray[y].id).className = "misplacedLastRecent";
                                         document.getElementById(i + ',' + guessArray[y].id).style.animationDelay = `${guessArray[y].id}s`;
+                                        isAnimated = true;
+                                        setTimeout(() => {
+                                            isAnimated = false;
+                                        }, 6000);
                                     } else {
                                         document.getElementById(i + ',' + guessArray[y].id).className = "misplacedLast";
                                     }
@@ -424,6 +448,10 @@ function Puzzle(){
                                         && lastKey == "Enter") {
                                         document.getElementById(i + ',' + guessArray[z].id).className = "wrongRecent";
                                         document.getElementById(i + ',' + guessArray[z].id).style.animationDelay = `${guessArray[z].id}s`;
+                                        isAnimated = true;
+                                        setTimeout(() => {
+                                            isAnimated = false;
+                                        }, 6000);
                                     } else {
                                         document.getElementById(i + ',' + guessArray[z].id).className = "wrong";
                                     }
@@ -431,6 +459,10 @@ function Puzzle(){
                                     if (i == guessesArray.length - 1 && guess.length == 0 && lastKey != "Backspace" && lastKey == "Enter") {
                                         document.getElementById(i + ',' + guessArray[z].id).className = "wrongLastRecent";
                                         document.getElementById(i + ',' + guessArray[z].id).style.animationDelay = `${guessArray[z].id}s`;
+                                        isAnimated = true;
+                                        setTimeout(() => {
+                                            isAnimated = false;
+                                        }, 6000);
                                     } else {
                                         document.getElementById(i + ',' + guessArray[z].id).className = "wrongLast";
                                     }
