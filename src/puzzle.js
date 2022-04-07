@@ -123,12 +123,12 @@ function Puzzle(){
     
 
     window.onmousedown = (event) => {
-        if (event.target.className != "keyboardButton" || "delEnterButton"){
+        if (event.target.className != "keyboardButton" || event.target.className !="delEnterButton"){
             event.preventDefault();
         }
     }
     window.onmouseup = (event) => {
-        if (event.target.className != "keyboardButton" || "delEnterButton") {
+        if (event.target.className != "keyboardButton" || event.target.className !="delEnterButton") {
             event.preventDefault();
         }
     }    

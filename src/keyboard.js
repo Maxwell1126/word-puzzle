@@ -4,7 +4,7 @@ import './keyboard.css';
 
 function Keyboard() {
     const dispatchAction = useDispatch();
-
+    
     useEffect(() => {
         dispatchAction({
             type: 'GET_GUESSES',
@@ -27,6 +27,14 @@ function Keyboard() {
     useEffect(() => {
         setWord(word = wordToGuess)
     })
+
+    let guessesArray = [];
+    for (let i = 0; i < guesses.length; i++) {
+
+        if (guesses[i].length > 0) {
+            guessesArray.push(guesses[i]);
+        }
+    }
 
        let letterButton = (event) => {
            if (guesses[5].length > 0 || guesses[0] == word || guesses[1] == word || guesses[2] == word || guesses[3] == word || guesses[4] == word){
@@ -62,7 +70,7 @@ function Keyboard() {
                 }
                 let sendGuess = async () => dispatchAction({
                     type: 'POST_GUESS',
-                    payload: { guess: finalGuess, id: (currentRow + 1) }
+                    payload: { guess: finalGuess.toLowerCase(), id: (currentRow + 1) }
                 })
                 sendGuess()
 
@@ -77,56 +85,56 @@ function Keyboard() {
       
         function createRow(firstRowArray, secondRowArray, thirdRowArray) {
             for(let i =0; i < firstRowArray.length; i++){   
-                topRow.push(<button onClick={letterButton} id={firstRowArray[i]} className="keyboardButton">{firstRowArray[i]}</button>);
+                topRow.push(<button onClick={letterButton} disabled="" id={firstRowArray[i]} className="keyboardButton">{firstRowArray[i]}</button>);
             }
             for (let i = 0; i < secondRowArray.length; i++) {
-                middleRow.push(<button onClick={letterButton} id={secondRowArray[i]} className="keyboardButton">{secondRowArray[i]}</button>);
+                middleRow.push(<button onClick={letterButton} disabled="" id={secondRowArray[i]} className="keyboardButton">{secondRowArray[i]}</button>);
             }
             for (let i = 0; i < thirdRowArray.length; i++) {
-                bottomRow.push(<button onClick={letterButton} id={thirdRowArray[i]} className="keyboardButton">{thirdRowArray[i]}</button>);
+                bottomRow.push(<button onClick={letterButton} disabled="" id={thirdRowArray[i]} className="keyboardButton">{thirdRowArray[i]}</button>);
             }
         }
         createRow(topRowArray, middleRowArray, bottomRowArray);
 
-        // function changeColor(){
-        //     let guessesArray = [];
-        //     for (let i = 0; i < guesses.length; i++) {
+    if (guessesArray.length > 0) {
+        if (document.getElementById(`${guessesArray.length - 1},0`).className == "correctRecent" ||
+            document.getElementById(`${guessesArray.length - 1},0`).className == "misplacedRecent" ||
+            document.getElementById(`${guessesArray.length - 1},0`).className == "wrongRecent") {
+            for(let i = 0; i < topRowArray.length; i ++){
+                document.getElementById(`${topRowArray[i]}`).disabled="disabled";
+            }
+            for (let i = 0; i < middleRowArray.length; i++) {
+                document.getElementById(`${middleRowArray[i]}`).disabled = "disabled";
+            }
+            for (let i = 0; i < bottomRowArray.length; i++) {
+                document.getElementById(`${bottomRowArray[i]}`).disabled = "disabled";
+            }
+            document.getElementById("enter").disabled="disabled";
+            document.getElementById("delete").disabled = "disabled";
 
-        //         if (guesses[i].length > 0) {
-        //             guessesArray.push(guesses[i]);
-        //         }
-        //     }
-        //    console.log(guessesArray);
-        //     for(let i =0; i < 3; i ++){
-        //         for (let n=0; n < guessesArray.length; n++) {
-        //             for(let z=0; z<6; z++){
-        //                 if (i == 0) {
-        //                     if (document.getElementById(n + ',' + z).className== "wrong" || 
-        //                         document.getElementById(n + ',' + z).className == "wrongLast") {
-        //                         document.getElementById(`${document.getElementById(n + ',' + z).value}`).className = "keyboardWrong";
-        //                         console.log(document.getElementById(`${document.getElementById(n + ',' + z).value}`))
-        //                     }
-        //                 } else if (i == 1) {
+            setTimeout(() => {
+                for (let i = 0; i < topRowArray.length; i++) {
+                    document.getElementById(`${topRowArray[i]}`).disabled = "";
+                }
+                for (let i = 0; i < middleRowArray.length; i++) {
+                    document.getElementById(`${middleRowArray[i]}`).disabled = "";
+                }
+                for (let i = 0; i < bottomRowArray.length; i++) {
+                    document.getElementById(`${bottomRowArray[i]}`).disabled = "";
+                }
+                document.getElementById("enter").disabled = "";
+                document.getElementById("delete").disabled = "";
+            }, 6000);
 
-        //                 } else if (i == 2) {
-
-        //                 }
-        //             } 
-        //         }
-        //     }
-        // }
-
-    // useEffect(() => {
-    //     changeColor();
-    // })
-
+        }
+    }
         return(
             <div className="keyboard">
       
                 <div className="row">{topRow}</div><br></br>
                 <div className="row">{middleRow}</div><br></br>
-                <div className="row"><button onClick={deleteButton} className="delEnterButton">DEL</button>{bottomRow}
-                    <button onClick={enterButton} className="delEnterButton">ENT</button></div>
+                <div className="row"><button onClick={deleteButton} disabled="" id="delete" className="delEnterButton">DEL</button>{bottomRow}
+                    <button onClick={enterButton} disabled="" id="enter" className="delEnterButton">ENT</button></div>
             </div>
         );
 
