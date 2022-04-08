@@ -21,8 +21,8 @@ function* postGuess(guess) {
 
             }
             // document.getElementById("p").className="pNotInDictioinary"
-            document.getElementById("p").style.visibility="visible";
-            setTimeout(()=>{document.getElementById("p").style.visibility = "hidden";}, 1000);
+            document.getElementById("p").style.display="inline-block";
+            setTimeout(()=>{document.getElementById("p").style.display = "none";}, 1000);
         }
         if(response.status ==200){
         const clearGuess = {type: 'CLEAR_GUESS'};

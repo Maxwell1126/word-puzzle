@@ -23,7 +23,7 @@ function Keyboard() {
     useEffect(() => { setGuesses(guesses = guessesList.current) }, [currentGuesses]);
 
     let [word, setWord] = useState("");
-    let wordToGuess = useSelector((state => state.setWordToGuess));
+    let wordToGuess = useSelector((state => state.setWordToGuess.toLowerCase()));
     useEffect(() => {
         setWord(word = wordToGuess)
     })

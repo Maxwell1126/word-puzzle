@@ -8,6 +8,7 @@ import './keyboard.css'
 function Puzzle(){
     const dispatchAction = useDispatch();
     let isAnimated = false;
+    let playAgainButton = <button id= "playAgain" className="playAgain">Play Again</button>
     useEffect(() => {
         dispatchAction({
             type: 'GET_GUESSES',
@@ -191,7 +192,8 @@ function Puzzle(){
                             className={"input"} maxLength={1} rows={1} cols={1}/>);
                     }
                 }
-            puzzleDiv = <div className={"puzzleContainer"}><h1>Word Puzzle</h1>{rowDiv}<div id="p" className='pNormal' >Word Not in the Dictionary</div></div>;
+            puzzleDiv = <div className={"puzzleContainer"}><h1>Word Puzzle</h1>{rowDiv}<div className="conditionallyRender">{playAgainButton}
+                <div id="p" className='pNormal' >Word Not in the Dictionary</div></div></div>;
             }
     // const animated = document.querySelector('.animated');
     let counter = 0;
@@ -474,149 +476,7 @@ function Puzzle(){
                 wordCharCounter = 0;
                 guessCharCounter = 0;
             }
-            
-            // for (let x = 0; x < wordArray.length; x++) {
-            //     for (let n = 0; n < guessArray.length; n++) {
-            //         console.log(wordArray);
-            //         console.log(guessArray);
-            //         if (wordArray[x].id !== guessArray[n].id &&
-            //             wordArray[x].char === guessArray[n].char && guessArray[n].id != 4) {
-            //             if (i == guessesArray.length - 1 && guess.length == 0 && lastKey != "Backspace" 
-            //                 && lastKey == "Enter") {
-            //                 document.getElementById(i + ',' + guessArray[n].id).className = "misplacedRecent";
-            //                 document.getElementById(i + ',' + guessArray[n].id).style.animationDelay = `${guessArray[n].id}s`;
-            //             } else {
-            //                 document.getElementById(i + ',' + guessArray[n].id).className = "misplaced";
-            //             }
-            //             tempWordArray.splice(x, 1);
-            //             tempGuessArray.splice(n, 1);
-            //          break;
-            //         } else if (wordArray[x].id !== guessArray[n].id &&
-            //             wordArray[x].char === guessArray[n].char && guessArray[n].id== 4) {
-            //             if (i == guessesArray.length - 1 && guess.length == 0 && lastKey != "Backspace" 
-            //                 && lastKey == "Enter") {
-            //                 document.getElementById(i + ',' + guessArray[n].id).className = "misplacedLastRecent";
-            //                 document.getElementById(i + ',' + guessArray[n].id).style.animationDelay = `${guessArray[n].id}s`;
-            //             } else {
-            //                 document.getElementById(i + ',' + guessArray[n].id).className = "misplacedLast";
-            //             }
-            //             tempWordArray.splice(x, 1);
-            //             tempGuessArray.splice(n, 1); 
-            //     break;
-            //         }
-            //     }
-            //     if(x == wordArray.length -1){
-            //         guessArray = tempGuessArray;
-            //         wordArray = tempWordArray;
-            //     }
-            // }
-
-            // for(let n =0; n <guessArray.length; n++){
-            //     if (document.getElementById(i + ',' + guessArray[n].id).className == "input") {
-            //         if (i == guessesArray.length - 1 && guess.length == 0 && lastKey != "Backspace" 
-            //             && lastKey == "Enter") {
-            //             document.getElementById(i + ',' + guessArray[n].id).className = "wrongRecent";
-            //             document.getElementById(i + ',' + guessArray[n].id).style.animationDelay = `${guessArray[n].id}s`;
-            //         } else {
-            //             document.getElementById(i + ',' + guessArray[n].id).className = "wrong";
-            //         }
-            //     } else if (document.getElementById(i + ',' + guessArray[n].id).className == "inputLast") {
-            //         if (i == guessesArray.length - 1 && guess.length == 0 && lastKey != "Backspace" && lastKey == "Enter") {
-            //             document.getElementById(i + ',' + guessArray[n].id).className = "wrongLastRecent";
-            //             document.getElementById(i + ',' + guessArray[n].id).style.animationDelay = `${guessArray[n].id}s`;
-            //         } else {
-            //             document.getElementById(i + ',' + guessArray[n].id).className = "wrongLast";
-            //         }
-            //     }
-            //     if (n == guessArray.length -1){
-            //         wordArray = [];
-            //         guessArray = [];
-            //     }
-            // }
-
-
-
-
-
-
-
-
-
-
-
-
-
-            // for(let n =0; n < 5; n++){
-            //     document.getElementById(i + ',' + n).value = guessesArray[i].charAt(n);
-            
-            //     if (guessesArray[i].charAt(n) == word.charAt(n) && n != 4){
-            //         console.log(i == guessesArray.length - 1, guess.length == 0, lastKey != "Backspace", lastKey == "Enter");
-            //         if (i == guessesArray.length - 1 && guess.length == 0 && lastKey != "Backspace" && lastKey == "Enter"){
-            //             document.getElementById(i + ',' + n).className = "correctRecent";
-            //             document.getElementById(i + ',' + n).style.animationDelay = `${n}s`;
-            //         }else{
-            //             document.getElementById(i + ',' + n).className = "correct";
-            //         }
-            //     } else if (guessesArray[i].charAt(n) == word.charAt(n) && n == 4){
-            //         if (i == guessesArray.length - 1 && guess.length == 0 && lastKey != "Backspace" && lastKey == "Enter") {
-            //             document.getElementById(i + ',' + n).className = "correctLastRecent";
-            //             document.getElementById(i + ',' + n).style.animationDelay = `${n}s`;
-            //         } else {
-            //             document.getElementById(i + ',' + n).className = "correctLast";
-            //         }
-            //     }
-            // }
-            // for (let x = 0; x < 5; x++) {
-            //     let tempGuessArray = [];
-            //     for (let n = 0; n < 5; n++){
-            //         if (
-            //             word.charAt(n) != guessesArray[i].charAt(n) &&
-            //             word.charAt(x) != guessesArray[i].charAt(x) &&
-            //             word.charAt(x) === guessesArray[i].charAt(n) 
-            //             && tempGuessArray[n] != "misplaced"
-            //             && n != 4){
-            //                 tempGuessArray.push("misplaced");
-            //             if (i == guessesArray.length - 1 && guess.length == 0 && lastKey != "Backspace" && lastKey == "Enter") {
-            //                 document.getElementById(i + ',' + n).className = "misplacedRecent";
-            //                 document.getElementById(i + ',' + n).style.animationDelay = `${n}s`;
-            //             } else {
-            //                 document.getElementById(i + ',' + n).className = "misplaced";
-            //             }
-            //         break;
-            //         } else if (word.charAt(n) != guessesArray[i].charAt(n) &&
-            //             word.charAt(x) != guessesArray[i].charAt(x) &&
-            //             word.charAt(x) === guessesArray[i].charAt(n) &&
-            //             n == 4){
-            //             if (i == guessesArray.length - 1 && guess.length == 0 && lastKey != "Backspace" && lastKey == "Enter") {
-            //                 document.getElementById(i + ',' + n).className = "misplacedLastRecent";
-            //                 document.getElementById(i + ',' + n).style.animationDelay = `${n}s`;
-            //             } else {
-            //                 document.getElementById(i + ',' + n).className = "misplacedLast";
-            //             }
-            //         break;
-            //         } else{
-            //             tempGuessArray.push("nothing");
-            //         }
-            //     }
-            //     console.log(tempGuessArray)
-            // }
-            // for (let n = 0; n < 5; n++) {
-            //     if (document.getElementById(i + ',' + n).className == "input"){
-            //         if (i == guessesArray.length - 1 && guess.length == 0 && lastKey != "Backspace" && lastKey == "Enter") {
-            //             document.getElementById(i + ',' + n).className = "wrongRecent";
-            //             document.getElementById(i + ',' + n).style.animationDelay = `${n}s`;
-            //         } else {
-            //             document.getElementById(i + ',' + n).className = "wrong";
-            //         }
-            //     } else if (document.getElementById(i + ',' + n).className == "inputLast"){
-            //         if (i == guessesArray.length - 1 && guess.length == 0 && lastKey != "Backspace" && lastKey == "Enter") {
-            //             document.getElementById(i + ',' + n).className = "wrongLastRecent";
-            //             document.getElementById(i + ',' + n).style.animationDelay = `${n}s`;
-            //         } else {
-            //             document.getElementById(i + ',' + n).className = "wrongLast";
-            //         }
-            //     }
-            // }
+           
             if (guessesArray.length == 0) {
                 document.getElementById('0,0').focus();
             }
@@ -691,6 +551,12 @@ function Puzzle(){
                     }
                 }
             }
+            
+        }
+        if (guessesArray[guessesArray.length-1] == word || guesses[5].length > 0) {
+           setTimeout(() => {
+               document.getElementById("playAgain").style.display = "inline-block";  
+           }, 6000);
         }
     }  
 

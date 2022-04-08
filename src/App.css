@@ -442,7 +442,7 @@ h1 {
 }
 
 .pNormal{
- visibility: hidden;
+ display: none;
   color: rgb(255, 87, 87);
  font-size: 18px;
 font-weight: bold;
@@ -454,7 +454,25 @@ font-weight: bold;
   text-align: center;
 }
 
+.playAgain{
+display:none;
+border-style: none;
 
+background-color: #309638;
+color:white;
+font-family: Arial, Helvetica, sans-serif;
+font-style:italic;
+font-weight: 100px;
+font-size: 20px;
+height:30px;
+width: 120px;
+border-radius: 10px;
+}
+
+.conditionallyRender{
+  height:35px;
+
+}
 
 /* .keyboardButton {
   background-color: #282c34;
