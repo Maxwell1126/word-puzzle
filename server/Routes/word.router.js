@@ -60,7 +60,9 @@ router.post('/', (req, res) => {
                                     && response.data[0].fl != "slang") {
                                         console.log(randomWord)
                                         isValid = true;
-                                        console.log("isValid ",isValid);    
+                                        console.log("isValid ", isValid); 
+                                        return;
+                
                                 }
                             }
                         }).catch((error) => {

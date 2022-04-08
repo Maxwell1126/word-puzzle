@@ -4,17 +4,6 @@ import './keyboard.css';
 
 function Keyboard() {
     const dispatchAction = useDispatch();
-    
-    useEffect(() => {
-        dispatchAction({
-            type: 'GET_GUESSES',
-        })
-    }, [])
-    useEffect(() => {
-        dispatchAction({
-            type: 'GET_WORD',
-        })
-    }, [])
 
     let guessesList = useRef([]);
     let [guesses, setGuesses] = useState([]);
