@@ -554,6 +554,16 @@ function Puzzle(){
             
         }
         if (guessesArray[guessesArray.length-1] == word || guesses[5].length > 0) {
+            let winOrLoss = 0;
+            if (guessesArray[guessesArray.length - 1] == word){
+                winOrLoss = 1
+            }else{
+                winOrLoss=0;
+            }
+            dispatchAction({
+                type:'POST_RECORD',
+                payload:{round:guessesArray.length, win: winOrLoss},
+            })
            setTimeout(() => {
                document.getElementById("playAgain").style.display = "inline-block";  
            }, 6000);

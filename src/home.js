@@ -6,6 +6,7 @@ import { useNavigate} from 'react-router-dom';
 
 
 function Home(){
+    
 let navigate = useNavigate();
 const playButton = (event) => {
     navigate('/puzzle');
