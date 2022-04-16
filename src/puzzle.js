@@ -564,9 +564,13 @@ function Puzzle(){
                 type:'POST_RECORD',
                 payload:{round:guessesArray.length, win: winOrLoss},
             })
-           setTimeout(() => {
-               document.getElementById("playAgain").style.display = "inline-block";  
-           }, 6000);
+            if (document.getElementById((guessesArray.length - 1) + ',0').className =="correctRecent"){
+                setTimeout(() => {
+                    document.getElementById("playAgain").style.display = "inline-block";
+                }, 6000);
+            }else{
+                document.getElementById("playAgain").style.display = "inline-block";  
+            }
         }
     }  
 
