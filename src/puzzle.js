@@ -16,7 +16,7 @@ function Puzzle(){
     }, [])
     useEffect(() => {
         dispatchAction({
-            type: 'GET_WORD',
+            type: 'POST_WORD',
         })
     }, [])
 

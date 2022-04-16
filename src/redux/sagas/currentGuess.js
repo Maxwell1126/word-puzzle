@@ -9,18 +9,14 @@ function* postGuess(guess) {
        const response =  yield axios.put('/guess', guess);
 
         if(response.status == 204){
-            // alert('Word not in the dicionary')
             let currentRow = parseInt(document.getElementById(document.activeElement.id).id.charAt(0));
             for (let i = 0; i < 5; i++) {
                 if (i != 4) {
                     document.getElementById(currentRow + ',' + i).className = "notWord";
                 } else {
                     document.getElementById(currentRow + ',' + i).className = "notWordLast";
-
                 }
-
             }
-            // document.getElementById("p").className="pNotInDictioinary"
             document.getElementById("p").style.display="inline-block";
             setTimeout(()=>{document.getElementById("p").style.display = "none";}, 1000);
         }

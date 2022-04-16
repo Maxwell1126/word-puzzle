@@ -2,6 +2,7 @@ const express = require('express');
 const pool = require('../pool');
 const router = express.Router();
 const axios = require('axios');
+const { restart } = require('nodemon');
 const API_KEY = process.env.API_KEY;
 const WORDNIK_KEY = process.env.WORDNIK_KEY;
 
@@ -16,10 +17,11 @@ router.post('/', (req, res) => {
             let wordToGuessCheck = `SELECT * FROM "word_to_guess";`;
             let verifyWordToGuess = await client.query(wordToGuessCheck);
             console.log('length ', verifyWordToGuess.rows.length)
-            if (verifyWordToGuess.rows.length > 0){
-                res.send(verifyWordToGuess.rows[0].word)
-                console.log('There is a word to guess')
-            }else{
+            // if (verifyWordToGuess.rows.length > 0){
+            //     res.send(verifyWordToGuess.rows[0].word)
+            //     console.log('There is a word to guess')
+            // }
+            if (verifyWordToGuess.rows.length == 0){
                 while(isValid == false){
                     console.log("isValid ", isValid)
                   
@@ -76,14 +78,17 @@ router.post('/', (req, res) => {
                     console.log("The random word ",randomWord);
                     let insertWordQuery = `INSERT INTO "word_to_guess" ("word") VALUES ($1);`;
                     let insertWordValue = [randomWord];
-                   let insertRandomWord = await client.query(insertWordQuery, insertWordValue);
-                    let randomWordQuery = `SELECT "word" FROM "word_to_guess";`;
-                    let getRandomWord = await client.query(randomWordQuery);
-                    let theRandomWord = getRandomWord.rows[0].word;
-                    console.log(theRandomWord);
+                    await client.query(insertWordQuery, insertWordValue);
+                    // let randomWordQuery = `SELECT "word" FROM "word_to_guess";`;
+                    // let getRandomWord = await client.query(randomWordQuery);
+                    // let theRandomWord = getRandomWord.rows[0].word;
+                    // console.log(theRandomWord);
                     await client.query('COMMIT');
-                    res.send(theRandomWord);
+                    // res.send(theRandomWord);
+                    res.sendStatus(201);
                 }
+            } else{
+                res.sendStatus(200);
             }
         } catch (e) {
             console.log('ROLLBACK', e);
@@ -99,6 +104,18 @@ router.post('/', (req, res) => {
 })
 
 router.get('/', (req,res) =>{
+    function getWord(){
+        let randomWord = "";
+        pool.query('SELECT "word" FROM "word_to_guess";').then((response) => {
+            randomWord = response.rows[0];
+            if (randomWord != undefined){
+                res.send(response.rows[0].word)
+            }else{
+                setTimeout(() => { getWord()},  300);
+            }   
+        });
+    }
+    getWord();
+});
 
-})
 module.exports = router;
