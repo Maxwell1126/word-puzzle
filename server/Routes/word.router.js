@@ -118,4 +118,12 @@ router.get('/', (req,res) =>{
     getWord();
 });
 
+router.delete('/', (req, res) => {
+    pool.query('DELETE * FROM "word_to_guess";').then((response) => {
+     res.sendStatus(200);
+    }).catch((error) => {
+        console.log('error in server deleting from database.', error);
+    });
+});
+
 module.exports = router;

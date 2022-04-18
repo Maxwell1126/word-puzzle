@@ -19,9 +19,21 @@ function* postWord(word) {
         console.log('Error in axios GET:', error);
     }
 }
+
+function* deleteWord(word) {
+    try {
+        yield axios.delete('/word');
+        const newWord = { type: 'POST_WORD'}
+        yield put(newWord);
+    } catch (error) {
+        console.log('Error in axios DELETE:', error);
+    }
+}
+
 function* getWordSaga() {
     yield takeLatest('GET_WORD', getWord);
     yield takeLatest('POST_WORD', postWord);
+    yield takeLatest( 'DELETE_WORD', deleteWord);
 }
 
 export default getWordSaga;
