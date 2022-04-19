@@ -4,7 +4,7 @@ axios.defaults.baseURL = 'http://localhost:8000';
 
 function* postRecord(record) {
     try {
-        const response = yield axios.post('/stats', record);
+        yield axios.post('/stats', record);
     } catch (error) {
         console.log('Error in axios POST (postRecord): ', error);
     }

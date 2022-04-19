@@ -34,19 +34,32 @@ function* postGuess(guess) {
 
 function* getGuesses(action) {
     try {
-
+        console.log("action ",action)
         const response = yield axios.get('/guess');
-
+        console.log("response.data ",response.data)
         const guesses = { type: 'SET_GUESSES', payload: response.data };
         yield put(guesses);
+      
     } catch (error) {
         console.log('Error in axios get', error);
+    }
+}
+
+function* resetGuesses(action) {
+    try {
+        yield axios.put('/guess/reset');
+        const getGuesses = { type: 'GET_GUESSES' };
+        yield put(getGuesses);
+       
+    } catch (error) {
+        console.log('Error in axios put', error);
     }
 }
 
 function* getGuessSaga() {
     yield takeLatest('POST_GUESS', postGuess);
     yield takeLatest('GET_GUESSES', getGuesses);
+    yield takeLatest('RESET_GUESSES', resetGuesses);
 }
 
 export default getGuessSaga;

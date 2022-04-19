@@ -130,7 +130,29 @@ router.get('/', (req, res) => {
     })
 })
 
-
+router.put('/reset', (req,res) => { 
+    (async () => {
+        const client = await pool.connect();
+        try {
+            await client.query('BEGIN');
+            for(let i = 1; i < 7; i ++){
+                let resetGuessQuery = `UPDATE "guess_list" SET "guess"='' WHERE "id" = $1`;
+                let resetGuessValue = [i];
+                client.query(resetGuessQuery, resetGuessValue);
+            }
+            res.sendStatus(200);
+        } catch (e) {
+            console.log('ROLLBACK', e);
+            await client.query('ROLLBACK');
+            throw e;
+        } finally {
+            client.release();
+        }
+    })().catch((error) => {
+        console.log('error in server posting to database.', error);
+        res.sendStatus(500);
+    })
+})
 
 
 

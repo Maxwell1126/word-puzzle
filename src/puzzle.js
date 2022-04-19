@@ -3,12 +3,14 @@ import { useSelector, useDispatch } from 'react-redux';
 import './App.css'
 import Keyboard from './keyboard' ;
 import './keyboard.css'
-
+import { useNavigate } from 'react-router-dom';
 
 function Puzzle(){
     const dispatchAction = useDispatch();
+    let navigate = useNavigate();
     let isAnimated = false;
-    let playAgainButton = <button id= "playAgain" className="playAgain">Play Again</button>
+    
+    let playAgainButton = <button id= "playAgain" className="playAgain" onClick="">Play Again</button>
     useEffect(() => {
         dispatchAction({
             type: 'GET_GUESSES',
@@ -39,7 +41,7 @@ function Puzzle(){
 
    
     let [word, setWord] = useState("");
-    let wordToGuess = useSelector((state => state.setWordToGuess.toLowerCase()));
+    let wordToGuess = useSelector((state => state.setWordToGuess.word.toLowerCase()));
     useEffect(() => {
         setWord(word= wordToGuess)
     })
@@ -314,9 +316,11 @@ function Puzzle(){
         //     document.removeEventListener('animationend', aniEnd)
         // }
     }, []);
-       
+    
+        
+    
     function renderGuess () {
-
+       
         let guessesArray = [];
         for (let i = 0; i < guesses.length; i++){
 
@@ -325,6 +329,7 @@ function Puzzle(){
             }
         }
 
+        if(guesses[0]!= undefined){
         for (let i = 0; i < guessesArray.length; i++) {
             let wordArray = [];
             let guessArray = [];
@@ -487,7 +492,7 @@ function Puzzle(){
             } 
       
         }
- 
+    }
         for(let i =0; i < guess.length; i ++){
             let currentRow = parseInt(document.getElementById(document.activeElement.id).id.charAt(0));
 
@@ -553,7 +558,9 @@ function Puzzle(){
             }
             
         }
-        if (guessesArray[guessesArray.length-1] == word || guesses[5].length > 0) {
+        document.getElementById("playAgain").style.display = "none";
+        
+        if ((guessesArray[guessesArray.length - 1] == word && word != "") || (guesses[5].length > 0 && word != "")) {
             let winOrLoss = 0;
             if (guessesArray[guessesArray.length - 1] == word){
                 winOrLoss = 1
@@ -572,8 +579,63 @@ function Puzzle(){
                 document.getElementById("playAgain").style.display = "inline-block";  
             }
         }
-    }  
+        let deleteWord = () => {
+            return new Promise(resolve => {
+                console.log('here 2 ')
+                dispatchAction({
+                    type: 'DELETE_WORD',
+                })
+                setTimeout(() => { 
+                resolve('resolved');
+                }, 200)
+            });
+        }
 
+        let resetGuesses = ()=>{
+            return new Promise(resolve => {
+                console.log('here')
+                dispatchAction({
+                    type: 'RESET_GUESSES',
+                })
+                setTimeout(() => { 
+                resolve('resolved');
+                }, 200)
+        });
+        }
+
+
+
+        async function playAgain(){
+           
+                console.log('play again');
+                for (let i = 0; i < 6; i++) {
+                    for (let n = 0; n < 5; n++) {
+                        if (n == 4) {
+                            document.getElementById(i + ',' + n).className = "inputLast";
+                        } else {
+                            document.getElementById(i + ',' + n).className = "input";
+                        }
+                    }
+                }
+                let buttonsList = document.querySelectorAll("button");
+                for (let i = 0; i < buttonsList.length; i++) {
+                    if (buttonsList[i].className == "keyboardCorrect" ||
+                        buttonsList[i].className == "keyboardMisplaced" ||
+                        buttonsList[i].className == "keyboardWrong") {
+                        buttonsList[i].className = "keyboardButton"
+                    }
+                }
+                await resetGuesses();
+                await deleteWord();
+                firstInput.current.focus();
+                console.log('here 3')
+                // navigate('/puzzle');
+            
+           
+        }
+        document.getElementById("playAgain").onclick = playAgain;
+    }  
+    
 
     
     useEffect(()=> {

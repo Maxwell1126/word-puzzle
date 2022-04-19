@@ -6,6 +6,8 @@ function* getWord(word) {
         const response = yield axios.get('/word');
         const getLatest = { type: 'SET_WORD', payload: response.data }
         yield put(getLatest);
+        // const resetGuesses = { type: 'RESET_GUESSES'};
+        // yield put(resetGuesses);
     } catch (error) {
         console.log('Error in axios GET:', error);
     }
@@ -25,6 +27,7 @@ function* deleteWord(word) {
         yield axios.delete('/word');
         const newWord = { type: 'POST_WORD'}
         yield put(newWord);
+       
     } catch (error) {
         console.log('Error in axios DELETE:', error);
     }
