@@ -17,8 +17,10 @@ function* postGuess(guess) {
                     document.getElementById(currentRow + ',' + i).className = "notWordLast";
                 }
             }
-            document.getElementById("p").style.display="inline-block";
+            
+            document.getElementById("p").style.display="inline";
             setTimeout(()=>{document.getElementById("p").style.display = "none";}, 1000);
+           
         }
         if(response.status ==200){
         const clearGuess = {type: 'CLEAR_GUESS'};

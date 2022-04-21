@@ -11,6 +11,7 @@ function Puzzle(){
     let isAnimated = false;
     
     let playAgainButton = <button id= "playAgain" className="playAgain" onClick="">Play Again</button>
+    
     useEffect(() => {
         dispatchAction({
             type: 'GET_GUESSES',
@@ -45,7 +46,10 @@ function Puzzle(){
     useEffect(() => {
         setWord(word= wordToGuess)
     })
-    
+    let link = `https://www.merriam-webster.com/dictionary/${word}`
+    let dictionaryLink = <div id="dictionaryContainer" className="dictionaryContainer"><div id="panda" className="panda" ><p id="wordWas" className="wordWas">Word was: </p>
+        <a href={link} id="dictionaryLink" className="dictionaryLink" target="_blank">{word.toUpperCase()} </a></div></div>
+{/* <div><p id="forDef" className="forDef">click "{word.toUpperCase()}" for definition</p></div> */}
     const firstInput = useRef(null);
     useEffect(() => {
         firstInput.current.focus();
@@ -188,13 +192,18 @@ function Puzzle(){
                     }else if(n == 4){
                         colDiv.push(<input type="text" value="" readOnly="readonly" id={i + `,` + n} 
                             className={"inputLast"} maxLength={1} rows={1} cols={1}/>);
-                        rowDiv.push(<div className={"rowContainer"} id={i}>{colDiv}</div>);
+                            if(i == 5){
+                                rowDiv.push(<div className={"rowContainerLast"} id={i}>{colDiv}</div>);
+                            }else{
+                                rowDiv.push(<div className={"rowContainer"} id={i}>{colDiv}</div>);
+                            }
+                        
                     }else{
                         colDiv.push(<input type="text" value="" readOnly="readonly" id={i + `,` + n} 
                             className={"input"} maxLength={1} rows={1} cols={1}/>);
                     }
                 }
-            puzzleDiv = <div className={"puzzleContainer"}><h1>Word Puzzle</h1>{rowDiv}<div className="conditionallyRender">{playAgainButton}
+            puzzleDiv = <div className={"puzzleContainer"}><h1>Word Puzzle</h1>{rowDiv}<div className="conditionallyRender">{dictionaryLink}{playAgainButton}
                 <div id="p" className='pNormal' >Word Not in the Dictionary</div></div></div>;
             }
     // const animated = document.querySelector('.animated');
@@ -559,7 +568,11 @@ function Puzzle(){
             
         }
         document.getElementById("playAgain").style.display = "none";
-        
+        document.getElementById("dictionaryLink").style.display = "none";
+        document.getElementById("wordWas").style.display = "none";
+        document.getElementById("dictionaryContainer").style.display = "none";
+        document.getElementById("panda").style.display = "none";
+        // document.getElementById("forDef").style.display = "none";
         if ((guessesArray[guessesArray.length - 1] == word && word != "") || (guesses[5].length > 0 && word != "")) {
             let winOrLoss = 0;
             if (guessesArray[guessesArray.length - 1] == word){
@@ -571,12 +584,25 @@ function Puzzle(){
                 type:'POST_RECORD',
                 payload:{round:guessesArray.length, win: winOrLoss},
             })
-            if (document.getElementById((guessesArray.length - 1) + ',0').className =="correctRecent"){
+            if (document.getElementById((guessesArray.length - 1) + ',0').className =="correctRecent" || 
+                document.getElementById((guessesArray.length - 1) + ',0').className == "misplacedRecent" ||
+                document.getElementById((guessesArray.length - 1) + ',0').className == "wrrongRecent"){
                 setTimeout(() => {
+                    document.getElementById("dictionaryContainer").style.display = "inline-flex";
+                    document.getElementById("panda").style.display = "inline";
                     document.getElementById("playAgain").style.display = "inline-block";
+                    document.getElementById("dictionaryLink").style.display = "inline";
+                    document.getElementById("wordWas").style.display = "inline";
+                    
+                    // document.getElementById("forDef").style.display = "inline";
                 }, 6000);
             }else{
-                document.getElementById("playAgain").style.display = "inline-block";  
+                    document.getElementById("dictionaryContainer").style.display = "inline-flex";
+                    document.getElementById("panda").style.display = "inline";
+                    document.getElementById("playAgain").style.display = "inline-block";
+                    document.getElementById("dictionaryLink").style.display = "inline";
+                    document.getElementById("wordWas").style.display = "inline";
+                // document.getElementById("forDef").style.display = "inline";
             }
         }
         let deleteWord = () => {

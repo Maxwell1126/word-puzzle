@@ -412,7 +412,7 @@ border: 2px solid rgb(99, 97, 97);
   justify-content: center;
   vertical-align: middle;
   text-align: center;
-  padding: 5px;
+  /* padding: 5px; */
   display: inline-block;
 }
 
@@ -425,7 +425,15 @@ border: 2px solid rgb(99, 97, 97);
   text-align: center;
   
 }
-
+.rowContainerLast {
+  margin-bottom: 2px;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  vertical-align: middle;
+  text-align: center;
+  
+}
 .container{
   text-align: center;
 }
@@ -444,20 +452,26 @@ h1 {
 .pNormal{
  display: none;
   color: rgb(255, 87, 87);
- font-size: 18px;
+ font-size: 26px;
 font-weight: bold;
  font-family: Arial, Helvetica, sans-serif;
-  flex-direction: column;
+ align-self: flex-end;
+ justify-content: center;
+
+ height:60px;
+
+
+  /* flex-direction: column;
   align-items: center;
   justify-content: center;
   vertical-align: middle;
-  text-align: center;
+  text-align: center; */
 }
 
 .playAgain{
 display:none;
 border-style: none;
-
+/* align-self: flex-end; */
 border: 2px solid rgb(92, 255, 144);
   background-color: #171718;
 color:rgb(92, 255, 144);
@@ -465,17 +479,70 @@ font-family: Arial, Helvetica, sans-serif;
 
 font-weight: 100px;
 font-size: 20px;
-height:30px;
+height:29px;
 width: 120px;
 border-radius: 10px;
- box-shadow: 0px 0px 15px 1px rgb(92, 255, 144);
+ /* box-shadow: 0px 0px 15px 1px rgb(92, 255, 144); */
 }
 
 .conditionallyRender{
-  height:35px;
+  height:52px;
+  display: inline-flex;
+  justify-content:space-between;
+  flex-direction: column;
+  align-items: center;
+width:290px;
+ margin-bottom: 12px;
+
+
+
 
 }
+.dictionaryLink{
+  color:white;
+  display:none;
+  margin-right: 2px;
+font-family: Arial, Helvetica, sans-serif;
+font-size: 20px;
+  height:20px;
 
+}
+.forDef{
+   color:white;
+  font-family: Arial, Helvetica, sans-serif;
+   font-size: 12px;
+  display:none;
+  align-self: flex-start;
+  /* min-height: 0; */
+}
+.dictionaryContainer{
+/* align-self: center; */
+/* height:30px; */
+display: none;
+
+ /* flex-direction: column; */
+ min-height: 0;
+ flex-shrink: 0;
+ min-width: 0;
+ margin-bottom: 4px;
+/* justify-content: flex-start;  */
+/* align-items: center; */
+/* column-gap:0px; */
+}
+
+.wordWas{
+  display:none;
+  color:rgb(181, 178, 178);
+
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 20px;
+  height:20px;
+}
+
+.panda{
+  display:none;
+  height:20px;
+}
 /* .keyboardButton {
   background-color: #282c34;
   color:white;
