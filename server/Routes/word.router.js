@@ -2,7 +2,7 @@ const express = require('express');
 const pool = require('../pool');
 const router = express.Router();
 const axios = require('axios');
-const { restart } = require('nodemon');
+// const { restart } = require('nodemon');
 const API_KEY = process.env.API_KEY;
 const WORDNIK_KEY = process.env.WORDNIK_KEY;
 
@@ -55,7 +55,8 @@ router.post('/', (req, res) => {
                             console.log(response.data[0].fl, " ", response.data[0].meta.offensive);
                             if (response.data[0].meta != undefined) {
                                 console.log("word exists")
-                                if (response.data[0].meta.offensive == false && response.data[0].fl != "trademark"
+                                if (response.data[0].meta.stems[0].charAt(0) != response.data[0].meta.stems[0].charAt(0).toUpperCase() 
+                                    && response.data[0].meta.offensive == false && response.data[0].fl != "trademark"
                                     && response.data[0].fl != "certification mark" && response.data[0].fl != "service mark"
                                     && response.data[0].fl != "geographical name" && response.data[0].fl != "biographical name"
                                     && response.data[0].fl != "abbreviation" && response.data[0].fl != "contraction"

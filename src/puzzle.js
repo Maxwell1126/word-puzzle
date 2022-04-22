@@ -47,8 +47,11 @@ function Puzzle(){
         setWord(word= wordToGuess)
     })
     let link = `https://www.merriam-webster.com/dictionary/${word}`
+    let linkToDef=()=>{
+        window.open(link, '_blank');
+    }
     let dictionaryLink = <div id="dictionaryContainer" className="dictionaryContainer"><div id="panda" className="panda" ><p id="wordWas" className="wordWas">Word was: </p>
-        <a href={link} id="dictionaryLink" className="dictionaryLink" target="_blank">{word.toUpperCase()} </a></div></div>
+        <p id="dictionaryLink" className="dictionaryLink" onClick={linkToDef}><u>{word.toUpperCase()} </u></p></div></div>
 {/* <div><p id="forDef" className="forDef">click "{word.toUpperCase()}" for definition</p></div> */}
     const firstInput = useRef(null);
     useEffect(() => {
@@ -522,36 +525,38 @@ function Puzzle(){
             for (let n = 0; n < guessesArray.length; n++) {
                 for (let z = 0; z < 5; z++) {
                     let letter = guessesArray[n].charAt(z).toUpperCase();
-                    if (i == 0) {
+                    if (i === 0) {
                         if (document.getElementById(n + ',' + z).className == "wrong" ||
                             document.getElementById(n + ',' + z).className == "wrongLast"){
                             document.getElementById(letter).className = "keyboardWrong";
                         } else if((document.getElementById(n + ',' + z).className == "wrongLastRecent" ||
                             document.getElementById(n + ',' + z).className == "wrongRecent") 
-                            && document.getElementById(letter).className != "keyboardWrong"){
+                            && document.getElementById(letter).className != "keyboardWrong"
+                            && document.getElementById(letter).className != "keyboardMisplaced"
+                            && document.getElementById(letter).className != "keyboardCorrect"){
                             // document.getElementById(letter).className = "keyboardWrongRecent";
                             // document.getElementById(letter).style.animationDelay = '7s'; 
                             setTimeout(() => { document.getElementById(letter).className = "keyboardWrong" }, 6000);  
                             }
-                    } else if (i == 1) {
+                    } else if (i === 1) {
                         if (document.getElementById(n + ',' + z).className == "misplaced" ||
                             document.getElementById(n + ',' + z).className == "misplacedLast"){
                             document.getElementById(letter).className = "keyboardMisplaced";
                         } else if ((document.getElementById(n + ',' + z).className == "misplacedLastRecent" ||
                             document.getElementById(n + ',' + z).className == "misplacedRecent") 
-                            && document.getElementById(letter).className != "keyboardMisplaced"){
+                            && document.getElementById(letter).className != "keyboardMisplaced"
+                            && document.getElementById(letter).className != "keyboardCorrect"){
                             // document.getElementById(letter).className = "keyboardMisplacedRecent";
                             // document.getElementById(letter).style.animationDelay = '7s'; 
                             setTimeout(() => { document.getElementById(letter).className = "keyboardMisplaced" },6000); 
                         }
-                    } else if (i == 2) {
+                    } else if (i === 2) {
                         if (document.getElementById(n + ',' + z).className == "correct" ||
                             document.getElementById(n + ',' + z).className == "correctLast"){
                             document.getElementById(letter).className = "keyboardCorrect";
                         } else if ((document.getElementById(n + ',' + z).className == "correctLastRecent" ||
                             document.getElementById(n + ',' + z).className == "correctRecent")
-                            && document.getElementById(letter).className != "keyboardCorrect"
-                            && document.getElementById(letter).className != "keyboardMisplaced") {
+                            && document.getElementById(letter).className != "keyboardCorrect") {
                             // document.getElementById(letter).className = "keyboardCorrectRecent";
                             // document.getElementById(letter).style.animationDelay = '7s'; 
                             setTimeout(() => { document.getElementById(letter).className = "keyboardCorrect" }, 6000); 

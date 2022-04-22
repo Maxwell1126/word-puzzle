@@ -17,13 +17,12 @@ router.put('/', (req, res) => {
                     url: `https://www.dictionaryapi.com/api/v3/references/collegiate/json/${req.body.payload.guess}?key=${API_KEY}`
                 }).then((response) => {
                     console.log(response.data[0].fl, " ",response.data[0].meta.offensive);
-    
+
                 if (response.data[0].meta != undefined) {
-                    if (response.data[0].meta.offensive == false && response.data[0].fl != "trademark" 
+                    if (response.data[0].meta.stems[0].charAt(0) != response.data[0].meta.stems[0].charAt(0).toUpperCase() && response.data[0].fl != "trademark" 
                         && response.data[0].fl != "certification mark" && response.data[0].fl !="service mark" 
-                        && response.data[0].fl != "geographical name" && response.data[0].fl != "biographical name" 
-                        && response.data[0].fl != "abbreviation" && response.data[0].fl != "contraction"
-                        && response.data[0].fl != "slang"){
+                        && response.data[0].fl != "geographical name" && response.data[0].fl != "abbreviation" 
+                        && response.data[0].fl != "contraction" && response.data[0].fl != "slang"){
                             isValid = true;
                             let insertGuessQuery = `UPDATE "guess_list" SET "guess"=$1 WHERE "id" = $2;`;
                             let insertGuessQueryValue = [req.body.payload.guess, req.body.payload.id];
@@ -71,6 +70,7 @@ router.post('/', (req, res) => {
                     method: 'GET',
                     url: `https://www.dictionaryapi.com/api/v3/references/collegiate/json/${req.body.payload}?key=${API_KEY}`
                 }).then((response) => {
+                    
                     if (response.data[0].meta != undefined){
                         isValid = true;
                         let insertGuessQuery = `INSERT INTO "guess_list" ("guess") VALUES ($1);`;
