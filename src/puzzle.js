@@ -206,7 +206,7 @@ function Puzzle(){
                             className={"input"} maxLength={1} rows={1} cols={1}/>);
                     }
                 }
-            puzzleDiv = <div className={"puzzleContainer"}><h1>Word Puzzle</h1>{rowDiv}<div className="conditionallyRender">{dictionaryLink}{playAgainButton}
+            puzzleDiv = <div className={"puzzleContainer"}><h1>Word Puzzle</h1>{rowDiv}<div id="conditionallyRender" className="conditionallyRender">{dictionaryLink}{playAgainButton}
                 <div id="p" className='pNormal' >Word Not in the Dictionary</div></div></div>;
             }
     // const animated = document.querySelector('.animated');
@@ -593,6 +593,7 @@ function Puzzle(){
                 document.getElementById((guessesArray.length - 1) + ',0').className == "misplacedRecent" ||
                 document.getElementById((guessesArray.length - 1) + ',0').className == "wrrongRecent"){
                 setTimeout(() => {
+                    document.getElementById("conditionallyRender").style.marginBottom = "5px";
                     document.getElementById("dictionaryContainer").style.display = "inline-flex";
                     document.getElementById("panda").style.display = "inline";
                     document.getElementById("playAgain").style.display = "inline-block";
@@ -602,6 +603,7 @@ function Puzzle(){
                     // document.getElementById("forDef").style.display = "inline";
                 }, 6000);
             }else{
+                document.getElementById("conditionallyRender").style.marginBottom = "5px";
                     document.getElementById("dictionaryContainer").style.display = "inline-flex";
                     document.getElementById("panda").style.display = "inline";
                     document.getElementById("playAgain").style.display = "inline-block";
@@ -637,7 +639,7 @@ function Puzzle(){
 
 
         async function playAgain(){
-           
+            document.getElementById("conditionallyRender").style.marginBottom = "0px";
                 console.log('play again');
                 for (let i = 0; i < 6; i++) {
                     for (let n = 0; n < 5; n++) {
@@ -658,6 +660,7 @@ function Puzzle(){
                 }
                 await resetGuesses();
                 await deleteWord();
+                
                 firstInput.current.focus();
                 console.log('here 3')
                 // navigate('/puzzle');

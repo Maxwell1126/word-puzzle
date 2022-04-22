@@ -17,9 +17,11 @@ function* postGuess(guess) {
                     document.getElementById(currentRow + ',' + i).className = "notWordLast";
                 }
             }
-            
+            document.getElementById("conditionallyRender").style.marginBottom = "5px";
             document.getElementById("p").style.display="inline";
-            setTimeout(()=>{document.getElementById("p").style.display = "none";}, 1000);
+            setTimeout(()=>{
+                document.getElementById("conditionallyRender").style.marginBottom = "0px";
+                document.getElementById("p").style.display = "none";}, 1000);
            
         }
         if(response.status ==200){
