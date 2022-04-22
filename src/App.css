@@ -135,14 +135,14 @@ from {  border: 2px solid rgb(99, 97, 97);
 }
 
 @keyframes rotateY {
-  /* to { transform: rotateY(360deg); } */
-    0%   { transform: scale(1,1)      translateY(0); }
+  to { transform: rotateY(360deg); }
+    /* 0%   { transform: scale(1,1)      translateY(0); }
         10%  { transform: scale(1.1,.9)   translateY(0); }
         30%  { transform: scale(.9,1.1)   translateY(-5px); }
         50%  { transform: scale(1.05,.95) translateY(0); }
         57%  { transform: scale(1,1)      translateY(-7px); }
         64%  { transform: scale(1,1)      translateY(0); }
-        100% { transform: scale(1,1)      translateY(0); }
+        100% { transform: scale(1,1)      translateY(0); } */
 }
 
 @keyframes shake {
@@ -226,6 +226,7 @@ background-color: #944040;}
   animation-name: correctAni, rotateY;
   animation-duration: 2s;
   animation-iteration-count: 1;
+  animation-timing-function: ease;
 }
 
 .misplacedRecent{
@@ -247,6 +248,7 @@ background-color: #944040;}
   animation-name: misplacedAni, rotateY;
   animation-duration: 2s;
   animation-iteration-count: 1;
+  animation-timing-function: ease;
 }
 
 .wrongRecent {
@@ -268,6 +270,7 @@ background-color: #944040;}
   animation-name: wrongAni, rotateY;
   animation-duration: 2s;
   animation-iteration-count: 1;
+  animation-timing-function: ease;
 }
 
 .correctLastRecent {
@@ -289,6 +292,7 @@ background-color: #944040;}
   animation-name: correctAni, rotateY;
   animation-duration: 2s;
   animation-iteration-count: 1;
+  animation-timing-function: ease;
 }
 
 .misplacedLastRecent{
@@ -310,6 +314,7 @@ background-color: #944040;}
   animation-name: misplacedAni, rotateY;
   animation-duration: 2s;
   animation-iteration-count: 1;
+  animation-timing-function: ease;
 }
 
 .wrongLastRecent {
@@ -331,6 +336,7 @@ border: 2px solid rgb(99, 97, 97);
   animation-name: wrongAni, rotateY;
   animation-duration: 2s;
   animation-iteration-count: 1;
+  animation-timing-function: ease;
 }
 
 .correctLast {

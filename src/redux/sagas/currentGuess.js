@@ -17,7 +17,7 @@ function* postGuess(guess) {
                     document.getElementById(currentRow + ',' + i).className = "notWordLast";
                 }
             }
-            document.getElementById("conditionallyRender").style.marginBottom = "5px";
+            document.getElementById("conditionallyRender").style.marginBottom = "4px";
             document.getElementById("p").style.display="inline";
             setTimeout(()=>{
                 document.getElementById("conditionallyRender").style.marginBottom = "0px";
