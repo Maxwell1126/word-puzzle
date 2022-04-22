@@ -43,12 +43,12 @@ router.get('/', (req, res)=>{
         const client = await pool.connect();
         try {
             await client.query('BEGIN');
-            let statsArray = {total: '', first: '', second: '', third: '', fourth: '', fifth: '', sixth: '', winPercent: '', streak: ''};
+            let statsObject = {total: '', first: '', second: '', third: '', fourth: '', fifth: '', sixth: '', winPercent: '', streak: ''};
 
             let getAllGamesQuery = `SELECT COUNT(*) FROM "record";`;
             let getAllGames = await client.query(getAllGamesQuery);
             let totalGames = getAllGames.rows[0];
-            statsArray.total = totalGames;
+            statsObject.total = totalGames;
 
             for(let i =1; i < 7; i++){
                 let placeGuessQuery = `SELECT COUNT(*) FROM "record" WHERE "round" = $1;`;
@@ -56,17 +56,17 @@ router.get('/', (req, res)=>{
                 let placeGuess = await client.query(placeGuessQuery, placeGuessValue);
                 let placeCount = placeGuess.rows[0];
                 if(i==1){
-                    statsArray.first=placeCount;
+                    statsObject.first=placeCount;
                 }else if(i==2){
-                    statsArray.second = placeCount;
+                    statsObject.second = placeCount;
                 } else if (i == 3) {
-                    statsArray.third = placeCount;
+                    statsObject.third = placeCount;
                 } else if (i == 4) {
-                    statsArray.fourth = placeCount;
+                    statsObject.fourth = placeCount;
                 } else if (i == 5) {
-                    statsArray.fifth= placeCount;
+                    statsObject.fifth= placeCount;
                 } else if (i == 6) {
-                    statsArray.sixth = placeCount;
+                    statsObject.sixth = placeCount;
                 };
             };
 
@@ -74,7 +74,7 @@ router.get('/', (req, res)=>{
             let getAllWins = await client.query(getAllWinsQuery);
             let totalWins = getAllWins.rows[0];
             let percentWon = totalWins/totalGames;
-            statsArray.winPercent = percentWon;
+            statsObject.winPercent = percentWon;
 
             let getTotalGamesIDQuery = `SELECT "id" FROM "record" ORDER BY "id" DESC LIMIT 1;`;
             let getTotalGamesID = await client.query(getTotalGamesIDQuery);
@@ -86,9 +86,9 @@ router.get('/', (req, res)=>{
                 latestLoss = getLatestLoss.rows[0];
             };
             let currentStreak = totalGamesID - latestLoss;
-            statsArray.streak = currentStreak;
+            statsObject.streak = currentStreak;
 
-            res.send(statsArray);
+            res.send([statsObject]);
         } catch (e) {
             console.log('ROLLBACK', e);
             await client.query('ROLLBACK');

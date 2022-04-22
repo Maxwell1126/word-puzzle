@@ -10,11 +10,20 @@ function* postRecord(record) {
     }
 }
 
+function* getStats(){
+    try{
+        let getStatsQuery = yield axios.get('/stats');
+        let stats = getStatsQuery.response;
+        yield put('SET_STATS', stats);
 
+    } catch (error) {
+        console.log('Error in axios GET (getStats): ', error);
+    }
+}
 
 function* statsSaga() {
     yield takeLatest('POST_RECORD', postRecord);
-
+    yield takeLatest('GET_STATS', getStats);
 }
 
 export default statsSaga;
