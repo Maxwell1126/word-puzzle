@@ -25,7 +25,7 @@ const setStats = (state = defaultState, action) => {
                 }
             }
             Object.assign(state, newState);
-            return { ...state };
+            return state;
         default:
             return state;
     }

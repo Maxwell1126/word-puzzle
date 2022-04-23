@@ -4,7 +4,13 @@ axios.defaults.baseURL = 'http://localhost:8000';
 
 function* postRecord(record) {
     try {
-        yield axios.post('/stats', record);
+       yield axios.post('/stats', record);
+
+     
+        const getStats = {type:'GET_STATS'};
+        yield put(getStats);
+
+        
     } catch (error) {
         console.log('Error in axios POST (postRecord): ', error);
     }
@@ -12,9 +18,9 @@ function* postRecord(record) {
 
 function* getStats(){
     try{
-        let getStatsQuery = yield axios.get('/stats');
-        let stats = getStatsQuery.response;
-        yield put('SET_STATS', stats);
+        const response = yield axios.get('/stats');
+        const setStatsRequest = { type: 'SET_STATS', payload: response.data};
+        yield put(setStatsRequest);
 
     } catch (error) {
         console.log('Error in axios GET (getStats): ', error);

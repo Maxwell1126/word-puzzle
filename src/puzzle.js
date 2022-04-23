@@ -22,6 +22,11 @@ function Puzzle(){
             type: 'POST_WORD',
         })
     }, [])
+    useEffect(() => {
+        dispatchAction({
+            type: 'GET_STATS',
+        })
+    }, [])
 
     let guessesList = useRef([]);
     let [guesses, setGuesses] = useState([]);
@@ -39,13 +44,20 @@ function Puzzle(){
     useEffect(() => {
         setLastKey(lastKey= lastKeyToSend)
     })
-
-   
     let [word, setWord] = useState("");
     let wordToGuess = useSelector((state => state.setWordToGuess.word.toLowerCase()));
     useEffect(() => {
         setWord(word= wordToGuess)
     })
+    let statsList = useRef([]);
+    let [stats, setStats] = useState([]);
+    let allStats = useSelector((state => state.setStats));
+    statsList.current = [allStats.total, allStats.first, allStats.second, allStats.third, allStats.fourth, 
+            allStats.fifth, allStats.sixth, allStats.winPercent, allStats.streak]
+    useEffect(() => {
+        setStats(stats = statsList.current)
+    }, []);
+
     let link = `https://www.merriam-webster.com/dictionary/${word}`
     let linkToDef=()=>{
         window.open(link, '_blank');
@@ -585,13 +597,11 @@ function Puzzle(){
             }else{
                 winOrLoss=0;
             }
-            dispatchAction({
-                type:'POST_RECORD',
-                payload:{round:guessesArray.length, win: winOrLoss},
-            })
+            
             if (document.getElementById((guessesArray.length - 1) + ',0').className =="correctRecent" || 
                 document.getElementById((guessesArray.length - 1) + ',0').className == "misplacedRecent" ||
                 document.getElementById((guessesArray.length - 1) + ',0').className == "wrrongRecent"){
+                
                 setTimeout(() => {
                     document.getElementById("conditionallyRender").style.marginBottom = "5px";
                     document.getElementById("dictionaryContainer").style.display = "inline-flex";
@@ -611,6 +621,10 @@ function Puzzle(){
                     document.getElementById("wordWas").style.display = "inline";
                 // document.getElementById("forDef").style.display = "inline";
             }
+            dispatchAction({
+                type: 'POST_RECORD',
+                payload: { round: guessesArray.length, win: winOrLoss },
+            })
         }
         let deleteWord = () => {
             return new Promise(resolve => {
@@ -668,6 +682,7 @@ function Puzzle(){
            
         }
         document.getElementById("playAgain").onclick = playAgain;
+       
     }  
     
 
