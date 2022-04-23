@@ -344,7 +344,7 @@ function Puzzle(){
         
     
     function renderGuess () {
-       
+        return new Promise(resolve => {
         let guessesArray = [];
         for (let i = 0; i < guesses.length; i++){
 
@@ -647,7 +647,7 @@ function Puzzle(){
                 setTimeout(() => { 
                 resolve('resolved');
                 }, 200)
-        });
+            });
         }
 
 
@@ -682,7 +682,10 @@ function Puzzle(){
            
         }
         document.getElementById("playAgain").onclick = playAgain;
-       
+            setTimeout(() => {
+                resolve('resolved');
+            }, 200)
+        });
     }  
     
 

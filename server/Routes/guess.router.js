@@ -16,20 +16,47 @@ router.put('/', (req, res) => {
                     method: 'GET',
                     url: `https://www.dictionaryapi.com/api/v3/references/collegiate/json/${req.body.payload.guess}?key=${API_KEY}`
                 }).then((response) => {
-                    console.log(response.data[0].fl, " ",response.data[0].meta.offensive);
+                    console.log(response.data[0].fl, " ", response.data[0].meta.stems[0].charAt(0));
+                    if (response.data[0].meta.stems[0].charAt(0) == response.data[0].meta.stems[0].charAt(0).toUpperCase()){
+                        console.log('here')
+                        return new Promise(resolve => {
+                        axios({
+                            method: 'GET',
+                            url: `https://www.dictionaryapi.com/api/v3/references/collegiate/json/${req.body.payload.guess.slice(0, -1)}?key=${API_KEY}`
+                        }).then((newResponse) =>{
+                            console.log(newResponse.data[0].fl, " newResp")
+                            if (newResponse.data[0].meta != undefined) {
+                                if (newResponse.data[0].fl != "trademark" && newResponse.data[0].fl != "certification mark" 
+                                    && newResponse.data[0].fl != "service mark" && newResponse.data[0].fl != "geographical name" 
+                                    && newResponse.data[0].fl != "abbreviation" && newResponse.data[0].fl != "contraction" 
+                                    && newResponse.data[0].fl != "slang") {
+                                    isValid = true;
+                                    let insertGuessQuery = `UPDATE "guess_list" SET "guess"=$1 WHERE "id" = $2;`;
+                                    let insertGuessQueryValue = [req.body.payload.guess, req.body.payload.id];
+                                    client.query(insertGuessQuery, insertGuessQueryValue);
+                                }
+                            }
+                        }).catch((error) => {
+                            console.log('Error in GET', error);
 
-                if (response.data[0].meta != undefined) {
-                    if (response.data[0].meta.stems[0].charAt(0) != response.data[0].meta.stems[0].charAt(0).toUpperCase() && response.data[0].fl != "trademark" 
-                        && response.data[0].fl != "certification mark" && response.data[0].fl !="service mark" 
-                        && response.data[0].fl != "geographical name" && response.data[0].fl != "abbreviation" 
-                        && response.data[0].fl != "contraction" && response.data[0].fl != "slang"){
-                            isValid = true;
-                            let insertGuessQuery = `UPDATE "guess_list" SET "guess"=$1 WHERE "id" = $2;`;
-                            let insertGuessQueryValue = [req.body.payload.guess, req.body.payload.id];
-                            client.query(insertGuessQuery, insertGuessQueryValue);
+                        }); 
+                            setTimeout(() => {
+                                resolve('resolved');
+                            }, 200)
+                        });  
+                    }else{
+                        if (response.data[0].meta != undefined) {
+                            if (response.data[0].meta.stems[0].charAt(0) != response.data[0].meta.stems[0].charAt(0).toUpperCase() && response.data[0].fl != "trademark" 
+                                && response.data[0].fl != "certification mark" && response.data[0].fl !="service mark" 
+                                && response.data[0].fl != "geographical name" && response.data[0].fl != "abbreviation" 
+                                && response.data[0].fl != "contraction" && response.data[0].fl != "slang"){
+                                    isValid = true;
+                                    let insertGuessQuery = `UPDATE "guess_list" SET "guess"=$1 WHERE "id" = $2;`;
+                                    let insertGuessQueryValue = [req.body.payload.guess, req.body.payload.id];
+                                    client.query(insertGuessQuery, insertGuessQueryValue);
+                            }
+                        }
                     }
-                }
-            
             }).catch((error) => {
                 console.log('Error in GET', error);
 
