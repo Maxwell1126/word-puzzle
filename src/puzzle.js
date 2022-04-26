@@ -24,7 +24,7 @@ function Puzzle(){
     }, [])
     useEffect(() => {
         dispatchAction({
-            type: 'GET_STATS',
+            type: 'GET_STATS', payload:'puzzle'
         })
     }, [])
 
@@ -344,7 +344,7 @@ function Puzzle(){
         
     
     function renderGuess () {
-        return new Promise(resolve => {
+        // return new Promise(resolve => {
         let guessesArray = [];
         for (let i = 0; i < guesses.length; i++){
 
@@ -682,10 +682,10 @@ function Puzzle(){
            
         }
         document.getElementById("playAgain").onclick = playAgain;
-            setTimeout(() => {
-                resolve('resolved');
-            }, 200)
-        });
+        //     setTimeout(() => {
+        //         resolve('resolved');
+        //     }, 200)
+        // });
     }  
     
 

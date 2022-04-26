@@ -7,7 +7,7 @@ function* postRecord(record) {
        yield axios.post('/stats', record);
 
      
-        const getStats = {type:'GET_STATS'};
+        const getStats = {type:'GET_STATS', payload:'puzzle'};
         yield put(getStats);
 
         
@@ -16,11 +16,19 @@ function* postRecord(record) {
     }
 }
 
-function* getStats(){
+function* getStats(action){
+    console.log(action)
     try{
         const response = yield axios.get('/stats');
-        const setStatsRequest = { type: 'SET_STATS', payload: response.data};
-        yield put(setStatsRequest);
+        if(action.payload== 'home'){
+            const setStatsRequest = { type: 'SET_STATS_MULTI', payload: response.data };
+            yield put(setStatsRequest);
+        }else if(action.payload == 'puzzle'){
+            const setStatsRequest = { type: 'SET_STATS_ONCE', payload: response.data };
+            yield put(setStatsRequest);
+        }
+        // const setStatsRequest = { type: 'SET_STATS', payload: response.data};
+        // yield put(setStatsRequest);
 
     } catch (error) {
         console.log('Error in axios GET (getStats): ', error);

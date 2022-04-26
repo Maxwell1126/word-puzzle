@@ -1,52 +1,58 @@
-import React, { Component } from 'react';
-
+import React, { useEffect, useRef, useState, useCallback, useReducer } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate} from 'react-router-dom';
-
-
+import './App.css'
 
 
 function Home(){
-    
-let navigate = useNavigate();
-const playButton = (event) => {
-    navigate('/puzzle');
-}        
-//     let word = "abcda";
-//     let guess = "abcab";
-//     let inputArray = [<input id={"0"} className="" readOnly="" />,
-//     <input id={"1"} className="" readOnly="" />,
-//     <input id={"2"} className="" readOnly="" />,
-//     <input id={"3"} className="" readOnly="" />,
-//     <input id={"4"} className="" readOnly="" />];
-//  function doingStuff(){
-//      for (let i = 0; i < 5; i++) {
-//          if (word.charAt(i) == guess.charAt(i)) {
-//             document.getElementById(i.toString()).className = "right";
-//          }
-//      }
+    const dispatchAction = useDispatch();    
+    let navigate = useNavigate();
+    const playButton = (event) => {
+        navigate('/puzzle');
+    } 
+    let statsCard = <div id="statsCard" className = "statsCard"></div>;
+    useEffect(() => {
+        dispatchAction({
+            type: 'GET_STATS', payload:'home'
+        })
+    }, [dispatchAction])
+ 
+    let statsList = useRef([]);
+    let [stats, setStats] = useState([]);
+    let allStats = useSelector((state => state.setStats));
+    console.log(allStats)
+    statsList.current = [allStats.total, allStats.first, allStats.second, allStats.third, allStats.fourth,
+    allStats.fifth, allStats.sixth, allStats.winPercent, allStats.streak]
+    useEffect(() => {
+        setStats(stats = statsList.current)
+    }, [])
+    statsCard = <div id="statsCard" className="statsCard">
+        <p className="statsRow">played: {statsList.current[0]}</p>
+        <p className="statsRow">first: {statsList.current[1]}</p>
+        <p className="statsRow">second: {statsList.current[2]}</p>
+        <p className="statsRow">third: {statsList.current[3]}</p>
+        <p className="statsRow">fourth: {statsList.current[4]}</p>
+        <p className="statsRow">fifth: {statsList.current[5]}</p>
+        <p className="statsRow">sixth: {statsList.current[6]}</p>
+        <p className="statsRow">win percentage: {statsList.current[7]}%</p>
+        <p className="statsRow">streak: {statsList.current[8]}</p></div>;
+    console.log(statsList.current [6])
 
-//      for (let x = 0; x < 5; x++){
-//          for (let n = 0; n < 5; n++){
-//              if (
-//                  word.charAt(n) != guess.charAt(n) &&
-//                  word.charAt(x) != guess.charAt(x) &&
-//                  word.charAt(x) === guess.charAt(n)){
-//                  document.getElementById(n.toString()).className = "misplaced";
-//                  break;
-//             }
-//         }
-//      }
+    // let renderStatState = ()=>{
+    //     return new Promise(resolve => {
+       
+    //         setTimeout(() => {
+    //             resolve('resolved');
+    //         }, 200)
+    //     });
+    // }
 
-
-//      console.log(document.getElementById("container"));
-//  }
     
 
         return (
-            <div id ={"container"}>
-                <button onClick={playButton}>Play</button>
-             {/* {inputArray} */}
-             {/* <button onClick={doingStuff}>do stuff</button> */}
+            <div id={"homeContainer"} className={"homeContainer"}>
+                {statsCard}
+                <button className="homeButton" onClick={playButton}>{"P L A Y"}</button>
             </div>
         );
     }
