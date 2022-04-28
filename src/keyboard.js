@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState, useCallback, useReducer } from 'react';
+import React, { useEffect, useRef, useState} from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import './keyboard.css';
 
@@ -35,9 +35,9 @@ function Keyboard() {
     }
 
        let letterButton = (event) => {
-           if (guesses[5].length > 0 || guesses[0] == word || guesses[1] == word || guesses[2] == word || guesses[3] == word || guesses[4] == word){
+           if (guesses[5].length > 0 || guesses[0] === word || guesses[1] === word || guesses[2] === word || guesses[3] === word || guesses[4] === word){
            }
-          else if (document.getElementById(document.activeElement.id).value == "") {
+          else if (document.getElementById(document.activeElement.id).value === "") {
                dispatchAction({
                    type: 'BUILD_GUESS',
                    payload: event.target.id,
@@ -46,9 +46,9 @@ function Keyboard() {
            console.log(event.target.id);
         } 
         let deleteButton = (event) => {
-            if (guesses[5].length > 0 || guesses[0] == word || guesses[1] == word || guesses[2] == word || guesses[3] == word || guesses[4] == word
-            || (document.getElementById(document.activeElement.id).id.charAt(2) == 0 &&
-                document.getElementById(document.activeElement.id).value == "")){
+            if (guesses[5].length > 0 || guesses[0] === word || guesses[1] === word || guesses[2] === word || guesses[3] === word || guesses[4] === word
+            || (document.getElementById(document.activeElement.id).id.charAt(2) === 0 &&
+                document.getElementById(document.activeElement.id).value === "")){
             }
             else {
                 dispatchAction({
@@ -58,9 +58,9 @@ function Keyboard() {
             }
         }
         let enterButton = (event) => {
-            if ((guesses[5].length > 0 && guesses[5] != word) || guesses[0] == word || guesses[1] == word || guesses[2] == word || guesses[3] == word || guesses[4] == word
-                ){}else if (document.getElementById(document.activeElement.id).id.charAt(2) == 4 &&
-                document.getElementById(document.activeElement.id).value != "") {
+            if ((guesses[5].length > 0 && guesses[5] !== word) || guesses[0] === word || guesses[1] === word || guesses[2] === word || guesses[3] === word || guesses[4] === word
+                ){}else if (document.getElementById(document.activeElement.id).id.charAt(2) === 4 &&
+                document.getElementById(document.activeElement.id).value !== "") {
                 let currentRow = parseInt(document.getElementById(document.activeElement.id).id.charAt(0));
                 let finalGuess = "";
                 for (let i = 0; i < 5; i++) {
@@ -95,9 +95,9 @@ function Keyboard() {
         createRow(topRowArray, middleRowArray, bottomRowArray);
 
     if (guessesArray.length > 0) {
-        if (document.getElementById(`${guessesArray.length - 1},0`).className == "correctRecent" ||
-            document.getElementById(`${guessesArray.length - 1},0`).className == "misplacedRecent" ||
-            document.getElementById(`${guessesArray.length - 1},0`).className == "wrongRecent") {
+        if (document.getElementById(`${guessesArray.length - 1},0`).className === "correctRecent" ||
+            document.getElementById(`${guessesArray.length - 1},0`).className === "misplacedRecent" ||
+            document.getElementById(`${guessesArray.length - 1},0`).className === "wrongRecent") {
             for(let i = 0; i < topRowArray.length; i ++){
                 document.getElementById(`${topRowArray[i]}`).disabled="disabled";
             }

@@ -1,13 +1,13 @@
-import React, { useEffect, useRef, useState, useCallback, useReducer } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import './App.css'
 import Keyboard from './keyboard' ;
 import './keyboard.css'
-import { useNavigate } from 'react-router-dom';
+
 
 function Puzzle(){
     const dispatchAction = useDispatch();
-    let navigate = useNavigate();
+
     let isAnimated = false;
     
     let playAgainButton = <button id= "playAgain" className="playAgain" onClick="">Play Again</button>
@@ -79,14 +79,14 @@ function Puzzle(){
     useEffect(() => {
     function userKeyDown(event){
      
-        if (guesses[5].length > 0 || guesses[0] == word || guesses[1] == word || guesses[2] == word || guesses[3] == word || guesses[4] == word || isAnimated==true){
+        if (guesses[5].length > 0 || guesses[0] === word || guesses[1] === word || guesses[2] === word || guesses[3] === word || guesses[4] === word || isAnimated===true){
             event.preventDefault();
         }else{
-        if (event.code.charAt(0) != 'K' && event.code != "Backspace" && event.code != "Enter") {
+        if (event.code.charAt(0) !== 'K' && event.code !== "Backspace" && event.code !== "Enter") {
                     event.preventDefault();
                 }
-        else if (event.code.charAt(0) == 'K' ){
-            if (document.getElementById(document.activeElement.id).value != ""){
+        else if (event.code.charAt(0) === 'K' ){
+            if (document.getElementById(document.activeElement.id).value !== ""){
                 event.preventDefault();
             }else{
                 
@@ -97,9 +97,9 @@ function Puzzle(){
           
             }
         }
-        else if (event.code == "Backspace"){
-            if (document.getElementById(document.activeElement.id).id.charAt(2) == 0 && 
-                document.getElementById(document.activeElement.id).value == ""){
+        else if (event.code === "Backspace"){
+            if (document.getElementById(document.activeElement.id).id.charAt(2) === 0 && 
+                document.getElementById(document.activeElement.id).value === ""){
                 event.preventDefault();
             }
             else{
@@ -109,9 +109,9 @@ function Puzzle(){
           
             }
         }
-        else if (event.code == "Enter"){
-            if (document.getElementById(document.activeElement.id).id.charAt(2) == 4 &&
-                document.getElementById(document.activeElement.id).value != ""){
+        else if (event.code === "Enter"){
+            if (document.getElementById(document.activeElement.id).id.charAt(2) === 4 &&
+                document.getElementById(document.activeElement.id).value !== ""){
                     
                 let currentRow = parseInt(document.getElementById(document.activeElement.id).id.charAt(0));
                 let finalGuess = "";
@@ -145,12 +145,12 @@ function Puzzle(){
     
 
     window.onmousedown = (event) => {
-        if (event.target.className != "keyboardButton" || event.target.className !="delEnterButton"){
+        if (event.target.className !== "keyboardButton" || event.target.className !=="delEnterButton"){
             event.preventDefault();
         }
     }
     window.onmouseup = (event) => {
-        if (event.target.className != "keyboardButton" || event.target.className !="delEnterButton") {
+        if (event.target.className !== "keyboardButton" || event.target.className !=="delEnterButton") {
             event.preventDefault();
         }
     }    
@@ -162,14 +162,14 @@ function Puzzle(){
     //     let currentColumn = parseInt(document.getElementById(document.activeElement.id).id.charAt(2));   
     //     console.log("guess ", guesses)
     //     renderGuess();
-            // if (code != "Backspace") {
+            // if (code !== "Backspace") {
             //     console.log("current row ", document.getElementById(document.activeElement.id).id);
             //     console.log("value ", document.getElementById(document.activeElement.id).value);
             //     document.getElementById(document.activeElement.id).value = code
-            //     if (document.getElementById(currentRow + ',' + currentColumn).value == "") {  
+            //     if (document.getElementById(currentRow + ',' + currentColumn).value === "") {  
             //         document.getElementById(currentRow + ',' + (currentColumn)).focus();
             //         console.log("hell0 ")
-            //     } else if (document.getElementById(currentRow + ',' + currentColumn).value && currentColumn != 4){
+            //     } else if (document.getElementById(currentRow + ',' + currentColumn).value && currentColumn !== 4){
             //         console.log("hey")
             //         console.log("current row ", document.getElementById(currentRow + ',' + currentColumn));
             //         document.getElementById(currentRow + ',' + currentColumn).blur();
@@ -178,16 +178,16 @@ function Puzzle(){
             //     }
                    
             // } 
-            // else if (code == "Backspace"){
+            // else if (code === "Backspace"){
             //     console.log("current row ", document.getElementById(currentRow + ',' + currentColumn))
-            //         if (document.getElementById(currentRow + ',' + currentColumn).value == "") {
+            //         if (document.getElementById(currentRow + ',' + currentColumn).value === "") {
             //             console.log("current row ", document.getElementById(currentRow + ',' + (currentColumn )))
             //             document.getElementById(currentRow + ',' + (currentColumn-1)).value = "";
             //             document.getElementById(currentRow + ',' + currentColumn).blur();
             //             document.getElementById(currentRow + ',' + (currentColumn - 1)).focus();
             //             console.log("current row ", document.getElementById(currentRow + ',' + currentColumn))
             //         }
-            //         else if (document.getElementById(currentRow + ',' + currentColumn).value != ""){
+            //         else if (document.getElementById(currentRow + ',' + currentColumn).value !== ""){
             //             console.log("current row ", document.getElementById(currentRow + ',' + currentColumn))
             //             document.getElementById(currentRow + ',' + currentColumn).value = "";
             //             document.getElementById(currentRow + ',' + currentColumn).focus();
@@ -201,13 +201,13 @@ function Puzzle(){
         for(let i=0; i<6; i++){
             let colDiv=[];
                 for(let n=0; n<5; n++){
-                    if(i==0 && n == 0){
+                    if(i===0 && n === 0){
                         colDiv.push(<input ref={firstInput} type="text" value="" autoFocus="" readOnly="readonly" id={i + `,` + n} 
                             className={"input"} maxLength={1} rows={1} cols={1}/>);
-                    }else if(n == 4){
+                    }else if(n === 4){
                         colDiv.push(<input type="text" value="" readOnly="readonly" id={i + `,` + n} 
                             className={"inputLast"} maxLength={1} rows={1} cols={1}/>);
-                            if(i == 5){
+                            if(i === 5){
                                 rowDiv.push(<div className={"rowContainerLast"} id={i}>{colDiv}</div>);
                             }else{
                                 rowDiv.push(<div className={"rowContainer"} id={i}>{colDiv}</div>);
@@ -229,10 +229,10 @@ function Puzzle(){
             document.getElementById("p").className = "pNormal";
             let currentRow = parseInt(document.getElementById(document.activeElement.id).id.charAt(0));
             for(let i =0; i < 5; i++){
-                if (document.getElementById((currentRow) + ',' + i).className == "notWord") {
+                if (document.getElementById((currentRow) + ',' + i).className === "notWord") {
                     document.getElementById((currentRow) + ',' + i).className = "input";
                  
-                } else if (document.getElementById((currentRow) + ',' + i).className == "notWordLast") {
+                } else if (document.getElementById((currentRow) + ',' + i).className === "notWordLast") {
                     document.getElementById((currentRow) + ',' + i).className = "inputLast";
                     document.getElementById("p").className = "pNormal";
                     counter = 0;
@@ -240,7 +240,7 @@ function Puzzle(){
                 }
             }
             
-            if (guessesList.current[5].length > 0 || guessesList.current[0].length == 0){
+            if (guessesList.current[5].length > 0 || guessesList.current[0].length === 0){
                 currentRow = parseInt(document.getElementById(document.activeElement.id).id.charAt(0));
                 
             }else{
@@ -251,36 +251,36 @@ function Puzzle(){
 
            
             
-                if (document.getElementById(currentRow + ',' + counter).className == "correctRecent"){
+                if (document.getElementById(currentRow + ',' + counter).className === "correctRecent"){
                     document.getElementById(currentRow + ',' + counter).className = "correct";
-                    // if (document.getElementById(document.getElementById(currentRow + ',' + counter).value.toUpperCase()).className == "keyboardCorrectRecent" ||
-                    //     document.getElementById(document.getElementById(currentRow + ',' + counter).value.toUpperCase()).className == "keyboardMisToCorRecent"){
+                    // if (document.getElementById(document.getElementById(currentRow + ',' + counter).value.toUpperCase()).className === "keyboardCorrectRecent" ||
+                    //     document.getElementById(document.getElementById(currentRow + ',' + counter).value.toUpperCase()).className === "keyboardMisToCorRecent"){
                     //     document.getElementById(document.getElementById(currentRow + ',' + counter).value.toUpperCase()).className = "keyboardCorrect";
                     // }
-                } else if (document.getElementById(currentRow + ',' + counter).className == "misplacedRecent"){
+                } else if (document.getElementById(currentRow + ',' + counter).className === "misplacedRecent"){
                     document.getElementById(currentRow + ',' + counter).className = "misplaced";
-                    // if (document.getElementById(document.getElementById(currentRow + ',' + counter).value.toUpperCase()).className == "keyboardMisplacedRecent") {
+                    // if (document.getElementById(document.getElementById(currentRow + ',' + counter).value.toUpperCase()).className === "keyboardMisplacedRecent") {
                     //     document.getElementById(document.getElementById(currentRow + ',' + counter).value.toUpperCase()).className = "keyboardMisplaced";
                     // }
-                } else if (document.getElementById(currentRow + ',' + counter).className == "wrongRecent"){
+                } else if (document.getElementById(currentRow + ',' + counter).className === "wrongRecent"){
                     document.getElementById(currentRow + ',' + counter).className = "wrong";
-                    // if (document.getElementById(document.getElementById(currentRow + ',' + counter).value.toUpperCase()).className == "keyboardWrongRecent") {
+                    // if (document.getElementById(document.getElementById(currentRow + ',' + counter).value.toUpperCase()).className === "keyboardWrongRecent") {
                     //     document.getElementById(document.getElementById(currentRow + ',' + counter).value.toUpperCase()).className = "keyboardWrong";
                     // }
-                } else if (document.getElementById(currentRow + ',' + counter).className == "correctLastRecent") {
+                } else if (document.getElementById(currentRow + ',' + counter).className === "correctLastRecent") {
                     document.getElementById(currentRow + ',' + counter).className = "correctLast";
-                    // if (document.getElementById(document.getElementById(currentRow + ',' + counter).value.toUpperCase()).className == "keyboardCorrectRecent" ||
-                    //     document.getElementById(document.getElementById(currentRow + ',' + counter).value.toUpperCase()).className == "keyboardMisToCorRecent") {
+                    // if (document.getElementById(document.getElementById(currentRow + ',' + counter).value.toUpperCase()).className === "keyboardCorrectRecent" ||
+                    //     document.getElementById(document.getElementById(currentRow + ',' + counter).value.toUpperCase()).className === "keyboardMisToCorRecent") {
                     //     document.getElementById(document.getElementById(currentRow + ',' + counter).value.toUpperCase()).className = "keyboardCorrect";
                     // }
-                } else if (document.getElementById(currentRow + ',' + counter).className == "misplacedLastRecent") {
+                } else if (document.getElementById(currentRow + ',' + counter).className === "misplacedLastRecent") {
                     document.getElementById(currentRow + ',' + counter).className = "misplacedLast";
-                    // if (document.getElementById(document.getElementById(currentRow + ',' + counter).value.toUpperCase()).className == "keyboardMisplacedRecent") {
+                    // if (document.getElementById(document.getElementById(currentRow + ',' + counter).value.toUpperCase()).className === "keyboardMisplacedRecent") {
                     //     document.getElementById(document.getElementById(currentRow + ',' + counter).value.toUpperCase()).className = "keyboardMisplaced";
                     // }
-                } else if (document.getElementById(currentRow + ',' + counter).className == "wrongLastRecent") {
+                } else if (document.getElementById(currentRow + ',' + counter).className === "wrongLastRecent") {
                     document.getElementById(currentRow + ',' + counter).className = "wrongLast";
-                    // if (document.getElementById(document.getElementById(currentRow + ',' + counter).value.toUpperCase()).className == "keyboardWrongRecent") {
+                    // if (document.getElementById(document.getElementById(currentRow + ',' + counter).value.toUpperCase()).className === "keyboardWrongRecent") {
                     //     document.getElementById(document.getElementById(currentRow + ',' + counter).value.toUpperCase()).className = "keyboardWrong";
                     // }
                 }
@@ -290,27 +290,27 @@ function Puzzle(){
                 //     console.log(document.getElementById(currentRow + ',' + i).className)
                 //     console.log(currentRow, ' ', i)
                 //     console.log(document.getElementById(document.getElementById(currentRow + ',' + i).value.toUpperCase()).className)
-                //     if (document.getElementById(currentRow + ',' + i).className == "correct"
-                //         || document.getElementById(currentRow + ',' + i).className == "correctLast"
-                //         || document.getElementById(currentRow + ',' + i).className == "correctLastRecent"
-                //         || document.getElementById(currentRow + ',' + i).className == "correctRecent") {
-                //         if (document.getElementById(document.getElementById(currentRow + ',' + i).value.toUpperCase()).className == "keyboardCorrectRecent" ||
-                //             document.getElementById(document.getElementById(currentRow + ',' + i).value.toUpperCase()).className == "keyboardMisToCorRecent") {
+                //     if (document.getElementById(currentRow + ',' + i).className === "correct"
+                //         || document.getElementById(currentRow + ',' + i).className === "correctLast"
+                //         || document.getElementById(currentRow + ',' + i).className === "correctLastRecent"
+                //         || document.getElementById(currentRow + ',' + i).className === "correctRecent") {
+                //         if (document.getElementById(document.getElementById(currentRow + ',' + i).value.toUpperCase()).className === "keyboardCorrectRecent" ||
+                //             document.getElementById(document.getElementById(currentRow + ',' + i).value.toUpperCase()).className === "keyboardMisToCorRecent") {
                 //             setTimeout(()=>{document.getElementById(document.getElementById(currentRow + ',' + i).value.toUpperCase()).className = "keyboardCorrect";}, 1000)
                 //         }
-                //     } else if (document.getElementById(currentRow + ',' + i).className == "misplacedLast"
-                //         || document.getElementById(currentRow + ',' + i).className == "misplaced"
-                //         || document.getElementById(currentRow + ',' + i).className == "misplacedLastRecent"
-                //         || document.getElementById(currentRow + ',' + i).className == "misplacedRecent"
+                //     } else if (document.getElementById(currentRow + ',' + i).className === "misplacedLast"
+                //         || document.getElementById(currentRow + ',' + i).className === "misplaced"
+                //         || document.getElementById(currentRow + ',' + i).className === "misplacedLastRecent"
+                //         || document.getElementById(currentRow + ',' + i).className === "misplacedRecent"
                 //     ) {
-                //         if (document.getElementById(document.getElementById(currentRow + ',' + i).value.toUpperCase()).className == "keyboardMisplacedRecent") {
+                //         if (document.getElementById(document.getElementById(currentRow + ',' + i).value.toUpperCase()).className === "keyboardMisplacedRecent") {
                 //             setTimeout(() => { document.getElementById(document.getElementById(currentRow + ',' + i).value.toUpperCase()).className = "keyboardMisplaced"; }, 1000)
                 //         }
-                //     } else if (document.getElementById(currentRow + ',' + i).className == "wrongLast"
-                //         || document.getElementById(currentRow + ',' + i).className == "wrong"
-                //         || document.getElementById(currentRow + ',' + i).className == "wrongLastRecent"
-                //         || document.getElementById(currentRow + ',' + i).className == "wrongRecent") {
-                //         if (document.getElementById(document.getElementById(currentRow + ',' + i).value.toUpperCase()).className == "keyboardWrongRecent") {
+                //     } else if (document.getElementById(currentRow + ',' + i).className === "wrongLast"
+                //         || document.getElementById(currentRow + ',' + i).className === "wrong"
+                //         || document.getElementById(currentRow + ',' + i).className === "wrongLastRecent"
+                //         || document.getElementById(currentRow + ',' + i).className === "wrongRecent") {
+                //         if (document.getElementById(document.getElementById(currentRow + ',' + i).value.toUpperCase()).className === "keyboardWrongRecent") {
                 //             setTimeout(() => {  document.getElementById(document.getElementById(currentRow + ',' + i).value.toUpperCase()).className = "keyboardWrong";}, 1000)
                 //         }
                 //     }
@@ -319,10 +319,10 @@ function Puzzle(){
                 // setTimeout(() => { document.onkeydown = () => true;}, 1000);
                 counter = 0;
             }  
-            if (document.getElementById(currentRow + ',' + '4').className == "correctLast" ||
-                document.getElementById(currentRow + ',' + '4').className == "misplacedLast" ||
-                document.getElementById(currentRow + ',' + '4').className == "wrongLast" ||
-                document.getElementById(currentRow + ',' + '4').className == "inputLast"){
+            if (document.getElementById(currentRow + ',' + '4').className === "correctLast" ||
+                document.getElementById(currentRow + ',' + '4').className === "misplacedLast" ||
+                document.getElementById(currentRow + ',' + '4').className === "wrongLast" ||
+                document.getElementById(currentRow + ',' + '4').className === "inputLast"){
                    
                 
                 }
@@ -346,6 +346,11 @@ function Puzzle(){
     function renderGuess () {
         // return new Promise(resolve => {
         let guessesArray = [];
+        function setAnimatedFalse(){
+            setTimeout(() => {
+                isAnimated = false;
+            }, 6000);
+        }
         for (let i = 0; i < guesses.length; i++){
 
             if (guesses[i].length >0){
@@ -353,7 +358,7 @@ function Puzzle(){
             }
         }
 
-        if(guesses[0]!= undefined){
+        if(guesses[0]!== undefined){
         for (let i = 0; i < guessesArray.length; i++) {
             let wordArray = [];
             let guessArray = [];
@@ -367,32 +372,29 @@ function Puzzle(){
 
             let tempGuessArray = [];
             let tempWordArray = [];
+           
             for (let n = 0; n < 5; n++) {
                 
                 document.getElementById(i + ',' + n).value = guessesArray[i].charAt(n);
-                if (wordArray[n].char == guessArray[n].char && 
-                    wordArray[n].id == guessArray[n].id && guessArray[n].id != 4){
-                    if (i == guessesArray.length - 1 && guess.length == 0 && lastKey != "Backspace" 
-                        && lastKey == "Enter") {
+                if (wordArray[n].char === guessArray[n].char && 
+                    wordArray[n].id === guessArray[n].id && guessArray[n].id !== 4){
+                    if (i === guessesArray.length - 1 && guess.length === 0 && lastKey !== "Backspace" 
+                        && lastKey === "Enter") {
                         document.getElementById(i + ',' + guessArray[n].id).className = "correctRecent";
                         document.getElementById(i + ',' + guessArray[n].id).style.animationDelay = `${guessArray[n].id}s`;
                         isAnimated=true;
-                        setTimeout(() => {
-                            isAnimated = false;
-                        }, 6000);
+                        setAnimatedFalse();
                     } else {
                         document.getElementById(i + ',' + guessArray[n].id).className = "correct";
                     }
-                } else if (wordArray[n].char == guessArray[n].char && 
-                           wordArray[n].id == guessArray[n].id && guessArray[n].id == 4) {
-                    if (i == guessesArray.length - 1 && guess.length == 0 && lastKey != "Backspace" 
-                        && lastKey == "Enter") {
+                } else if (wordArray[n].char === guessArray[n].char && 
+                           wordArray[n].id === guessArray[n].id && guessArray[n].id === 4) {
+                    if (i === guessesArray.length - 1 && guess.length === 0 && lastKey !== "Backspace" 
+                        && lastKey === "Enter") {
                         document.getElementById(i + ',' + guessArray[n].id).className = "correctLastRecent";
                         document.getElementById(i + ',' + guessArray[n].id).style.animationDelay = `${n}s`;
                         isAnimated = true;
-                        setTimeout(() => {
-                            isAnimated = false;
-                        }, 6000);
+                        setAnimatedFalse();
                     } else {
                         document.getElementById(i + ',' + guessArray[n].id).className = "correctLast";
                     }     
@@ -401,7 +403,7 @@ function Puzzle(){
                     tempWordArray.push(wordArray[n]);
                     tempGuessArray.push(guessArray[n]);
                 }
-                if(n == 4){
+                if(n === 4){
                     guessArray = tempGuessArray;
                     wordArray = tempWordArray;
                 }
@@ -411,32 +413,28 @@ function Puzzle(){
             for(let z = 0; z < wordArray.length; z++){
 
                 for(let y = 0; y < wordArray.length; y++){
-                    if(guessArray[z].char == wordArray[y].char){
+                    if(guessArray[z].char === wordArray[y].char){
                         wordCharCounter ++;
                     }
                 }
 
-                if(wordCharCounter == 0){
-                    if (guessArray[z].id != 4){
-                        if (i == guessesArray.length - 1 && guess.length == 0 && lastKey != "Backspace"
-                            && lastKey == "Enter") {
+                if(wordCharCounter === 0){
+                    if (guessArray[z].id !== 4){
+                        if (i === guessesArray.length - 1 && guess.length === 0 && lastKey !== "Backspace"
+                            && lastKey === "Enter") {
                             document.getElementById(i + ',' + guessArray[z].id).className = "wrongRecent";
                             document.getElementById(i + ',' + guessArray[z].id).style.animationDelay = `${guessArray[z].id}s`;
                             isAnimated = true;
-                            setTimeout(() => {
-                                isAnimated = false;
-                            }, 6000);
+                            setAnimatedFalse();
                         } else {
                             document.getElementById(i + ',' + guessArray[z].id).className = "wrong";
                         }
                     }else{
-                        if (i == guessesArray.length - 1 && guess.length == 0 && lastKey != "Backspace" && lastKey == "Enter") {
+                        if (i === guessesArray.length - 1 && guess.length === 0 && lastKey !== "Backspace" && lastKey === "Enter") {
                             document.getElementById(i + ',' + guessArray[z].id).className = "wrongLastRecent";
                             document.getElementById(i + ',' + guessArray[z].id).style.animationDelay = `${guessArray[z].id}s`;
                             isAnimated = true;
-                            setTimeout(() => {
-                                isAnimated = false;
-                            }, 6000);
+                            setAnimatedFalse();
                         } else {
                             document.getElementById(i + ',' + guessArray[z].id).className = "wrongLast";
                         }
@@ -445,55 +443,47 @@ function Puzzle(){
                 } else{
                     for (let y = 0; y < wordArray.length; y++) {
                       
-                        if (guessArray[z].char == guessArray[y].char) {
+                        if (guessArray[z].char === guessArray[y].char) {
                             guessCharCounter++;
                             if (guessCharCounter <= wordCharCounter) {
-                                if (guessArray[y].id != 4) {
-                                    if (i == guessesArray.length - 1 && guess.length == 0 && lastKey != "Backspace"
-                                        && lastKey == "Enter") {
+                                if (guessArray[y].id !== 4) {
+                                    if (i === guessesArray.length - 1 && guess.length === 0 && lastKey !== "Backspace"
+                                        && lastKey === "Enter") {
                                         document.getElementById(i + ',' + guessArray[y].id).className = "misplacedRecent";
                                         document.getElementById(i + ',' + guessArray[y].id).style.animationDelay = `${guessArray[y].id}s`;
                                         isAnimated = true;
-                                        setTimeout(() => {
-                                            isAnimated = false;
-                                        }, 6000);
+                                        setAnimatedFalse();
                                     } else {
                                         document.getElementById(i + ',' + guessArray[y].id).className = "misplaced";
                                     } 
                                 }else{
-                                    if (i == guessesArray.length - 1 && guess.length == 0 && lastKey != "Backspace"
-                                        && lastKey == "Enter") {
+                                    if (i === guessesArray.length - 1 && guess.length === 0 && lastKey !== "Backspace"
+                                        && lastKey === "Enter") {
                                         document.getElementById(i + ',' + guessArray[y].id).className = "misplacedLastRecent";
                                         document.getElementById(i + ',' + guessArray[y].id).style.animationDelay = `${guessArray[y].id}s`;
                                         isAnimated = true;
-                                        setTimeout(() => {
-                                            isAnimated = false;
-                                        }, 6000);
+                                        setAnimatedFalse();
                                     } else {
                                         document.getElementById(i + ',' + guessArray[y].id).className = "misplacedLast";
                                     }
                                 }
                             }else{
-                                if (guessArray[z].id != 4) {
-                                    if (i == guessesArray.length - 1 && guess.length == 0 && lastKey != "Backspace"
-                                        && lastKey == "Enter") {
+                                if (guessArray[z].id !== 4) {
+                                    if (i === guessesArray.length - 1 && guess.length === 0 && lastKey !== "Backspace"
+                                        && lastKey === "Enter") {
                                         document.getElementById(i + ',' + guessArray[z].id).className = "wrongRecent";
                                         document.getElementById(i + ',' + guessArray[z].id).style.animationDelay = `${guessArray[z].id}s`;
                                         isAnimated = true;
-                                        setTimeout(() => {
-                                            isAnimated = false;
-                                        }, 6000);
+                                        setAnimatedFalse();
                                     } else {
                                         document.getElementById(i + ',' + guessArray[z].id).className = "wrong";
                                     }
                                 } else {
-                                    if (i == guessesArray.length - 1 && guess.length == 0 && lastKey != "Backspace" && lastKey == "Enter") {
+                                    if (i === guessesArray.length - 1 && guess.length === 0 && lastKey !== "Backspace" && lastKey === "Enter") {
                                         document.getElementById(i + ',' + guessArray[z].id).className = "wrongLastRecent";
                                         document.getElementById(i + ',' + guessArray[z].id).style.animationDelay = `${guessArray[z].id}s`;
                                         isAnimated = true;
-                                        setTimeout(() => {
-                                            isAnimated = false;
-                                        }, 6000);
+                                        setAnimatedFalse();
                                     } else {
                                         document.getElementById(i + ',' + guessArray[z].id).className = "wrongLast";
                                     }
@@ -506,12 +496,12 @@ function Puzzle(){
                 guessCharCounter = 0;
             }
            
-            if (guessesArray.length == 0) {
+            if (guessesArray.length === 0) {
                 document.getElementById('0,0').focus();
             }
-            else if (i == guessesArray.length-1 && guessesArray.length != 6){
+            else if (i === guessesArray.length-1 && guessesArray.length !== 6){
                 document.getElementById((i +1 ) + ',0').focus();
-            } else if (guessesArray.length == 6){
+            } else if (guessesArray.length === 6){
                 document.getElementById('5,0').focus();
             } 
       
@@ -520,13 +510,13 @@ function Puzzle(){
         for(let i =0; i < guess.length; i ++){
             let currentRow = parseInt(document.getElementById(document.activeElement.id).id.charAt(0));
 
-            if (guessesArray.length != 6){
+            if (guessesArray.length !== 6){
                 document.getElementById(currentRow + ',' + i).value = guess.charAt(i);
  
                 if (guess.length && i < (guess.length ) && guess.length < 5){
                 
                     document.getElementById(currentRow + ',' + (i+1)).focus();
-                } else if (guess.length && i == (guess.length - 1) && guess.length == 5){
+                } else if (guess.length && i === (guess.length - 1) && guess.length === 5){
                     document.getElementById(currentRow + ',' + i).focus();
               
                 }
@@ -538,43 +528,43 @@ function Puzzle(){
                 for (let z = 0; z < 5; z++) {
                     let letter = guessesArray[n].charAt(z).toUpperCase();
                     if (i === 0) {
-                        if (document.getElementById(n + ',' + z).className == "wrong" ||
-                            document.getElementById(n + ',' + z).className == "wrongLast"){
+                        if (document.getElementById(n + ',' + z).className === "wrong" ||
+                            document.getElementById(n + ',' + z).className === "wrongLast"){
                             document.getElementById(letter).className = "keyboardWrong";
-                        } else if((document.getElementById(n + ',' + z).className == "wrongLastRecent" ||
-                            document.getElementById(n + ',' + z).className == "wrongRecent") 
-                            && document.getElementById(letter).className != "keyboardWrong"
-                            && document.getElementById(letter).className != "keyboardMisplaced"
-                            && document.getElementById(letter).className != "keyboardCorrect"){
+                        } else if((document.getElementById(n + ',' + z).className === "wrongLastRecent" ||
+                            document.getElementById(n + ',' + z).className === "wrongRecent") 
+                            && document.getElementById(letter).className !== "keyboardWrong"
+                            && document.getElementById(letter).className !== "keyboardMisplaced"
+                            && document.getElementById(letter).className !== "keyboardCorrect"){
                             // document.getElementById(letter).className = "keyboardWrongRecent";
                             // document.getElementById(letter).style.animationDelay = '7s'; 
                             setTimeout(() => { document.getElementById(letter).className = "keyboardWrong" }, 6000);  
                             }
                     } else if (i === 1) {
-                        if (document.getElementById(n + ',' + z).className == "misplaced" ||
-                            document.getElementById(n + ',' + z).className == "misplacedLast"){
+                        if (document.getElementById(n + ',' + z).className === "misplaced" ||
+                            document.getElementById(n + ',' + z).className === "misplacedLast"){
                             document.getElementById(letter).className = "keyboardMisplaced";
-                        } else if ((document.getElementById(n + ',' + z).className == "misplacedLastRecent" ||
-                            document.getElementById(n + ',' + z).className == "misplacedRecent") 
-                            && document.getElementById(letter).className != "keyboardMisplaced"
-                            && document.getElementById(letter).className != "keyboardCorrect"){
+                        } else if ((document.getElementById(n + ',' + z).className === "misplacedLastRecent" ||
+                            document.getElementById(n + ',' + z).className === "misplacedRecent") 
+                            && document.getElementById(letter).className !== "keyboardMisplaced"
+                            && document.getElementById(letter).className !== "keyboardCorrect"){
                             // document.getElementById(letter).className = "keyboardMisplacedRecent";
                             // document.getElementById(letter).style.animationDelay = '7s'; 
                             setTimeout(() => { document.getElementById(letter).className = "keyboardMisplaced" },6000); 
                         }
                     } else if (i === 2) {
-                        if (document.getElementById(n + ',' + z).className == "correct" ||
-                            document.getElementById(n + ',' + z).className == "correctLast"){
+                        if (document.getElementById(n + ',' + z).className === "correct" ||
+                            document.getElementById(n + ',' + z).className === "correctLast"){
                             document.getElementById(letter).className = "keyboardCorrect";
-                        } else if ((document.getElementById(n + ',' + z).className == "correctLastRecent" ||
-                            document.getElementById(n + ',' + z).className == "correctRecent")
-                            && document.getElementById(letter).className != "keyboardCorrect") {
+                        } else if ((document.getElementById(n + ',' + z).className === "correctLastRecent" ||
+                            document.getElementById(n + ',' + z).className === "correctRecent")
+                            && document.getElementById(letter).className !== "keyboardCorrect") {
                             // document.getElementById(letter).className = "keyboardCorrectRecent";
                             // document.getElementById(letter).style.animationDelay = '7s'; 
                             setTimeout(() => { document.getElementById(letter).className = "keyboardCorrect" }, 6000); 
-                        } else if ((document.getElementById(n + ',' + z).className == "correctLastRecent" ||
-                            document.getElementById(n + ',' + z).className == "correctRecent")
-                            && document.getElementById(letter).className == "keyboardMisplaced"){
+                        } else if ((document.getElementById(n + ',' + z).className === "correctLastRecent" ||
+                            document.getElementById(n + ',' + z).className === "correctRecent")
+                            && document.getElementById(letter).className === "keyboardMisplaced"){
                             // document.getElementById(letter).className = "keyboardMisToCorRecent";
                             // document.getElementById(letter).style.animationDelay = '7s';
                             setTimeout(() => { document.getElementById(letter).className = "keyboardCorrect" }, 6000); 
@@ -590,17 +580,17 @@ function Puzzle(){
         document.getElementById("dictionaryContainer").style.display = "none";
         document.getElementById("panda").style.display = "none";
         // document.getElementById("forDef").style.display = "none";
-        if ((guessesArray[guessesArray.length - 1] == word && word != "") || (guesses[5].length > 0 && word != "")) {
+        if ((guessesArray[guessesArray.length - 1] === word && word !== "") || (guesses[5].length > 0 && word !== "")) {
             let winOrLoss = 0;
-            if (guessesArray[guessesArray.length - 1] == word){
+            if (guessesArray[guessesArray.length - 1] === word){
                 winOrLoss = 1
             }else{
                 winOrLoss=0;
             }
             
-            if (document.getElementById((guessesArray.length - 1) + ',0').className =="correctRecent" || 
-                document.getElementById((guessesArray.length - 1) + ',0').className == "misplacedRecent" ||
-                document.getElementById((guessesArray.length - 1) + ',0').className == "wrrongRecent"){
+            if (document.getElementById((guessesArray.length - 1) + ',0').className ==="correctRecent" || 
+                document.getElementById((guessesArray.length - 1) + ',0').className === "misplacedRecent" ||
+                document.getElementById((guessesArray.length - 1) + ',0').className === "wrrongRecent"){
                 
                 setTimeout(() => {
                     document.getElementById("conditionallyRender").style.marginBottom = "5px";
@@ -657,7 +647,7 @@ function Puzzle(){
                 console.log('play again');
                 for (let i = 0; i < 6; i++) {
                     for (let n = 0; n < 5; n++) {
-                        if (n == 4) {
+                        if (n === 4) {
                             document.getElementById(i + ',' + n).className = "inputLast";
                         } else {
                             document.getElementById(i + ',' + n).className = "input";
@@ -666,9 +656,9 @@ function Puzzle(){
                 }
                 let buttonsList = document.querySelectorAll("button");
                 for (let i = 0; i < buttonsList.length; i++) {
-                    if (buttonsList[i].className == "keyboardCorrect" ||
-                        buttonsList[i].className == "keyboardMisplaced" ||
-                        buttonsList[i].className == "keyboardWrong") {
+                    if (buttonsList[i].className === "keyboardCorrect" ||
+                        buttonsList[i].className === "keyboardMisplaced" ||
+                        buttonsList[i].className === "keyboardWrong") {
                         buttonsList[i].className = "keyboardButton"
                     }
                 }

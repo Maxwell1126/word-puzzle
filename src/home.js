@@ -1,10 +1,12 @@
-import React, { useEffect, useRef, useState, useCallback, useReducer } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate} from 'react-router-dom';
-import './App.css'
+import './home.css'
+import StatChart from './statChart';
 
 
 function Home(){
+
     const dispatchAction = useDispatch();    
     let navigate = useNavigate();
     const playButton = (event) => {
@@ -16,7 +18,7 @@ function Home(){
             type: 'GET_STATS', payload:'home'
         })
     }, [dispatchAction])
- 
+    
     let statsList = useRef([]);
     let [stats, setStats] = useState([]);
     let allStats = useSelector((state => state.setStats));
@@ -27,33 +29,25 @@ function Home(){
         setStats(stats = statsList.current)
     }, [])
     statsCard = <div id="statsCard" className="statsCard">
-        <p className="statsRow">played: {statsList.current[0]}</p>
-        <p className="statsRow">first: {statsList.current[1]}</p>
-        <p className="statsRow">second: {statsList.current[2]}</p>
-        <p className="statsRow">third: {statsList.current[3]}</p>
-        <p className="statsRow">fourth: {statsList.current[4]}</p>
-        <p className="statsRow">fifth: {statsList.current[5]}</p>
-        <p className="statsRow">sixth: {statsList.current[6]}</p>
-        <p className="statsRow">win percentage: {statsList.current[7]}%</p>
-        <p className="statsRow">streak: {statsList.current[8]}</p></div>;
-    console.log(statsList.current [6])
-
-    // let renderStatState = ()=>{
-    //     return new Promise(resolve => {
-       
-    //         setTimeout(() => {
-    //             resolve('resolved');
-    //         }, 200)
-    //     });
-    // }
-
+        <StatChart />
+        <div className="statsContainer">
+        <p className="statsRowPlayed">Played:  {statsList.current[0]}</p>
+        <p className="statsRowWin">Win %: {statsList.current[7]}</p>
+        <p className="statsRowStreak">Streak: {statsList.current[8]}</p>
+        </div>
+        </div>;
     
 
         return (
+
             <div id={"homeContainer"} className={"homeContainer"}>
+                
+                
                 {statsCard}
+ 
+                
                 <button className="homeButton" onClick={playButton}>{"P L A Y"}</button>
-            </div>
+    </div>
         );
     }
 

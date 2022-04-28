@@ -1,4 +1,4 @@
-import { put, take, takeLatest } from 'redux-saga/effects';
+import { put, takeLatest } from 'redux-saga/effects';
 import axios from 'axios';
 axios.defaults.baseURL = 'http://localhost:8000';
 
@@ -20,10 +20,10 @@ function* getStats(action){
     console.log(action)
     try{
         const response = yield axios.get('/stats');
-        if(action.payload== 'home'){
+        if(action.payload=== 'home'){
             const setStatsRequest = { type: 'SET_STATS_MULTI', payload: response.data };
             yield put(setStatsRequest);
-        }else if(action.payload == 'puzzle'){
+        }else if(action.payload === 'puzzle'){
             const setStatsRequest = { type: 'SET_STATS_ONCE', payload: response.data };
             yield put(setStatsRequest);
         }

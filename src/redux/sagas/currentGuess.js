@@ -1,4 +1,4 @@
-import { put, take, takeLatest } from 'redux-saga/effects';
+import { put, takeLatest } from 'redux-saga/effects';
 import axios from 'axios';
 axios.defaults.baseURL = 'http://localhost:8000';
 
@@ -8,10 +8,10 @@ function* postGuess(guess) {
 
        const response =  yield axios.put('/guess', guess);
 
-        if(response.status == 204){
+        if(response.status === 204){
             let currentRow = parseInt(document.getElementById(document.activeElement.id).id.charAt(0));
             for (let i = 0; i < 5; i++) {
-                if (i != 4) {
+                if (i !== 4) {
                     document.getElementById(currentRow + ',' + i).className = "notWord";
                 } else {
                     document.getElementById(currentRow + ',' + i).className = "notWordLast";
@@ -24,7 +24,7 @@ function* postGuess(guess) {
                 document.getElementById("p").style.display = "none";}, 1000);
            
         }
-        if(response.status ==200){
+        if(response.status ===200){
         const clearGuess = {type: 'CLEAR_GUESS'};
         yield put (clearGuess);
         const getGuesses = { type: 'GET_GUESSES'};
