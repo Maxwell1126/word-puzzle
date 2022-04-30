@@ -7,6 +7,7 @@ import {
     BarElement,
 } from 'chart.js';
 import { Bar } from 'react-chartjs-2';
+import ChartDataLabels from 'chartjs-plugin-datalabels';
 
 function StatChart() {
     const dispatchAction = useDispatch();  
@@ -27,30 +28,70 @@ function StatChart() {
     }, [])
 
 
-ChartJS.register(
-    CategoryScale,
-    LinearScale,
-    BarElement,
-);
+    ChartJS.register(
+        CategoryScale,
+        LinearScale,
+        BarElement,
+    );
+    const labels = ['1st', '2nd', '3rd', '4th', '5th', '6th'];
 
-const options = {
-    responsive: false,
-    plugins: {
+    let data = {
+        labels,
+        datasets: [
+            {
+                data: stats.map((stats, item) => statsList.current[item]),
+                backgroundColor: 'rgb(92, 255, 144)',
+                barThickness: 15,
+                height:2,
+   
+            }
+        ],
+    };
+ 
+
+    let options = {
+        // aspectRatio:1,
+        layout: {
+            padding: 20,
+            height: 2,
+        },
+        maintainAspectRatio:false,
+        scales: {
+            
+            x: {
+                ticks: {
+                    color: "rgb(181, 178, 178)",
+                }, 
+                grid: {
+                    color: "rgba(19, 19, 19)",
+                },
+
+            },
+            y: {
+                // display:false,
+                ticks:{
+                    color: "rgba(19, 19, 19)",
+                },
+                grid: {
+                    color: "rgba(19, 19, 19)",
+                },
+        },
     },
-};
 
-const labels = ['1st', '2nd', '3rd', '4th', '5th', '6th'];
+        responsive: true,
+    
+        plugins: {
+            datalabels: {
+            color:'white',
+            anchor: "end",
+            offset: -20,
+            align: "start"
+            },
+        },
+    };
 
-let data = {
-    labels,
-    datasets: [
-        {
-            data: stats.map((stats, item) => statsList.current[item]),
-            backgroundColor: 'rgba(255, 99, 132, 0.5)',
-        }
-    ],
-};
-    return <Bar options={options} data={data} />;
+
+    return <Bar options={options} plugins={[ChartDataLabels]} data={data} />;
 }
 
 export default StatChart;

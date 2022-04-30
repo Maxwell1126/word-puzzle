@@ -64,7 +64,7 @@ function Puzzle(){
     }
     let dictionaryLink = <div id="dictionaryContainer" className="dictionaryContainer"><div id="panda" className="panda" ><p id="wordWas" className="wordWas">Word was: </p>
         <p id="dictionaryLink" className="dictionaryLink" onClick={linkToDef}><u>{word.toUpperCase()} </u></p></div></div>
-{/* <div><p id="forDef" className="forDef">click "{word.toUpperCase()}" for definition</p></div> */}
+
     const firstInput = useRef(null);
     useEffect(() => {
         firstInput.current.focus();
@@ -319,10 +319,10 @@ function Puzzle(){
                 // setTimeout(() => { document.onkeydown = () => true;}, 1000);
                 counter = 0;
             }  
-            if (document.getElementById(currentRow + ',' + '4').className === "correctLast" ||
-                document.getElementById(currentRow + ',' + '4').className === "misplacedLast" ||
-                document.getElementById(currentRow + ',' + '4').className === "wrongLast" ||
-                document.getElementById(currentRow + ',' + '4').className === "inputLast"){
+            if (document.getElementById(currentRow + ',4').className === "correctLast" ||
+                document.getElementById(currentRow + ',4').className === "misplacedLast" ||
+                document.getElementById(currentRow + ',4').className === "wrongLast" ||
+                document.getElementById(currentRow + ',4').className === "inputLast"){
                    
                 
                 }

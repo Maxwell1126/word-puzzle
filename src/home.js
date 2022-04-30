@@ -22,14 +22,16 @@ function Home(){
     let statsList = useRef([]);
     let [stats, setStats] = useState([]);
     let allStats = useSelector((state => state.setStats));
-    console.log(allStats)
+
     statsList.current = [allStats.total, allStats.first, allStats.second, allStats.third, allStats.fourth,
     allStats.fifth, allStats.sixth, allStats.winPercent, allStats.streak]
     useEffect(() => {
         setStats(stats = statsList.current)
     }, [])
     statsCard = <div id="statsCard" className="statsCard">
+        <div id="statChartContainer" className="statChartContainer">
         <StatChart />
+        </div>
         <div className="statsContainer">
         <p className="statsRowPlayed">Played:  {statsList.current[0]}</p>
         <p className="statsRowWin">Win %: {statsList.current[7]}</p>
@@ -37,17 +39,18 @@ function Home(){
         </div>
         </div>;
     
-
+    
         return (
-
+            <div align="center">
             <div id={"homeContainer"} className={"homeContainer"}>
-                
+                <h1>Word Puzzle</h1>
                 
                 {statsCard}
  
                 
                 <button className="homeButton" onClick={playButton}>{"P L A Y"}</button>
     </div>
+            </div>
         );
     }
 

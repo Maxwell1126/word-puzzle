@@ -2,7 +2,7 @@
 display:inline-block;
 border-style: none;
 border: 2px solid rgb(92, 255, 144);
-  background-color: #171718;
+  background-color: rgba(19, 19, 19);
 color:rgb(92, 255, 144);
 font-family: Arial, Helvetica, sans-serif;
 font-weight: 100px;
@@ -15,12 +15,10 @@ border-radius: 10px;
 }
 .statsCard{
   color:white;
-  display:inline;
-    
-  /* display: inline-flex;
+  display:inline-flex;
   justify-content:space-between;
   flex-direction: column;
-  align-items: center; */
+  align-items: center;
 }
 
 .statsRowPlayed{
@@ -30,7 +28,7 @@ justify-content: center;
 border-style: none;
 /* align-self: flex-end; */
 border: 2px solid white;
-  background-color: #171718;
+  background-color: rgba(19, 19, 19);
   border-top: 0px;
   border-bottom:0px;
 
@@ -47,6 +45,7 @@ align-items: center;
 justify-content: center;
 border-style: none;
 /* align-self: flex-end; */
+background-color: rgba(19, 19, 19);
 border: none;
 color:white;
 font-family: Arial, Helvetica, sans-serif;
@@ -63,7 +62,7 @@ justify-content: center;
 border-style: none;
 /* align-self: flex-end; */
 border: 2px solid white;
-  background-color: #171718;
+  background-color: rgba(19, 19, 19);
   border-top: 0px;
   border-bottom:0px;
 color:white;
@@ -77,14 +76,18 @@ width:150px;
 .statsContainer{
   margin:15px;
 }
-
+.statChartContainer{
+  height:250px;
+  width:200px;
+  align-self: center;
+}
 .homeContainer{
  display: inline-flex;
-  justify-content:space-between;
+  justify-content:center;
 flex-direction:  column;
   align-items: center;   
-}
 
-react-root{
-  align-items: center;
+
+ 
+
 }
