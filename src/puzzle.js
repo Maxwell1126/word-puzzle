@@ -53,7 +53,7 @@ function Puzzle(){
     let [stats, setStats] = useState([]);
     let allStats = useSelector((state => state.setStats));
     statsList.current = [allStats.total, allStats.first, allStats.second, allStats.third, allStats.fourth, 
-            allStats.fifth, allStats.sixth, allStats.winPercent, allStats.streak]
+            allStats.fifth, allStats.sixth, allStats.winPercent, allStats.streak, allStats.best]
     useEffect(() => {
         setStats(stats = statsList.current)
     }, []);
@@ -78,71 +78,65 @@ function Puzzle(){
  
     useEffect(() => {
     function userKeyDown(event){
-     
         if (guesses[5].length > 0 || guesses[0] === word || guesses[1] === word || guesses[2] === word || guesses[3] === word || guesses[4] === word || isAnimated===true){
             event.preventDefault();
         }else{
-        if (event.code.charAt(0) !== 'K' && event.code !== "Backspace" && event.code !== "Enter") {
+            if (event.code.charAt(0) !== 'K' && event.code !== "Backspace" && event.code !== "Enter") {
+                        event.preventDefault();
+                    }
+            else if (event.code.charAt(0) === 'K' ){
+                if (document.getElementById(document.activeElement.id).value !== ""){
+                    event.preventDefault();
+                }else{
+                    
+                    dispatchAction({
+                        type: 'BUILD_GUESS',
+                        payload: event.key,
+                    }) 
+            
+                }
+            }
+            else if (event.code === "Backspace"){
+                if (document.getElementById(document.activeElement.id).id.charAt(2) === 0 && 
+                    document.getElementById(document.activeElement.id).value === ""){
                     event.preventDefault();
                 }
-        else if (event.code.charAt(0) === 'K' ){
-            if (document.getElementById(document.activeElement.id).value !== ""){
-                event.preventDefault();
-            }else{
-                
-                dispatchAction({
-                    type: 'BUILD_GUESS',
-                    payload: event.key,
-                }) 
-          
+                else{
+                    dispatchAction({
+                        type: 'DELETE_LETTER',
+                    })
+            
+                }
             }
-        }
-        else if (event.code === "Backspace"){
-            if (document.getElementById(document.activeElement.id).id.charAt(2) === 0 && 
-                document.getElementById(document.activeElement.id).value === ""){
-                event.preventDefault();
-            }
-            else{
-                dispatchAction({
-                    type: 'DELETE_LETTER',
-                })
-          
-            }
-        }
-        else if (event.code === "Enter"){
-            if (document.getElementById(document.activeElement.id).id.charAt(2) === 4 &&
-                document.getElementById(document.activeElement.id).value !== ""){
+            else if (event.code === "Enter"){
+                if (document.getElementById(document.activeElement.id).id.charAt(2) == 4 &&
+                    document.getElementById(document.activeElement.id).value != ""){
+                    console.log(document.getElementById(document.activeElement.id).id.charAt(2), " ", document.getElementById(document.activeElement.id).value)
+    
+                    let currentRow = parseInt(document.getElementById(document.activeElement.id).id.charAt(0));
+                    let finalGuess = "";
+                    for (let i = 0; i < 5; i++) {
+                        finalGuess = finalGuess + document.getElementById(currentRow + ',' + i).value
+                    }
+                    let sendGuess= async () => dispatchAction({
+                        type: 'POST_GUESS',
+                        payload: {guess: finalGuess.toLowerCase(), id:(currentRow+1)}
+                    })
                     
-                let currentRow = parseInt(document.getElementById(document.activeElement.id).id.charAt(0));
-                let finalGuess = "";
-                for (let i = 0; i < 5; i++) {
-                    finalGuess = finalGuess + document.getElementById(currentRow + ',' + i).value
+                    sendGuess()
+            
                 }
-                let sendGuess= async () => dispatchAction({
-                    type: 'POST_GUESS',
-                    payload: {guess: finalGuess, id:(currentRow+1)}
-                })
-                
-                sendGuess()
-
-                    // dispatchAction({
-                    //     type: 'CLEAR_GUESS',
-                    // })
-         
-                }
-           else{
+            else{
                 event.preventDefault();
-           }
-        } 
+            }
+            } 
+        }
     }
-}
         document.addEventListener('keydown', userKeyDown)
         return function cleanupListener() {
            document.removeEventListener('keydown', userKeyDown)
         }
     });
-
-    
 
     window.onmousedown = (event) => {
         if (event.target.className !== "keyboardButton" || event.target.className !=="delEnterButton"){
@@ -155,47 +149,6 @@ function Puzzle(){
         }
     }    
         let rowDiv=[];
-  
-
-    // function assignFocus(code){
-    //     let currentRow = parseInt(document.getElementById(document.activeElement.id).id.charAt(0));
-    //     let currentColumn = parseInt(document.getElementById(document.activeElement.id).id.charAt(2));   
-    //     console.log("guess ", guesses)
-    //     renderGuess();
-            // if (code !== "Backspace") {
-            //     console.log("current row ", document.getElementById(document.activeElement.id).id);
-            //     console.log("value ", document.getElementById(document.activeElement.id).value);
-            //     document.getElementById(document.activeElement.id).value = code
-            //     if (document.getElementById(currentRow + ',' + currentColumn).value === "") {  
-            //         document.getElementById(currentRow + ',' + (currentColumn)).focus();
-            //         console.log("hell0 ")
-            //     } else if (document.getElementById(currentRow + ',' + currentColumn).value && currentColumn !== 4){
-            //         console.log("hey")
-            //         console.log("current row ", document.getElementById(currentRow + ',' + currentColumn));
-            //         document.getElementById(currentRow + ',' + currentColumn).blur();
-            //         document.getElementById(currentRow + ',' + (currentColumn+1)).focus();
-            //         console.log("current row ", document.getElementById(document.activeElement.id).value);
-            //     }
-                   
-            // } 
-            // else if (code === "Backspace"){
-            //     console.log("current row ", document.getElementById(currentRow + ',' + currentColumn))
-            //         if (document.getElementById(currentRow + ',' + currentColumn).value === "") {
-            //             console.log("current row ", document.getElementById(currentRow + ',' + (currentColumn )))
-            //             document.getElementById(currentRow + ',' + (currentColumn-1)).value = "";
-            //             document.getElementById(currentRow + ',' + currentColumn).blur();
-            //             document.getElementById(currentRow + ',' + (currentColumn - 1)).focus();
-            //             console.log("current row ", document.getElementById(currentRow + ',' + currentColumn))
-            //         }
-            //         else if (document.getElementById(currentRow + ',' + currentColumn).value !== ""){
-            //             console.log("current row ", document.getElementById(currentRow + ',' + currentColumn))
-            //             document.getElementById(currentRow + ',' + currentColumn).value = "";
-            //             document.getElementById(currentRow + ',' + currentColumn).focus();
-            //             console.log("current row ", document.getElementById(currentRow + ',' + currentColumn))
-            //         }
-            //     }
-                
-        // } 
     
         let puzzleDiv="";
         for(let i=0; i<6; i++){
@@ -221,11 +174,9 @@ function Puzzle(){
             puzzleDiv = <div className={"puzzleContainer"}><h1>Word Puzzle</h1>{rowDiv}<div id="conditionallyRender" className="conditionallyRender">{dictionaryLink}{playAgainButton}
                 <div id="p" className='pNormal' >Word Not in the Dictionary</div></div></div>;
             }
-    // const animated = document.querySelector('.animated');
     let counter = 0;
     useEffect(() => {
         document.addEventListener('animationend', () => {
-        // function aniEnd(event){
             document.getElementById("p").className = "pNormal";
             let currentRow = parseInt(document.getElementById(document.activeElement.id).id.charAt(0));
             for(let i =0; i < 5; i++){
@@ -247,104 +198,34 @@ function Puzzle(){
                 
                 currentRow = parseInt(document.getElementById(document.activeElement.id).id.charAt(0) - 1);
             }
-            if (counter < 5){
-
-           
+            if (counter < 5){           
             
                 if (document.getElementById(currentRow + ',' + counter).className === "correctRecent"){
                     document.getElementById(currentRow + ',' + counter).className = "correct";
-                    // if (document.getElementById(document.getElementById(currentRow + ',' + counter).value.toUpperCase()).className === "keyboardCorrectRecent" ||
-                    //     document.getElementById(document.getElementById(currentRow + ',' + counter).value.toUpperCase()).className === "keyboardMisToCorRecent"){
-                    //     document.getElementById(document.getElementById(currentRow + ',' + counter).value.toUpperCase()).className = "keyboardCorrect";
-                    // }
                 } else if (document.getElementById(currentRow + ',' + counter).className === "misplacedRecent"){
                     document.getElementById(currentRow + ',' + counter).className = "misplaced";
-                    // if (document.getElementById(document.getElementById(currentRow + ',' + counter).value.toUpperCase()).className === "keyboardMisplacedRecent") {
-                    //     document.getElementById(document.getElementById(currentRow + ',' + counter).value.toUpperCase()).className = "keyboardMisplaced";
-                    // }
                 } else if (document.getElementById(currentRow + ',' + counter).className === "wrongRecent"){
                     document.getElementById(currentRow + ',' + counter).className = "wrong";
-                    // if (document.getElementById(document.getElementById(currentRow + ',' + counter).value.toUpperCase()).className === "keyboardWrongRecent") {
-                    //     document.getElementById(document.getElementById(currentRow + ',' + counter).value.toUpperCase()).className = "keyboardWrong";
-                    // }
                 } else if (document.getElementById(currentRow + ',' + counter).className === "correctLastRecent") {
                     document.getElementById(currentRow + ',' + counter).className = "correctLast";
-                    // if (document.getElementById(document.getElementById(currentRow + ',' + counter).value.toUpperCase()).className === "keyboardCorrectRecent" ||
-                    //     document.getElementById(document.getElementById(currentRow + ',' + counter).value.toUpperCase()).className === "keyboardMisToCorRecent") {
-                    //     document.getElementById(document.getElementById(currentRow + ',' + counter).value.toUpperCase()).className = "keyboardCorrect";
-                    // }
                 } else if (document.getElementById(currentRow + ',' + counter).className === "misplacedLastRecent") {
                     document.getElementById(currentRow + ',' + counter).className = "misplacedLast";
-                    // if (document.getElementById(document.getElementById(currentRow + ',' + counter).value.toUpperCase()).className === "keyboardMisplacedRecent") {
-                    //     document.getElementById(document.getElementById(currentRow + ',' + counter).value.toUpperCase()).className = "keyboardMisplaced";
-                    // }
                 } else if (document.getElementById(currentRow + ',' + counter).className === "wrongLastRecent") {
                     document.getElementById(currentRow + ',' + counter).className = "wrongLast";
-                    // if (document.getElementById(document.getElementById(currentRow + ',' + counter).value.toUpperCase()).className === "keyboardWrongRecent") {
-                    //     document.getElementById(document.getElementById(currentRow + ',' + counter).value.toUpperCase()).className = "keyboardWrong";
-                    // }
                 }
                 counter++;
             }else{
-                // for (let i = 0; i < 5; i++) {
-                //     console.log(document.getElementById(currentRow + ',' + i).className)
-                //     console.log(currentRow, ' ', i)
-                //     console.log(document.getElementById(document.getElementById(currentRow + ',' + i).value.toUpperCase()).className)
-                //     if (document.getElementById(currentRow + ',' + i).className === "correct"
-                //         || document.getElementById(currentRow + ',' + i).className === "correctLast"
-                //         || document.getElementById(currentRow + ',' + i).className === "correctLastRecent"
-                //         || document.getElementById(currentRow + ',' + i).className === "correctRecent") {
-                //         if (document.getElementById(document.getElementById(currentRow + ',' + i).value.toUpperCase()).className === "keyboardCorrectRecent" ||
-                //             document.getElementById(document.getElementById(currentRow + ',' + i).value.toUpperCase()).className === "keyboardMisToCorRecent") {
-                //             setTimeout(()=>{document.getElementById(document.getElementById(currentRow + ',' + i).value.toUpperCase()).className = "keyboardCorrect";}, 1000)
-                //         }
-                //     } else if (document.getElementById(currentRow + ',' + i).className === "misplacedLast"
-                //         || document.getElementById(currentRow + ',' + i).className === "misplaced"
-                //         || document.getElementById(currentRow + ',' + i).className === "misplacedLastRecent"
-                //         || document.getElementById(currentRow + ',' + i).className === "misplacedRecent"
-                //     ) {
-                //         if (document.getElementById(document.getElementById(currentRow + ',' + i).value.toUpperCase()).className === "keyboardMisplacedRecent") {
-                //             setTimeout(() => { document.getElementById(document.getElementById(currentRow + ',' + i).value.toUpperCase()).className = "keyboardMisplaced"; }, 1000)
-                //         }
-                //     } else if (document.getElementById(currentRow + ',' + i).className === "wrongLast"
-                //         || document.getElementById(currentRow + ',' + i).className === "wrong"
-                //         || document.getElementById(currentRow + ',' + i).className === "wrongLastRecent"
-                //         || document.getElementById(currentRow + ',' + i).className === "wrongRecent") {
-                //         if (document.getElementById(document.getElementById(currentRow + ',' + i).value.toUpperCase()).className === "keyboardWrongRecent") {
-                //             setTimeout(() => {  document.getElementById(document.getElementById(currentRow + ',' + i).value.toUpperCase()).className = "keyboardWrong";}, 1000)
-                //         }
-                //     }
-                //     console.log(document.getElementById(document.getElementById(currentRow + ',' + i).value.toUpperCase()).className)
-                // }
-                // setTimeout(() => { document.onkeydown = () => true;}, 1000);
                 counter = 0;
             }  
             if (document.getElementById(currentRow + ',4').className === "correctLast" ||
                 document.getElementById(currentRow + ',4').className === "misplacedLast" ||
                 document.getElementById(currentRow + ',4').className === "wrongLast" ||
                 document.getElementById(currentRow + ',4').className === "inputLast"){
-                   
-                
-                }
-  
-                
-         
-            
-
-           
-            
-            
+                }  
         });
-        // document.addEventListener('animationend', aniEnd)
-        // return function cleanupListener() {
-        //     document.removeEventListener('animationend', aniEnd)
-        // }
     }, []);
-    
-        
-    
+       
     function renderGuess () {
-        // return new Promise(resolve => {
         let guessesArray = [];
         function setAnimatedFalse(){
             setTimeout(() => {
@@ -536,8 +417,6 @@ function Puzzle(){
                             && document.getElementById(letter).className !== "keyboardWrong"
                             && document.getElementById(letter).className !== "keyboardMisplaced"
                             && document.getElementById(letter).className !== "keyboardCorrect"){
-                            // document.getElementById(letter).className = "keyboardWrongRecent";
-                            // document.getElementById(letter).style.animationDelay = '7s'; 
                             setTimeout(() => { document.getElementById(letter).className = "keyboardWrong" }, 6000);  
                             }
                     } else if (i === 1) {
@@ -548,8 +427,6 @@ function Puzzle(){
                             document.getElementById(n + ',' + z).className === "misplacedRecent") 
                             && document.getElementById(letter).className !== "keyboardMisplaced"
                             && document.getElementById(letter).className !== "keyboardCorrect"){
-                            // document.getElementById(letter).className = "keyboardMisplacedRecent";
-                            // document.getElementById(letter).style.animationDelay = '7s'; 
                             setTimeout(() => { document.getElementById(letter).className = "keyboardMisplaced" },6000); 
                         }
                     } else if (i === 2) {
@@ -559,14 +436,10 @@ function Puzzle(){
                         } else if ((document.getElementById(n + ',' + z).className === "correctLastRecent" ||
                             document.getElementById(n + ',' + z).className === "correctRecent")
                             && document.getElementById(letter).className !== "keyboardCorrect") {
-                            // document.getElementById(letter).className = "keyboardCorrectRecent";
-                            // document.getElementById(letter).style.animationDelay = '7s'; 
                             setTimeout(() => { document.getElementById(letter).className = "keyboardCorrect" }, 6000); 
                         } else if ((document.getElementById(n + ',' + z).className === "correctLastRecent" ||
                             document.getElementById(n + ',' + z).className === "correctRecent")
                             && document.getElementById(letter).className === "keyboardMisplaced"){
-                            // document.getElementById(letter).className = "keyboardMisToCorRecent";
-                            // document.getElementById(letter).style.animationDelay = '7s';
                             setTimeout(() => { document.getElementById(letter).className = "keyboardCorrect" }, 6000); 
                             }
                     }
@@ -579,7 +452,6 @@ function Puzzle(){
         document.getElementById("wordWas").style.display = "none";
         document.getElementById("dictionaryContainer").style.display = "none";
         document.getElementById("panda").style.display = "none";
-        // document.getElementById("forDef").style.display = "none";
         if ((guessesArray[guessesArray.length - 1] === word && word !== "") || (guesses[5].length > 0 && word !== "")) {
             let winOrLoss = 0;
             if (guessesArray[guessesArray.length - 1] === word){
@@ -599,8 +471,6 @@ function Puzzle(){
                     document.getElementById("playAgain").style.display = "inline-block";
                     document.getElementById("dictionaryLink").style.display = "inline";
                     document.getElementById("wordWas").style.display = "inline";
-                    
-                    // document.getElementById("forDef").style.display = "inline";
                 }, 6000);
             }else{
                 document.getElementById("conditionallyRender").style.marginBottom = "5px";
@@ -609,7 +479,6 @@ function Puzzle(){
                     document.getElementById("playAgain").style.display = "inline-block";
                     document.getElementById("dictionaryLink").style.display = "inline";
                     document.getElementById("wordWas").style.display = "inline";
-                // document.getElementById("forDef").style.display = "inline";
             }
             dispatchAction({
                 type: 'POST_RECORD',
@@ -640,8 +509,6 @@ function Puzzle(){
             });
         }
 
-
-
         async function playAgain(){
             document.getElementById("conditionallyRender").style.marginBottom = "0px";
                 console.log('play again');
@@ -666,32 +533,22 @@ function Puzzle(){
                 await deleteWord();
                 
                 firstInput.current.focus();
-                console.log('here 3')
-                // navigate('/puzzle');
-            
-           
         }
         document.getElementById("playAgain").onclick = playAgain;
-        //     setTimeout(() => {
-        //         resolve('resolved');
-        //     }, 200)
-        // });
     }  
     
-
-    
     useEffect(()=> {
-        renderGuess();
+        if (guessesList.current.length > 0){
+            renderGuess();
+        }     
     })
-  return (
-        
+
+    return (
             <div className="container">
                 {puzzleDiv}
-          
                 <Keyboard />
             </div>
-        );
-
+    );
 }
 
 export default (Puzzle);

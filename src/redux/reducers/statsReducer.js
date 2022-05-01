@@ -1,9 +1,9 @@
-const defaultState = { total:0, first:0, second:0, third:0, fourth:0, fifth:0, sixth:0, winPercent:0, streak:0 };
-let newState = { total:0, first:0, second:0, third:0, fourth:0, fifth:0, sixth:0, winPercent:0, streak:0 };
+const defaultState = { total:0, first:0, second:0, third:0, fourth:0, fifth:0, sixth:0, winPercent:0, streak:0, best:0 };
+let newState = { total:0, first:0, second:0, third:0, fourth:0, fifth:0, sixth:0, winPercent:0, streak:0, best:0 };
 const setStats = (state = defaultState, action) => {
     switch (action.type) {
         case 'SET_STATS':
-            for (let i = 0; i < 9; i++) {
+            for (let i = 0; i < 10; i++) {
                 if (i === 0 && action.payload[0].total !==0) {
                     newState.total = action.payload[0].total;
                 } else if (i === 1 && action.payload[0].first !==0) {
@@ -22,13 +22,15 @@ const setStats = (state = defaultState, action) => {
                     newState.winPercent = action.payload[0].winPercent;
                 } else if (i === 8 && action.payload[0].streak !== 0) {
                     newState.streak = action.payload[0].streak;
+                } else if (i === 9 && action.payload[0].best !== 0) {
+                    newState.best = action.payload[0].best;
                 }
             }
             Object.assign(state, newState);
             console.log(state)
             return {...state};
         case 'SET_STATS_MULTI':
-            for (let i = 0; i < 9; i++) {
+            for (let i = 0; i < 10; i++) {
                 if (i === 0 && action.payload[0].total !== 0) {
                     newState.total = action.payload[0].total;
                 } else if (i === 1 && action.payload[0].first !== 0) {
@@ -47,6 +49,8 @@ const setStats = (state = defaultState, action) => {
                     newState.winPercent = action.payload[0].winPercent;
                 } else if (i === 8 && action.payload[0].streak !== 0) {
                     newState.streak = action.payload[0].streak;
+                } else if (i === 9 && action.payload[0].best !== 0) {
+                    newState.best = action.payload[0].best;
                 }
             }
             Object.assign(state, newState);
@@ -54,7 +58,7 @@ const setStats = (state = defaultState, action) => {
             return { ...state };
 
         case 'SET_STATS_ONCE':
-            for (let i = 0; i < 9; i++) {
+            for (let i = 0; i < 10; i++) {
                 if (i === 0 && action.payload[0].total !== 0) {
                     newState.total = action.payload[0].total;
                 } else if (i === 1 && action.payload[0].first !== 0) {
@@ -73,6 +77,8 @@ const setStats = (state = defaultState, action) => {
                     newState.winPercent = action.payload[0].winPercent;
                 } else if (i === 8 && action.payload[0].streak !== 0) {
                     newState.streak = action.payload[0].streak;
+                } else if (i === 9 && action.payload[0].best !== 0) {
+                    newState.best = action.payload[0].best;
                 }
             }
             Object.assign(state, newState);

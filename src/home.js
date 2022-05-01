@@ -24,7 +24,7 @@ function Home(){
     let allStats = useSelector((state => state.setStats));
 
     statsList.current = [allStats.total, allStats.first, allStats.second, allStats.third, allStats.fourth,
-    allStats.fifth, allStats.sixth, allStats.winPercent, allStats.streak]
+    allStats.fifth, allStats.sixth, allStats.winPercent, allStats.streak, allStats.best]
     useEffect(() => {
         setStats(stats = statsList.current)
     }, [])
@@ -36,6 +36,7 @@ function Home(){
         <p className="statsRowPlayed">Played:  {statsList.current[0]}</p>
         <p className="statsRowWin">Win %: {statsList.current[7]}</p>
         <p className="statsRowStreak">Streak: {statsList.current[8]}</p>
+        <p className="statsRowBest">Best: {statsList.current[9]}</p>
         </div>
         </div>;
     

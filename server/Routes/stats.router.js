@@ -46,7 +46,7 @@ router.get('/', (req, res)=>{
         const client = await pool.connect();
         try {
             await client.query('BEGIN');
-            let statsObject = {total: 0, first: 0, second: 0, third: 0, fourth: 0, fifth: 0, sixth: 0, winPercent: 0, streak: 0};
+            let statsObject = {total: 0, first: 0, second: 0, third: 0, fourth: 0, fifth: 0, sixth: 0, winPercent: 0, streak: 0, best:0};
 
             let getAllGamesQuery = `SELECT COUNT(*) FROM "record";`;
             let getAllGames = await client.query(getAllGamesQuery);
@@ -100,6 +100,28 @@ router.get('/', (req, res)=>{
             };
             let currentStreak = totalGamesID - latestLoss;
             statsObject.streak = parseInt(currentStreak);
+
+            let selectAllRecordsQuery = `SELECT * FROM "record" ORDER BY "id";`;
+            let selectAllRecords = await client.query(selectAllRecordsQuery);
+            let bestStreakCounter = 0;
+            let currentStreakCounter = 0;
+            for (let i = 0; i < selectAllRecords.rows.length; i++){
+                if (selectAllRecords.rows[i].win == true && i != selectAllRecords.rows.length-1){
+                    currentStreakCounter++;
+                } else if (selectAllRecords.rows[i].win == true && i == selectAllRecords.rows.length - 1) {
+                    currentStreakCounter++;
+                    if (currentStreakCounter > bestStreakCounter) {
+                        bestStreakCounter = currentStreakCounter;
+                    };
+                    currentStreakCounter = 0;
+                } else if (selectAllRecords.rows[i].win == false){
+                    if (currentStreakCounter > bestStreakCounter){
+                        bestStreakCounter = currentStreakCounter;
+                    };
+                    currentStreakCounter = 0;
+                };
+            };
+            statsObject.best = parseInt(bestStreakCounter);
 
             res.send([statsObject]);
         } catch (e) {
