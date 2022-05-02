@@ -1,10 +1,11 @@
+import { style } from '@mui/system';
 import React, { useEffect, useRef, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import './App.css'
 import Keyboard from './keyboard' ;
 import './keyboard.css'
-
-
+import StatChart from './statChart';
+// import './home.css';
 function Puzzle(){
     const dispatchAction = useDispatch();
 
@@ -148,6 +149,18 @@ function Puzzle(){
             event.preventDefault();
         }
     }    
+    let statsCard = <div id="statsCard" className="statsCard">
+        <div id="statChartContainer" className="statChartContainer">
+            <StatChart />
+        </div>
+        <div className="statsContainer">
+            <p className="statsRowPlayed">Played:  {statsList.current[0]}</p>
+            <p className="statsRowWin">Win %: {statsList.current[7]}</p>
+            <p className="statsRowStreak">Streak: {statsList.current[8]}</p>
+            <p className="statsRowBest">Best: {statsList.current[9]}</p>
+        </div>
+    </div>;
+    let statsWindow = <div id="statsWindow" className="statsWindow">{statsCard}</div>;
         let rowDiv=[];
     
         let puzzleDiv="";
@@ -171,9 +184,16 @@ function Puzzle(){
                             className={"input"} maxLength={1} rows={1} cols={1}/>);
                     }
                 }
-            puzzleDiv = <div className={"puzzleContainer"}><h1>Word Puzzle</h1>{rowDiv}<div id="conditionallyRender" className="conditionallyRender">{dictionaryLink}{playAgainButton}
+            let puzzleParent = <div className="puzzleParent"><div id="allRowContainer" className="allRowContainer">{rowDiv} </div> {statsWindow}</div>;
+            
+            puzzleDiv = <div className={"puzzleContainer"}>
+                <div id="headerDiv" className="headerDiv"><h1>Word Puzzle</h1><button id="showPuzzle" className="showPuzzle" onclick=""></button>
+                    <button id="showStats" className="showStats" onclick=""></button></div>
+                {puzzleParent}
+                <div id="conditionallyRender" className="conditionallyRender">{dictionaryLink}{playAgainButton}
                 <div id="p" className='pNormal' >Word Not in the Dictionary</div></div></div>;
             }
+    
     let counter = 0;
     useEffect(() => {
         document.addEventListener('animationend', () => {
@@ -459,10 +479,14 @@ function Puzzle(){
             }else{
                 winOrLoss=0;
             }
+            dispatchAction({
+                type: 'POST_RECORD',
+                payload: { round: guessesArray.length, win: winOrLoss },
+            })
             
             if (document.getElementById((guessesArray.length - 1) + ',0').className ==="correctRecent" || 
                 document.getElementById((guessesArray.length - 1) + ',0').className === "misplacedRecent" ||
-                document.getElementById((guessesArray.length - 1) + ',0').className === "wrrongRecent"){
+                document.getElementById((guessesArray.length - 1) + ',0').className === "wrongRecent"){
                 
                 setTimeout(() => {
                     document.getElementById("conditionallyRender").style.marginBottom = "5px";
@@ -471,6 +495,11 @@ function Puzzle(){
                     document.getElementById("playAgain").style.display = "inline-block";
                     document.getElementById("dictionaryLink").style.display = "inline";
                     document.getElementById("wordWas").style.display = "inline";
+                    document.getElementById("allRowContainer").style.opacity = "5%";
+                    document.getElementById("statsCard").style.border = "none";
+                    document.getElementById("statsWindow").style.opacity = "100%";
+                    document.getElementById("showPuzzle").style.display = "inline";
+                    document.getElementById("showStats").style.display = "none";
                 }, 6000);
             }else{
                 document.getElementById("conditionallyRender").style.marginBottom = "5px";
@@ -479,11 +508,13 @@ function Puzzle(){
                     document.getElementById("playAgain").style.display = "inline-block";
                     document.getElementById("dictionaryLink").style.display = "inline";
                     document.getElementById("wordWas").style.display = "inline";
+                    document.getElementById("allRowContainer").style.opacity = "5%";
+                    document.getElementById("statsCard").style.border = "none";
+                    document.getElementById("statsWindow").style.opacity = "100%";
+                    document.getElementById("showPuzzle").style.display = "inline";
+                    document.getElementById("showStats").style.display = "none";
             }
-            dispatchAction({
-                type: 'POST_RECORD',
-                payload: { round: guessesArray.length, win: winOrLoss },
-            })
+            
         }
         let deleteWord = () => {
             return new Promise(resolve => {
@@ -503,6 +534,11 @@ function Puzzle(){
                 dispatchAction({
                     type: 'RESET_GUESSES',
                 })
+                document.getElementById("statsWindow").style.opacity = "0%";
+                document.getElementById("showPuzzle").style.display = "none";
+                document.getElementById("showStats").style.display = "none";
+                document.getElementById("allRowContainer").style.opacity = "100%";
+                document.getElementById("statsCard").style.border = "2px solid rgb(181, 178, 178)";
                 setTimeout(() => { 
                 resolve('resolved');
                 }, 200)
@@ -532,9 +568,26 @@ function Puzzle(){
                 await resetGuesses();
                 await deleteWord();
                 
+                
                 firstInput.current.focus();
         }
+        function showStats() {
+            document.getElementById("allRowContainer").style.opacity = "5%";
+            document.getElementById("statsCard").style.border = "none";
+            document.getElementById("statsWindow").style.opacity = "100%";
+            document.getElementById("showPuzzle").style.display = "inline";
+            document.getElementById("showStats").style.display = "none";
+        }
+        function showPuzzle() {
+            document.getElementById("allRowContainer").style.opacity = "100%";
+            document.getElementById("statsCard").style.border = "2px solid rgb(181, 178, 178)";
+            document.getElementById("statsWindow").style.opacity = "0%";
+            document.getElementById("showPuzzle").style.display = "none";
+            document.getElementById("showStats").style.display = "inline";
+        }
         document.getElementById("playAgain").onclick = playAgain;
+        document.getElementById("showPuzzle").onclick = showPuzzle;
+        document.getElementById("showStats").onclick = showStats;
     }  
     
     useEffect(()=> {
@@ -545,7 +598,9 @@ function Puzzle(){
 
     return (
             <div className="container">
-                {puzzleDiv}
+                
+                    {puzzleDiv}
+                
                 <Keyboard />
             </div>
     );

@@ -412,15 +412,41 @@ border: 2px solid rgb(99, 97, 97);
   margin-right:0px;
 }
 
-.puzzleContainer {
- flex-direction: column;
+.puzzleParent{
+  flex-direction: column;
   align-items: center;
   justify-content: center;
   vertical-align: middle;
   text-align: center;
+  align-self:center;
   display: inline-block;
-}
+  position:relative;
+  width:290px;
 
+}
+.puzzleContainer {
+ flex-direction: column;
+  align-items: center;
+  /* justify-content: center; */
+  /* vertical-align: middle; */
+  text-align: center;
+  display: inline-block;
+  width:290px;
+
+}
+.statsWindow{
+  /* flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  vertical-align: middle;
+  text-align: center;
+  display: inline-block; */
+  height:344px;
+  /* display:none; */
+  /* position:absolute; */
+  opacity: 0%;
+
+}
 .rowContainer {
   margin-bottom: 10px;
   flex-direction: column;
@@ -439,21 +465,69 @@ border: 2px solid rgb(99, 97, 97);
   text-align: center;
   
 }
-.container{
-  text-align: center;
-}
 
-h1 {
-  color: rgb(181, 178, 178);
-  font-family: Arial, Helvetica, sans-serif;
-  font-size: 36px;
+.allRowContainer{
+  /* position:absolute; */
+  /* margin-bottom: 10px; */
+  height:344px;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   vertical-align: middle;
   text-align: center;
+  position:absolute;
+  /* display:none; */
+  opacity:100%;
+}
+.container{
+  text-align: center;
+}
+.headerDiv{
+  display:inline-flex;
+  flex-direction: row;
+  width:290px;
+}
+h1 {
+  color: rgb(181, 178, 178);
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 36px;
+  align-self:flex-end;
+  /* flex-direction: column; */
+  /* align-items: flex-start; */
+  /* justify-content: start;
+  vertical-align:start; */
+  text-align: start;
+  /* margin-left:30px; */
+}
+.showPuzzle{
+  align-self:center;
+  /* text-align: end; */
+  margin-left:45px;
+  width:30px;
+  height:30px;
+  background-color:rgb(181, 178, 178);
+  border: 2px solid rgb(99, 97, 97);
+  border-radius:5px;
+  background-image: url('./Images/extension.png');
+  background-repeat: no-repeat;
+  background-position: center;
+  display:none;
 }
 
+.showStats{
+align-self:center;
+/* text-align: end; */
+margin-left:45px;
+width:30px;
+height:30px;
+background-color:rgb(181, 178, 178);
+border: 2px solid rgb(99, 97, 97);
+border-radius:5px;
+background-image: url('./Images/graph.png');
+background-repeat: no-repeat;
+background-position: center;
+display:none;
+}
 .pNormal{
  display: none;
   color: rgb(255, 87, 87);

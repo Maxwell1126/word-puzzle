@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate} from 'react-router-dom';
 import './home.css'
+import './App.css'
 import StatChart from './statChart';
 
 
@@ -43,9 +44,11 @@ function Home(){
     
         return (
             <div align="center">
-            <div id={"homeContainer"} className={"homeContainer"}>
-                <h1>Word Puzzle</h1>
                 
+            <div id={"homeContainer"} className={"homeContainer"}>
+                    <div id="headerDiv" className="headerDiv">
+                    <h1>Word Puzzle</h1>
+                    </div>
                 {statsCard}
  
                 

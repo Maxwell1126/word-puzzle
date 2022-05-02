@@ -50,7 +50,9 @@ function StatChart() {
  
 
     let options = {
+     
         // aspectRatio:1,
+        indexAxis: 'y',
         layout: {
             padding: 20,
             height: 2,
@@ -58,23 +60,25 @@ function StatChart() {
         maintainAspectRatio:false,
         scales: {
             
-            x: {
+            y: {
+                // display:false,
                 ticks: {
                     color: "rgb(181, 178, 178)",
                 }, 
                 grid: {
                     color: "rgba(19, 19, 19)",
                 },
-
+                border: { color: "rgba(19, 19, 19)", },
             },
-            y: {
-                // display:false,
+            x: {
+                display:false,
                 ticks:{
                     color: "rgba(19, 19, 19)",
                 },
                 grid: {
                     color: "rgba(19, 19, 19)",
                 },
+                border: {color: "rgba(19, 19, 19)",},
         },
     },
 
