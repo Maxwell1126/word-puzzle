@@ -25,7 +25,7 @@ function StatChart() {
     allStats.fifth, allStats.sixth]
     useEffect(() => {
         setStats(stats = statsList.current)
-    }, [])
+    }, [allStats])
 
 
     ChartJS.register(

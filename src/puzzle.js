@@ -1,4 +1,3 @@
-import { style } from '@mui/system';
 import React, { useEffect, useRef, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import './App.css'
@@ -10,8 +9,9 @@ function Puzzle(){
     const dispatchAction = useDispatch();
 
     let isAnimated = false;
-    
+    let gameOver = false;
     let playAgainButton = <button id= "playAgain" className="playAgain" onClick="">Play Again</button>
+    let keyboardElements = document.querySelectorAll('.keyboardButton, .delEnterButton, .keyboardCorrect, .keyboardMisplaced, .keyboardWrong');
     
     useEffect(() => {
         dispatchAction({
@@ -24,10 +24,12 @@ function Puzzle(){
         })
     }, [])
     useEffect(() => {
-        dispatchAction({
-            type: 'GET_STATS', payload:'puzzle'
-        })
-    }, [])
+
+            dispatchAction({
+                type: 'GET_STATS', payload:'home'
+            })
+        
+    },[])
 
     let guessesList = useRef([]);
     let [guesses, setGuesses] = useState([]);
@@ -51,14 +53,35 @@ function Puzzle(){
         setWord(word= wordToGuess)
     })
     let statsList = useRef([]);
-    let [stats, setStats] = useState([]);
+    let [stats, setStats] = useState({});
+    
     let allStats = useSelector((state => state.setStats));
+    console.log(allStats)
     statsList.current = [allStats.total, allStats.first, allStats.second, allStats.third, allStats.fourth, 
             allStats.fifth, allStats.sixth, allStats.winPercent, allStats.streak, allStats.best]
+    
     useEffect(() => {
-        setStats(stats = statsList.current)
-    }, []);
 
+            setStats(stats = allStats)
+    }, [allStats]);
+    function getAllStats() {
+        console.log(statsList.current[0], stats[0])
+        return new Promise(resolve => {
+            if (statsList.current[0] > stats[0]) {
+                console.log('in here')
+            dispatchAction({
+                type: 'GET_STATS', payload: 'home'
+            })
+            setTimeout(() => {
+                resolve('resolved');
+            }, 200)
+        }
+        });
+    }
+    async function completeGetAllStats() {
+        await getAllStats();
+    }
+    completeGetAllStats();
     let link = `https://www.merriam-webster.com/dictionary/${word}`
     let linkToDef=()=>{
         window.open(link, '_blank');
@@ -81,6 +104,7 @@ function Puzzle(){
     function userKeyDown(event){
         if (guesses[5].length > 0 || guesses[0] === word || guesses[1] === word || guesses[2] === word || guesses[3] === word || guesses[4] === word || isAnimated===true){
             event.preventDefault();
+            
         }else{
             if (event.code.charAt(0) !== 'K' && event.code !== "Backspace" && event.code !== "Enter") {
                         event.preventDefault();
@@ -140,26 +164,30 @@ function Puzzle(){
     });
 
     window.onmousedown = (event) => {
-        if (event.target.className !== "keyboardButton" || event.target.className !=="delEnterButton"){
+        if (event.target.className !== "keyboardButton" || event.target.className !=="delEnterButton" ||
+            (guesses[5].length > 0 || guesses[0] === word || guesses[1] === word || guesses[2] === word || guesses[3] === word || guesses[4] === word || isAnimated === true)){
             event.preventDefault();
         }
     }
     window.onmouseup = (event) => {
-        if (event.target.className !== "keyboardButton" || event.target.className !=="delEnterButton") {
+        if (event.target.className !== "keyboardButton" || event.target.className !== "delEnterButton" ||
+            (guesses[5].length > 0 || guesses[0] === word || guesses[1] === word || guesses[2] === word || guesses[3] === word || guesses[4] === word || isAnimated === true)) {
             event.preventDefault();
         }
-    }    
+    }  
+
     let statsCard = <div id="statsCard" className="statsCard">
         <div id="statChartContainer" className="statChartContainer">
             <StatChart />
         </div>
         <div className="statsContainer">
-            <p className="statsRowPlayed">Played:  {statsList.current[0]}</p>
-            <p className="statsRowWin">Win %: {statsList.current[7]}</p>
-            <p className="statsRowStreak">Streak: {statsList.current[8]}</p>
-            <p className="statsRowBest">Best: {statsList.current[9]}</p>
+            <p className="statsRowPlayed">Played:  {stats.total}</p>
+            <p className="statsRowWin">Win %: {stats.winPercent}</p>
+            <p className="statsRowStreak">Streak: {stats.streak}</p>
+            <p className="statsRowBest">Best: {stats.best}</p>
         </div>
     </div>;
+
     let statsWindow = <div id="statsWindow" className="statsWindow">{statsCard}</div>;
         let rowDiv=[];
     
@@ -194,63 +222,67 @@ function Puzzle(){
                 <div id="p" className='pNormal' >Word Not in the Dictionary</div></div></div>;
             }
     
-    let counter = 0;
-    useEffect(() => {
-        document.addEventListener('animationend', () => {
-            document.getElementById("p").className = "pNormal";
-            let currentRow = parseInt(document.getElementById(document.activeElement.id).id.charAt(0));
-            for(let i =0; i < 5; i++){
-                if (document.getElementById((currentRow) + ',' + i).className === "notWord") {
-                    document.getElementById((currentRow) + ',' + i).className = "input";
+    // let counter = 0;
+    // useEffect(() => {
+    //     document.addEventListener('animationend', () => {
+            // document.getElementById("p").className = "pNormal";
+            // let currentRow = parseInt(document.getElementById(document.activeElement.id).id.charAt(0));
+            // for(let i =0; i < 5; i++){
+            //     if (document.getElementById((currentRow) + ',' + i).className === "notWord") {
+            //         document.getElementById((currentRow) + ',' + i).className = "input";
                  
-                } else if (document.getElementById((currentRow) + ',' + i).className === "notWordLast") {
-                    document.getElementById((currentRow) + ',' + i).className = "inputLast";
-                    document.getElementById("p").className = "pNormal";
-                    counter = 0;
+            //     } else if (document.getElementById((currentRow) + ',' + i).className === "notWordLast") {
+            //         document.getElementById((currentRow) + ',' + i).className = "inputLast";
+            //         document.getElementById("p").className = "pNormal";
+            //         counter = 0;
               
-                }
-            }
+            //     }
+            // }
             
-            if (guessesList.current[5].length > 0 || guessesList.current[0].length === 0){
-                currentRow = parseInt(document.getElementById(document.activeElement.id).id.charAt(0));
+            // if (guessesList.current[5].length > 0 || guessesList.current[0].length === 0){
+            //     currentRow = parseInt(document.getElementById(document.activeElement.id).id.charAt(0));
                 
-            }else{
+            // }else{
                 
-                currentRow = parseInt(document.getElementById(document.activeElement.id).id.charAt(0) - 1);
-            }
-            if (counter < 5){           
+            //     currentRow = parseInt(document.getElementById(document.activeElement.id).id.charAt(0) - 1);
+            // }
+            // if (counter < 5){           
             
-                if (document.getElementById(currentRow + ',' + counter).className === "correctRecent"){
-                    document.getElementById(currentRow + ',' + counter).className = "correct";
-                } else if (document.getElementById(currentRow + ',' + counter).className === "misplacedRecent"){
-                    document.getElementById(currentRow + ',' + counter).className = "misplaced";
-                } else if (document.getElementById(currentRow + ',' + counter).className === "wrongRecent"){
-                    document.getElementById(currentRow + ',' + counter).className = "wrong";
-                } else if (document.getElementById(currentRow + ',' + counter).className === "correctLastRecent") {
-                    document.getElementById(currentRow + ',' + counter).className = "correctLast";
-                } else if (document.getElementById(currentRow + ',' + counter).className === "misplacedLastRecent") {
-                    document.getElementById(currentRow + ',' + counter).className = "misplacedLast";
-                } else if (document.getElementById(currentRow + ',' + counter).className === "wrongLastRecent") {
-                    document.getElementById(currentRow + ',' + counter).className = "wrongLast";
-                }
-                counter++;
-            }else{
-                counter = 0;
-            }  
-            if (document.getElementById(currentRow + ',4').className === "correctLast" ||
-                document.getElementById(currentRow + ',4').className === "misplacedLast" ||
-                document.getElementById(currentRow + ',4').className === "wrongLast" ||
-                document.getElementById(currentRow + ',4').className === "inputLast"){
-                }  
-        });
-    }, []);
+            //     if (document.getElementById(currentRow + ',' + counter).className === "correctRecent"){
+            //         document.getElementById(currentRow + ',' + counter).className = "correct";
+            //     } else if (document.getElementById(currentRow + ',' + counter).className === "misplacedRecent"){
+            //         document.getElementById(currentRow + ',' + counter).className = "misplaced";
+            //     } else if (document.getElementById(currentRow + ',' + counter).className === "wrongRecent"){
+            //         document.getElementById(currentRow + ',' + counter).className = "wrong";
+            //     } else if (document.getElementById(currentRow + ',' + counter).className === "correctLastRecent") {
+            //         document.getElementById(currentRow + ',' + counter).className = "correctLast";
+            //     } else if (document.getElementById(currentRow + ',' + counter).className === "misplacedLastRecent") {
+            //         document.getElementById(currentRow + ',' + counter).className = "misplacedLast";
+            //     } else if (document.getElementById(currentRow + ',' + counter).className === "wrongLastRecent") {
+            //         document.getElementById(currentRow + ',' + counter).className = "wrongLast";
+            //     }
+            //     counter++;
+            // }else{
+            //     counter = 0;
+            // }  
+            // if (document.getElementById(currentRow + ',4').className === "correctLast" ||
+            //     document.getElementById(currentRow + ',4').className === "misplacedLast" ||
+            //     document.getElementById(currentRow + ',4').className === "wrongLast" ||
+            //     document.getElementById(currentRow + ',4').className === "inputLast"){
+            //     }  
+    //     });
+    // }, []);
        
     function renderGuess () {
         let guessesArray = [];
+    
         function setAnimatedFalse(){
             setTimeout(() => {
                 isAnimated = false;
-            }, 6000);
+                for (let i = 0; i < keyboardElements.length - 1; i++) {
+                    keyboardElements[i].disabled = "";
+                }
+            }, 2500);
         }
         for (let i = 0; i < guesses.length; i++){
 
@@ -275,14 +307,14 @@ function Puzzle(){
             let tempWordArray = [];
            
             for (let n = 0; n < 5; n++) {
-                
+                if (wordArray[n] !== undefined && guessArray[n] !== undefined) {
                 document.getElementById(i + ',' + n).value = guessesArray[i].charAt(n);
                 if (wordArray[n].char === guessArray[n].char && 
                     wordArray[n].id === guessArray[n].id && guessArray[n].id !== 4){
                     if (i === guessesArray.length - 1 && guess.length === 0 && lastKey !== "Backspace" 
                         && lastKey === "Enter") {
                         document.getElementById(i + ',' + guessArray[n].id).className = "correctRecent";
-                        document.getElementById(i + ',' + guessArray[n].id).style.animationDelay = `${guessArray[n].id}s`;
+                        document.getElementById(i + ',' + guessArray[n].id).style.animationDelay = `${guessArray[n].id*.25}s`;
                         isAnimated=true;
                         setAnimatedFalse();
                     } else {
@@ -293,7 +325,7 @@ function Puzzle(){
                     if (i === guessesArray.length - 1 && guess.length === 0 && lastKey !== "Backspace" 
                         && lastKey === "Enter") {
                         document.getElementById(i + ',' + guessArray[n].id).className = "correctLastRecent";
-                        document.getElementById(i + ',' + guessArray[n].id).style.animationDelay = `${n}s`;
+                        document.getElementById(i + ',' + guessArray[n].id).style.animationDelay = `${n*.25}s`;
                         isAnimated = true;
                         setAnimatedFalse();
                     } else {
@@ -308,6 +340,7 @@ function Puzzle(){
                     guessArray = tempGuessArray;
                     wordArray = tempWordArray;
                 }
+            }
             }
             let wordCharCounter = 0;
             let guessCharCounter = 0;
@@ -324,7 +357,7 @@ function Puzzle(){
                         if (i === guessesArray.length - 1 && guess.length === 0 && lastKey !== "Backspace"
                             && lastKey === "Enter") {
                             document.getElementById(i + ',' + guessArray[z].id).className = "wrongRecent";
-                            document.getElementById(i + ',' + guessArray[z].id).style.animationDelay = `${guessArray[z].id}s`;
+                            document.getElementById(i + ',' + guessArray[z].id).style.animationDelay = `${guessArray[z].id*.25}s`;
                             isAnimated = true;
                             setAnimatedFalse();
                         } else {
@@ -333,7 +366,7 @@ function Puzzle(){
                     }else{
                         if (i === guessesArray.length - 1 && guess.length === 0 && lastKey !== "Backspace" && lastKey === "Enter") {
                             document.getElementById(i + ',' + guessArray[z].id).className = "wrongLastRecent";
-                            document.getElementById(i + ',' + guessArray[z].id).style.animationDelay = `${guessArray[z].id}s`;
+                            document.getElementById(i + ',' + guessArray[z].id).style.animationDelay = `${guessArray[z].id*.25}s`;
                             isAnimated = true;
                             setAnimatedFalse();
                         } else {
@@ -351,7 +384,7 @@ function Puzzle(){
                                     if (i === guessesArray.length - 1 && guess.length === 0 && lastKey !== "Backspace"
                                         && lastKey === "Enter") {
                                         document.getElementById(i + ',' + guessArray[y].id).className = "misplacedRecent";
-                                        document.getElementById(i + ',' + guessArray[y].id).style.animationDelay = `${guessArray[y].id}s`;
+                                        document.getElementById(i + ',' + guessArray[y].id).style.animationDelay = `${guessArray[y].id*.25}s`;
                                         isAnimated = true;
                                         setAnimatedFalse();
                                     } else {
@@ -361,7 +394,7 @@ function Puzzle(){
                                     if (i === guessesArray.length - 1 && guess.length === 0 && lastKey !== "Backspace"
                                         && lastKey === "Enter") {
                                         document.getElementById(i + ',' + guessArray[y].id).className = "misplacedLastRecent";
-                                        document.getElementById(i + ',' + guessArray[y].id).style.animationDelay = `${guessArray[y].id}s`;
+                                        document.getElementById(i + ',' + guessArray[y].id).style.animationDelay = `${guessArray[y].id*.25}s`;
                                         isAnimated = true;
                                         setAnimatedFalse();
                                     } else {
@@ -373,16 +406,17 @@ function Puzzle(){
                                     if (i === guessesArray.length - 1 && guess.length === 0 && lastKey !== "Backspace"
                                         && lastKey === "Enter") {
                                         document.getElementById(i + ',' + guessArray[z].id).className = "wrongRecent";
-                                        document.getElementById(i + ',' + guessArray[z].id).style.animationDelay = `${guessArray[z].id}s`;
+                                        document.getElementById(i + ',' + guessArray[z].id).style.animationDelay = `${guessArray[z].id*.25}s`;
                                         isAnimated = true;
                                         setAnimatedFalse();
+                                        
                                     } else {
                                         document.getElementById(i + ',' + guessArray[z].id).className = "wrong";
                                     }
                                 } else {
                                     if (i === guessesArray.length - 1 && guess.length === 0 && lastKey !== "Backspace" && lastKey === "Enter") {
                                         document.getElementById(i + ',' + guessArray[z].id).className = "wrongLastRecent";
-                                        document.getElementById(i + ',' + guessArray[z].id).style.animationDelay = `${guessArray[z].id}s`;
+                                        document.getElementById(i + ',' + guessArray[z].id).style.animationDelay = `${guessArray[z].id*.25}s`;
                                         isAnimated = true;
                                         setAnimatedFalse();
                                     } else {
@@ -424,6 +458,27 @@ function Puzzle(){
             }
         
         }
+       
+        function keyboardElementsActivate(ele){
+            setTimeout(() => {
+                ele.disabled = "";
+            }, 2500);
+        }
+        for (let i = 0; i < keyboardElements.length - 1; i++) {
+            if(guessesArray[0]){
+                if (document.getElementById(guessesArray.length-1+ ',0').className == "wrong" ||
+                    document.getElementById(guessesArray.length - 1 + ',0').className == "misplaced" ||
+                    document.getElementById(guessesArray.length - 1 + ',0').className == "correct" ||
+                    document.getElementById(guessesArray.length - 1 + ',0').className == "input"){
+                    keyboardElements[i].disabled = "";
+                }else{
+                    keyboardElements[i].disabled = "disabled";
+                }
+            }
+        }
+        for (let i = 0; i < keyboardElements.length - 1; i++) {
+            keyboardElementsActivate(keyboardElements[i])
+        }
         for (let i = 0; i < 3; i++) {
             for (let n = 0; n < guessesArray.length; n++) {
                 for (let z = 0; z < 5; z++) {
@@ -437,7 +492,7 @@ function Puzzle(){
                             && document.getElementById(letter).className !== "keyboardWrong"
                             && document.getElementById(letter).className !== "keyboardMisplaced"
                             && document.getElementById(letter).className !== "keyboardCorrect"){
-                            setTimeout(() => { document.getElementById(letter).className = "keyboardWrong" }, 6000);  
+                            setTimeout(() => { document.getElementById(letter).className = "keyboardWrong" }, 2500);  
                             }
                     } else if (i === 1) {
                         if (document.getElementById(n + ',' + z).className === "misplaced" ||
@@ -447,7 +502,7 @@ function Puzzle(){
                             document.getElementById(n + ',' + z).className === "misplacedRecent") 
                             && document.getElementById(letter).className !== "keyboardMisplaced"
                             && document.getElementById(letter).className !== "keyboardCorrect"){
-                            setTimeout(() => { document.getElementById(letter).className = "keyboardMisplaced" },6000); 
+                            setTimeout(() => { document.getElementById(letter).className = "keyboardMisplaced" },2500); 
                         }
                     } else if (i === 2) {
                         if (document.getElementById(n + ',' + z).className === "correct" ||
@@ -456,17 +511,18 @@ function Puzzle(){
                         } else if ((document.getElementById(n + ',' + z).className === "correctLastRecent" ||
                             document.getElementById(n + ',' + z).className === "correctRecent")
                             && document.getElementById(letter).className !== "keyboardCorrect") {
-                            setTimeout(() => { document.getElementById(letter).className = "keyboardCorrect" }, 6000); 
+                            setTimeout(() => { document.getElementById(letter).className = "keyboardCorrect" }, 2500); 
                         } else if ((document.getElementById(n + ',' + z).className === "correctLastRecent" ||
                             document.getElementById(n + ',' + z).className === "correctRecent")
                             && document.getElementById(letter).className === "keyboardMisplaced"){
-                            setTimeout(() => { document.getElementById(letter).className = "keyboardCorrect" }, 6000); 
+                            setTimeout(() => { document.getElementById(letter).className = "keyboardCorrect" }, 2500); 
                             }
                     }
                 }
             }
             
         }
+        
         document.getElementById("playAgain").style.display = "none";
         document.getElementById("dictionaryLink").style.display = "none";
         document.getElementById("wordWas").style.display = "none";
@@ -479,15 +535,29 @@ function Puzzle(){
             }else{
                 winOrLoss=0;
             }
-            dispatchAction({
-                type: 'POST_RECORD',
-                payload: { round: guessesArray.length, win: winOrLoss },
-            })
+            function postRecord(){
+                return new Promise(resolve => {
+                dispatchAction({
+                    type: 'POST_RECORD',
+                    payload: { round: guessesArray.length, win: winOrLoss },
+                })
+                    setTimeout(() => {
+                        resolve('resolved');
+                    }, 200)
+                });
+            }
+            async function completePostRecord(){
+                await postRecord();
+            }
+            completePostRecord();
             
+            gameOver = true;
+            console.log(stats[0])
             if (document.getElementById((guessesArray.length - 1) + ',0').className ==="correctRecent" || 
                 document.getElementById((guessesArray.length - 1) + ',0').className === "misplacedRecent" ||
                 document.getElementById((guessesArray.length - 1) + ',0').className === "wrongRecent"){
-                
+               
+               
                 setTimeout(() => {
                     document.getElementById("conditionallyRender").style.marginBottom = "5px";
                     document.getElementById("dictionaryContainer").style.display = "inline-flex";
@@ -500,7 +570,8 @@ function Puzzle(){
                     document.getElementById("statsWindow").style.opacity = "100%";
                     document.getElementById("showPuzzle").style.display = "inline";
                     document.getElementById("showStats").style.display = "none";
-                }, 6000);
+                    
+                }, 2500);
             }else{
                 document.getElementById("conditionallyRender").style.marginBottom = "5px";
                     document.getElementById("dictionaryContainer").style.display = "inline-flex";
@@ -513,9 +584,35 @@ function Puzzle(){
                     document.getElementById("statsWindow").style.opacity = "100%";
                     document.getElementById("showPuzzle").style.display = "inline";
                     document.getElementById("showStats").style.display = "none";
+                
             }
             
         }
+        setTimeout(() => {
+            for (let i = 0; i < 5; i++) {
+                if (guessesArray[0]) {
+                    if (document.getElementById(guessesArray.length - 1 + ',' + i).className == "correctRecent") {
+                        console.log(document.getElementById(guessesArray.length - 1 + ',' + i).className)
+                        document.getElementById(guessesArray.length - 1 + ',' + i).classname = "correct";
+                    } else if (document.getElementById(guessesArray.length - 1 + ',' + i).className == "correctLastRecent") {
+                        console.log(document.getElementById(guessesArray.length - 1 + ',' + i).className)
+                        document.getElementById(guessesArray.length - 1 + ',' + i).classname = "correctLast";
+                    } else if (document.getElementById(guessesArray.length - 1 + ',' + i).className == "misplacedRecent") {
+                        console.log(document.getElementById(guessesArray.length - 1 + ',' + i).className)
+                        document.getElementById(guessesArray.length - 1 + ',' + i).classname = "misplaced";
+                    } else if (document.getElementById(guessesArray.length - 1 + ',' + i).className == "misplacedLastRecent") {
+                        console.log(document.getElementById(guessesArray.length - 1 + ',' + i).className)
+                        document.getElementById(guessesArray.length - 1 + ',' + i).classname = "misplacedLast";
+                    } else if (document.getElementById(guessesArray.length - 1 + ',' + i).className == "wrongRecent") {
+                        console.log(document.getElementById(guessesArray.length - 1 + ',' + i).className)
+                        document.getElementById(guessesArray.length - 1 + ',' + i).classname = "wrong";
+                    } else if (document.getElementById(guessesArray.length - 1 + ',' + i).className == "wrongLastRecent") {
+                        console.log(document.getElementById(guessesArray.length - 1 + ',' + i).className)
+                        document.getElementById(guessesArray.length - 1 + ',' + i).classname = "wrongLast";
+                    }
+                }
+            }
+        }, 2500);
         let deleteWord = () => {
             return new Promise(resolve => {
                 console.log('here 2 ')
@@ -567,8 +664,6 @@ function Puzzle(){
                 }
                 await resetGuesses();
                 await deleteWord();
-                
-                
                 firstInput.current.focus();
         }
         function showStats() {
@@ -588,11 +683,15 @@ function Puzzle(){
         document.getElementById("playAgain").onclick = playAgain;
         document.getElementById("showPuzzle").onclick = showPuzzle;
         document.getElementById("showStats").onclick = showStats;
+
+        
+      
     }  
     
     useEffect(()=> {
         if (guessesList.current.length > 0){
             renderGuess();
+            
         }     
     })
 

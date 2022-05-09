@@ -86,19 +86,20 @@ router.get('/', (req, res)=>{
                 statsObject.winPercent = percentWon;
             }
 
-            let getTotalGamesIDQuery = `SELECT "id" FROM "record" ORDER BY "id" DESC LIMIT 1;`;
+            let getTotalGamesIDQuery = `SELECT "game_id" FROM "record" ORDER BY "game_id" DESC LIMIT 1;`;
             let getTotalGamesID = await client.query(getTotalGamesIDQuery);
             let totalGamesID = 0;
             if (getTotalGamesID.rows.length){
-                totalGamesID = parseInt(getTotalGamesID.rows[0].id);
+                totalGamesID = parseInt(getTotalGamesID.rows[0].game_id);
             };
-            let getLatestLossQuery = `SELECT "id" FROM "record" WHERE "win" = FALSE ORDER BY "id" DESC LIMIT 1;`;
+            let getLatestLossQuery = `SELECT "game_id" FROM "record" WHERE "win" = FALSE ORDER BY "game_id" DESC LIMIT 1;`;
             let getLatestLoss = await client.query(getLatestLossQuery);
             let latestLoss = 0;
             if(getLatestLoss.rows.length){
-                latestLoss = parseInt(getLatestLoss.rows[0].id);
+                latestLoss = parseInt(getLatestLoss.rows[0].game_id);
             };
             let currentStreak = totalGamesID - latestLoss;
+            console.log(currentStreak, ' ', totalGamesID, ' ', latestLoss)
             statsObject.streak = parseInt(currentStreak);
 
             let selectAllRecordsQuery = `SELECT * FROM "record" ORDER BY "id";`;
@@ -113,6 +114,7 @@ router.get('/', (req, res)=>{
                     if (currentStreakCounter > bestStreakCounter) {
                         bestStreakCounter = currentStreakCounter;
                     };
+                    
                     currentStreakCounter = 0;
                 } else if (selectAllRecords.rows[i].win == false){
                     if (currentStreakCounter > bestStreakCounter){

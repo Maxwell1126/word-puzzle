@@ -55,7 +55,7 @@
   outline: none;
 }
 
-.notWord {
+/* .notWord {
   resize: none;
   margin-right:15px;
   width: 30px;
@@ -73,8 +73,8 @@
   outline: none;
   animation-name: shake;
   animation-duration: 1s;
-}
-
+} */
+/* 
 .notWordLast{
   resize: none;
   padding: 6px;
@@ -93,7 +93,7 @@
   margin-right:0px;
   animation-name: shake;
   animation-duration: 1s;
-}
+} */
 .correct {
   resize: none;
   margin-right:15px;
@@ -110,42 +110,49 @@
   font-weight: 900;
   text-align: center;
   outline: none;
-  
+
 }
 
 @keyframes correctAni{
 from {  border: 2px solid rgb(99, 97, 97);
   background-color: #171718;}
   to {border: 2px solid rgb(92, 255, 144);
-   background-color: #309638;}
+   background-color: #309638;
+  transform: rotateX(360deg);}
+
 }
 
 @keyframes misplacedAni{
 from { border: 2px solid rgb(99, 97, 97);
   background-color: #171718;}
   to {border: 2px solid rgb(255, 255, 122);
-  background-color: #919848;}
+  background-color: #919848;
+transform: rotateX(360deg);}
+
 }
 
 @keyframes wrongAni{
 from {  border: 2px solid rgb(99, 97, 97);
   background-color: #171718;}
   to {border: 2px solid rgb(138, 138, 138);
-  background-color: #303030;}
+  background-color: #303030;
+transform: rotateX(360deg);}
+
 }
 
-@keyframes rotateY {
+/* @keyframes rotateY {
   to { transform: rotateY(360deg); }
-    /* 0%   { transform: scale(1,1)      translateY(0); }
+    0%   { transform: scale(1,1)      translateY(0); }
         10%  { transform: scale(1.1,.9)   translateY(0); }
         30%  { transform: scale(.9,1.1)   translateY(-5px); }
         50%  { transform: scale(1.05,.95) translateY(0); }
         57%  { transform: scale(1,1)      translateY(-7px); }
         64%  { transform: scale(1,1)      translateY(0); }
-        100% { transform: scale(1,1)      translateY(0); } */
-}
+        100% { transform: scale(1,1)      translateY(0); }
+} */
 
 @keyframes shake {
+  
   10%, 90% {
     transform: translate3d(-1px, 0, 0);
   }
@@ -186,6 +193,7 @@ background-color: #944040;}
   font-weight: 900;
   text-align: center;
   outline: none;
+
 }
 
 .wrong {
@@ -223,9 +231,10 @@ background-color: #944040;}
   font-weight: 900;
   text-align: center;
   outline: none;
-  animation-name: correctAni, rotateY;
-  animation-duration: 2s;
+  animation-name: correctAni;
+  animation-duration: .5s;
   animation-iteration-count: 1;
+  animation-fill-mode: forwards;
   animation-timing-function: ease;
 }
 
@@ -245,9 +254,10 @@ background-color: #944040;}
   font-weight: 900;
   text-align: center;
   outline: none;
-  animation-name: misplacedAni, rotateY;
-  animation-duration: 2s;
+  animation-name: misplacedAni;
+  animation-duration: .5s;
   animation-iteration-count: 1;
+  animation-fill-mode: forwards;
   animation-timing-function: ease;
 }
 
@@ -267,9 +277,10 @@ background-color: #944040;}
   font-weight: 900;
   text-align: center;
   outline: none;
-  animation-name: wrongAni, rotateY;
-  animation-duration: 2s;
+  animation-name: wrongAni;
+  animation-duration: .5s;
   animation-iteration-count: 1;
+  animation-fill-mode: forwards;
   animation-timing-function: ease;
 }
 
@@ -289,9 +300,10 @@ background-color: #944040;}
   margin-right:0px;
   border: 2px solid rgb(99, 97, 97);
   background-color: #171718;
-  animation-name: correctAni, rotateY;
-  animation-duration: 2s;
+  animation-name: correctAni;
+  animation-duration: .5s;
   animation-iteration-count: 1;
+  animation-fill-mode: forwards;
   animation-timing-function: ease;
 }
 
@@ -311,9 +323,10 @@ background-color: #944040;}
   margin-right:0px;
   border: 2px solid rgb(99, 97, 97);
   background-color: #171718;
-  animation-name: misplacedAni, rotateY;
-  animation-duration: 2s;
+  animation-name: misplacedAni;
+  animation-duration: .5s;
   animation-iteration-count: 1;
+  animation-fill-mode: forwards;
   animation-timing-function: ease;
 }
 
@@ -333,9 +346,10 @@ background-color: #944040;}
   margin-right:0px;
 border: 2px solid rgb(99, 97, 97);
   background-color: #171718;
-  animation-name: wrongAni, rotateY;
-  animation-duration: 2s;
+  animation-name: wrongAni;
+  animation-duration:.5s;
   animation-iteration-count: 1;
+  animation-fill-mode: forwards;
   animation-timing-function: ease;
 }
 
@@ -446,6 +460,33 @@ border: 2px solid rgb(99, 97, 97);
   /* position:absolute; */
   opacity: 0%;
 
+}
+
+.notWord{
+  margin-bottom: 10px;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  vertical-align: middle;
+  text-align: center;
+}
+.notWordLast{
+  margin-bottom: 2px;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  vertical-align: middle;
+  text-align: center;
+}
+
+.notWord > input {
+  animation-name: shake;
+  animation-duration: 1s;
+}
+
+.notWordLast > input{
+  animation-name: shake;
+  animation-duration: 1s;
 }
 .rowContainer {
   margin-bottom: 10px;

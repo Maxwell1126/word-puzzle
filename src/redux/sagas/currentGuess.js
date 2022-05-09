@@ -7,22 +7,40 @@ function* postGuess(guess) {
     try {
 
        const response =  yield axios.put('/guess', guess);
+        if (response.status === 204) {
 
-        if(response.status === 204){
             let currentRow = parseInt(document.getElementById(document.activeElement.id).id.charAt(0));
-            for (let i = 0; i < 5; i++) {
-                if (i !== 4) {
-                    document.getElementById(currentRow + ',' + i).className = "notWord";
-                } else {
-                    document.getElementById(currentRow + ',' + i).className = "notWordLast";
-                }
+            if(currentRow != 5){
+                document.getElementById(currentRow).className = "notWord";
+            }else if(currentRow == 5){
+                document.getElementById(currentRow).className = "notWordLast";
             }
+            // for (let i = 0; i < 5; i++) {
+            //     if (i !== 4) {
+            //         document.getElementById(currentRow + ',' + i).className = "notWord";
+            //     } else {
+            //         document.getElementById(currentRow + ',' + i).className = "notWordLast";
+            //     }
+            // }
             document.getElementById("conditionallyRender").style.marginBottom = "4px";
             document.getElementById("p").style.display="inline";
             setTimeout(()=>{
                 document.getElementById("conditionallyRender").style.marginBottom = "0px";
-                document.getElementById("p").style.display = "none";}, 1000);
-           
+                document.getElementById("p").style.display = "none";
+                if (currentRow != 5) {
+                    document.getElementById(currentRow).className = "rowContainer";
+                } else if (currentRow == 5) {
+                    document.getElementById(currentRow).className = "rowContainerLast";
+                }
+                // for (let i = 0; i < 5; i++) {
+                //     if (i !== 4) {
+                //         document.getElementById(currentRow + ',' + i).className = "input";
+                //     } else {
+                //         document.getElementById(currentRow + ',' + i).className = "inputLast";
+                //     }
+
+                // }
+            }, 1000);  
         }
         if(response.status ===200){
         const clearGuess = {type: 'CLEAR_GUESS'};

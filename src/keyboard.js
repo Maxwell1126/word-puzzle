@@ -94,38 +94,38 @@ function Keyboard() {
         }
         createRow(topRowArray, middleRowArray, bottomRowArray);
 
-    if (guessesArray.length > 0) {
-        if (document.getElementById(`${guessesArray.length - 1},0`).className === "correctRecent" ||
-            document.getElementById(`${guessesArray.length - 1},0`).className === "misplacedRecent" ||
-            document.getElementById(`${guessesArray.length - 1},0`).className === "wrongRecent") {
-            for(let i = 0; i < topRowArray.length; i ++){
-                document.getElementById(`${topRowArray[i]}`).disabled="disabled";
-            }
-            for (let i = 0; i < middleRowArray.length; i++) {
-                document.getElementById(`${middleRowArray[i]}`).disabled = "disabled";
-            }
-            for (let i = 0; i < bottomRowArray.length; i++) {
-                document.getElementById(`${bottomRowArray[i]}`).disabled = "disabled";
-            }
-            document.getElementById("enter").disabled="disabled";
-            document.getElementById("delete").disabled = "disabled";
+    // if (guessesArray.length > 0) {
+    //     if (document.getElementById(`${guessesArray.length - 1},0`).className === "correctRecent" ||
+    //         document.getElementById(`${guessesArray.length - 1},0`).className === "misplacedRecent" ||
+    //         document.getElementById(`${guessesArray.length - 1},0`).className === "wrongRecent" ){
+    //         for(let i = 0; i < topRowArray.length; i ++){
+    //             document.getElementById(`${topRowArray[i]}`).disabled="disabled";
+    //         }
+    //         for (let i = 0; i < middleRowArray.length; i++) {
+    //             document.getElementById(`${middleRowArray[i]}`).disabled = "disabled";
+    //         }
+    //         for (let i = 0; i < bottomRowArray.length; i++) {
+    //             document.getElementById(`${bottomRowArray[i]}`).disabled = "disabled";
+    //         }
+    //         document.getElementById("enter").disabled="disabled";
+    //         document.getElementById("delete").disabled = "disabled";
 
-            setTimeout(() => {
-                for (let i = 0; i < topRowArray.length; i++) {
-                    document.getElementById(`${topRowArray[i]}`).disabled = "";
-                }
-                for (let i = 0; i < middleRowArray.length; i++) {
-                    document.getElementById(`${middleRowArray[i]}`).disabled = "";
-                }
-                for (let i = 0; i < bottomRowArray.length; i++) {
-                    document.getElementById(`${bottomRowArray[i]}`).disabled = "";
-                }
-                document.getElementById("enter").disabled = "";
-                document.getElementById("delete").disabled = "";
-            }, 6000);
+    //         setTimeout(() => {
+    //             for (let i = 0; i < topRowArray.length; i++) {
+    //                 document.getElementById(`${topRowArray[i]}`).disabled = "";
+    //             }
+    //             for (let i = 0; i < middleRowArray.length; i++) {
+    //                 document.getElementById(`${middleRowArray[i]}`).disabled = "";
+    //             }
+    //             for (let i = 0; i < bottomRowArray.length; i++) {
+    //                 document.getElementById(`${bottomRowArray[i]}`).disabled = "";
+    //             }
+    //             document.getElementById("enter").disabled = "";
+    //             document.getElementById("delete").disabled = "";
+    //         }, 2500);
 
-        }
-    }
+    //     }
+    // }
         return(
             <div className="keyboard">
       
