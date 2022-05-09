@@ -282,7 +282,7 @@ function Puzzle(){
                 for (let i = 0; i < keyboardElements.length - 1; i++) {
                     keyboardElements[i].disabled = "";
                 }
-            }, 2500);
+            }, 2000);
         }
         for (let i = 0; i < guesses.length; i++){
 
@@ -462,7 +462,7 @@ function Puzzle(){
         function keyboardElementsActivate(ele){
             setTimeout(() => {
                 ele.disabled = "";
-            }, 2500);
+            }, 2000);
         }
         for (let i = 0; i < keyboardElements.length - 1; i++) {
             if(guessesArray[0]){
@@ -492,7 +492,7 @@ function Puzzle(){
                             && document.getElementById(letter).className !== "keyboardWrong"
                             && document.getElementById(letter).className !== "keyboardMisplaced"
                             && document.getElementById(letter).className !== "keyboardCorrect"){
-                            setTimeout(() => { document.getElementById(letter).className = "keyboardWrong" }, 2500);  
+                            setTimeout(() => { document.getElementById(letter).className = "keyboardWrong" }, 2000);  
                             }
                     } else if (i === 1) {
                         if (document.getElementById(n + ',' + z).className === "misplaced" ||
@@ -502,7 +502,7 @@ function Puzzle(){
                             document.getElementById(n + ',' + z).className === "misplacedRecent") 
                             && document.getElementById(letter).className !== "keyboardMisplaced"
                             && document.getElementById(letter).className !== "keyboardCorrect"){
-                            setTimeout(() => { document.getElementById(letter).className = "keyboardMisplaced" },2500); 
+                            setTimeout(() => { document.getElementById(letter).className = "keyboardMisplaced" },2000); 
                         }
                     } else if (i === 2) {
                         if (document.getElementById(n + ',' + z).className === "correct" ||
@@ -511,11 +511,11 @@ function Puzzle(){
                         } else if ((document.getElementById(n + ',' + z).className === "correctLastRecent" ||
                             document.getElementById(n + ',' + z).className === "correctRecent")
                             && document.getElementById(letter).className !== "keyboardCorrect") {
-                            setTimeout(() => { document.getElementById(letter).className = "keyboardCorrect" }, 2500); 
+                            setTimeout(() => { document.getElementById(letter).className = "keyboardCorrect" }, 2000); 
                         } else if ((document.getElementById(n + ',' + z).className === "correctLastRecent" ||
                             document.getElementById(n + ',' + z).className === "correctRecent")
                             && document.getElementById(letter).className === "keyboardMisplaced"){
-                            setTimeout(() => { document.getElementById(letter).className = "keyboardCorrect" }, 2500); 
+                            setTimeout(() => { document.getElementById(letter).className = "keyboardCorrect" }, 2000); 
                             }
                     }
                 }
@@ -571,7 +571,7 @@ function Puzzle(){
                     document.getElementById("showPuzzle").style.display = "inline";
                     document.getElementById("showStats").style.display = "none";
                     
-                }, 2500);
+                }, 2000);
             }else{
                 document.getElementById("conditionallyRender").style.marginBottom = "5px";
                     document.getElementById("dictionaryContainer").style.display = "inline-flex";
@@ -612,7 +612,7 @@ function Puzzle(){
                     }
                 }
             }
-        }, 2500);
+        }, 2000);
         let deleteWord = () => {
             return new Promise(resolve => {
                 console.log('here 2 ')

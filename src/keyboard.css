@@ -255,7 +255,7 @@ from {  border: 2px solid rgb(255, 255, 122);
     .delEnterButton {
         background-color: #282c34;
         color:white;
-        border: 2px solid rgb(99, 97, 97);
+        border: solid rgb(99, 97, 97);
         border-radius: 5px;
         font-size: 16px;
         width: 60px;
